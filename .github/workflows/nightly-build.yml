@@ -1,0 +1,66 @@
+name: Nightly Build and Test
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Executa diariamente às 02:00 UTC
+
+jobs:
+  nightly-build:
+    name: Nightly Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies (Frontend)
+        run: npm install
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Install Dependencies (Backend)
+        run: npm install
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+      - name: Lint Frontend Code
+        run: npm run lint
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Lint Backend Code
+        run: npm run lint
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+      - name: Run Frontend Tests
+        run: npm run test:ci
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Run Backend Tests
+        run: npm run test:ci
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Build Backend
+        run: npm run build
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+      - name: E2E Tests
+        run: npm run test:e2e
+        working-directory: C:/taly/dir-taly/taly/tests/e2e/
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: nightly-test-reports
+          path: C:/taly/dir-taly/taly/tests/reports/
+
+      - name: Notify Team
+        if: failure()
+        run: echo "Nightly build or tests failed. Please investigate."
+

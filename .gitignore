@@ -26,3 +26,14 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+# Ignore environment variable files
+.env
+*.ps1
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db

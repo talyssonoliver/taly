@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  role      String
+  salonId   String?  @unique
+  planId    String?  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  salon     Salon?   @relation
+  plan      Plan?    @relation(fields: [planId], references: [id])
+}
+
+model Salon {
+  id        String   @id @default(uuid())
+  name      String
+  ownerId   String?  @unique
+  owner     User?    @relation(fields: [ownerId], references: [id])
+}
+
+model Plan {
+  id        String   @id @default(uuid())
+  name      String
+  users     User[]
+}

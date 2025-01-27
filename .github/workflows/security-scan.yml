@@ -1,0 +1,66 @@
+name: Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * *' # Executes daily at 03:00 UTC
+
+jobs:
+  security-scan:
+    name: Dependency and Code Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies (Frontend)
+        run: npm install
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Install Dependencies (Backend)
+        run: npm install
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+      - name: Dependency Vulnerability Scan (Frontend)
+        run: npm audit --json
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Dependency Vulnerability Scan (Backend)
+        run: npm audit --json
+        working-directory: C:/taly/dir-taly/taly/backend/
+
+    #   - name: Static Code Analysis with Snyk
+    #     uses: snyk/actions/node@v3
+    #     with:
+    #       args: monitor
+    #     env:
+    #       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Static Application Security Testing (SAST)
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+      - name: Upload Audit and Analysis Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-reports
+          path: C:/taly/dir-taly/taly/security-reports/
+
+      - name: Notify Team on Failure
+        if: failure()
+        run: echo "Security scan failed. Please investigate immediately."

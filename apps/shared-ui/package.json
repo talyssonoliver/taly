@@ -1,0 +1,36 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "description": "Shared UI components and utilities for the microfrontend application.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.4",
+    "jest": "^27.0.6",
+    "eslint": "^7.32.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/microfrontend-app.git"
+  },
+  "keywords": [
+    "microfrontend",
+    "shared",
+    "components",
+    "ui"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
