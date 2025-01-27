@@ -1,60 +1,125 @@
-# microfrontend-app/microfrontend-app/README.md
+# Taly Apps - Microfrontend Architecture
 
-# Microfrontend Application
+## Overview
+The `apps/` directory contains the core microfrontends of the Taly platform. Each app serves a distinct purpose, tailored to the roles and needs of the system's users. This microfrontend approach ensures modularity, scalability, and streamlined development workflows.
 
-This project is a microfrontend application designed to manage various aspects of a salon management system. It is structured into separate modules for dashboard, booking, payments, and shared UI components, allowing for independent development and deployment.
+---
 
-## Project Structure
-
+## Directory Structure
 ```
-microfrontend-app
-├── dashboard          # Dashboard module for administration and reports
-├── booking            # Booking module for managing appointments
-├── payments           # Payments module for handling transactions
-├── shared             # Shared UI components and utilities
-├── package.json       # Main configuration file for the application
-└── tsconfig.json      # TypeScript configuration for the entire application
+C:\taly\dir-taly\taly\apps
+├── dashboard/         # Admin panel for salon owners
+├── booking/           # Public booking interface for customers
+├── payments/          # Payment management module
+├── shared-ui/         # Reusable UI components shared across apps
 ```
 
-## Features
+### **1. Dashboard**
+- **Purpose**: Provides salon owners with tools to manage their businesses, including bookings, payments, and analytics.
+- **Key Features**:
+  - Metrics overview (appointments, revenue, customer interactions).
+  - Configurable settings for salons (e.g., staff permissions, service offerings).
+  - Reports with exportable insights.
+- **Tech Stack**:
+  - Next.js for server-side rendering and SEO.
+  - Tailwind CSS for styling.
+  - Integrated with backend services (e.g., `user-service`, `payment-service`).
 
-- **Dashboard**: Provides an overview of salon operations, including reports and analytics.
-- **Booking**: Allows users to create and manage appointments with clients.
-- **Payments**: Facilitates payment processing and transaction history.
-- **Shared Components**: Contains reusable UI components and utility functions for consistent styling and functionality across modules.
+### **2. Booking**
+- **Purpose**: A user-friendly public interface for customers to schedule appointments with salons.
+- **Key Features**:
+  - Interactive calendar for selecting available time slots.
+  - Integration with salon-specific configurations.
+  - Responsive design for mobile and desktop users.
+- **Tech Stack**:
+  - React.js with Next.js for fast rendering.
+  - Axios for API interactions.
+  - CSS-in-JS for scalable styles.
 
-## Getting Started
+### **3. Payments**
+- **Purpose**: Handles all payment-related functionalities for salon owners and customers.
+- **Key Features**:
+  - Payment history for salon owners.
+  - Secure Stripe/PayPal integration for customers.
+  - Refund management and transaction tracking.
+- **Tech Stack**:
+  - React.js with reusable components.
+  - Chart.js for visualizing payment data.
+  - API integrations with `payment-service` backend.
 
-1. Clone the repository:
+### **4. Shared-UI**
+- **Purpose**: Houses reusable UI components to ensure consistency across all apps.
+- **Key Features**:
+  - Common components such as buttons, modals, inputs, and navigation bars.
+  - Centralized theme and style definitions for uniformity.
+  - Optimized for reusability and extensibility.
+- **Tech Stack**:
+  - Storybook for component documentation.
+  - Tailwind CSS for theming.
+
+---
+
+## How to Run Each App
+
+1. Navigate to the specific app directory:
+   ```bash
+   cd apps/dashboard
    ```
-   git clone <repository-url>
-   cd microfrontend-app
+
+2. Install dependencies:
+   ```bash
+   pnpm install
    ```
 
-2. Install dependencies for each module:
-   ```
-   cd dashboard
-   npm install
-   cd ../booking
-   npm install
-   cd ../payments
-   npm install
-   cd ../shared
-   npm install
+3. Start the development server:
+   ```bash
+   pnpm dev
    ```
 
-3. Start the development server for each module:
+4. Access the app in your browser:
+   - Dashboard: `http://localhost:3000`
+   - Booking: `http://localhost:3001`
+   - Payments: `http://localhost:3002`
+
+---
+
+## Contributing to Apps
+
+1. **Create a Feature Branch**: 
+   ```bash
+   git checkout -b feature/app-improvement
    ```
-   cd dashboard
-   npm start
+
+2. **Follow Component Guidelines**:
+   - Use shared components from `shared-ui` wherever possible.
+   - Ensure components are responsive and accessible.
+
+3. **Write Tests**:
+   - Unit tests for React components.
+   - Integration tests for API interactions.
+
+4. **Submit a Pull Request**:
+   ```bash
+   git push origin feature/app-improvement
    ```
 
-   Repeat for `booking` and `payments` as needed.
+---
 
-## Contributing
+## Deployment
 
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+1. **Build the App**:
+   ```bash
+   pnpm build
+   ```
 
-## License
+2. **Deployment Pipelines**:
+   - Each app is configured with a CI/CD pipeline via GitHub Actions.
+   - Merging into the `main` branch triggers the pipeline to build and deploy to AWS.
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+---
+
+## Contact
+
+For assistance or to report issues:
+- **Email**: dev-support@taly.com
+- **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)
