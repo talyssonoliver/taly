@@ -1,0 +1,55 @@
+name: Frontend CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  frontend-ci:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Lint Code
+        run: npm run lint
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Run Unit Tests
+        run: npm run test:ci
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+
+      - name: Upload Build Artifacts (Optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: dashboard-build
+          path: C:/taly/dir-taly/taly/apps/dashboard/.next/
+
+    #   - name: Deploy to Staging (Optional)
+    #     if: github.ref == 'refs/heads/main'
+    #     env:
+    #       STAGING_URL: ${{ secrets.STAGING_URL }}
+    #     run: |
+    #       echo "Deploying to staging environment at $STAGING_URL"
+    #       # Exemplo de deploy com Vercel, Firebase ou outro serviço
+    #       npm run deploy
+    #     working-directory: C:/taly/dir-taly/taly/apps/dashboard/

@@ -1,0 +1,41 @@
+// payment-service/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Add other fields as needed
+
+  Payment Payment[]
+}
+
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  payments  Payment[]
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  userId     String
+  bookingId  String?
+  amount     Float
+  currency   String
+  status     String   // e.g., "pending", "completed", "refunded"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  User       User     @relation(fields: [userId], references: [id])
+  Booking    Booking? @relation(fields: [bookingId], references: [id])
+}

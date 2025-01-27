@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend shared utilities for Taly project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "author": "Talysson Da Silva Oliveira",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.5"
+  }
+}

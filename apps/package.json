@@ -1,0 +1,21 @@
+{
+  "name": "microfrontend-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix dashboard\" \"npm run start --prefix booking\" \"npm run start --prefix payments\"",
+    "build": "npm run build --prefix dashboard && npm run build --prefix booking && npm run build --prefix payments",
+    "test": "npm run test --prefix dashboard && npm run test --prefix booking && npm run test --prefix payments"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "concurrently": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  }
+}
