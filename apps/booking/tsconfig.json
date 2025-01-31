@@ -9,7 +9,9 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./src",
 		"paths": {
-			"@shared/*": ["../shared-ui/src/*"]
+			"@shared/*": ["../shared-ui/src/*"],
+			"*": ["node_modules/*", "*"],
+			"@shared-ui/*": ["../../shared-ui/src/*"]
 		}
 	},
 	"include": ["src/**/*"],

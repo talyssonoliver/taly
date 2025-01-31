@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
-import type { SignupDto } from "../dto/signup.dto";
-import { hashPassword } from "../utils/password-hasher";
+import type { SignupDto } from "../../../../shared/dto/signup.dto";
+import { hashPassword } from "../../../../shared/utils/password-hasher";
 import type { AuthRepository } from "../repositories/auth.repository";
 import type { NotificationService } from "../integrations/notification.service";
 

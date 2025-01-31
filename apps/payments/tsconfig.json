@@ -10,6 +10,8 @@
 		"outDir": "./dist",
 		"baseUrl": "./src",
 		"paths": {
+			"*": ["node_modules/*", "*"],
+			"@shared-ui/*": ["../../shared-ui/src/*"],
 			"@shared/*": ["../shared-ui/src/*"]
 		}
 	},

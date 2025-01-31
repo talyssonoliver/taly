@@ -40,12 +40,12 @@ jobs:
         run: npm audit --json
         working-directory: C:/taly/dir-taly/taly/backend/
 
-    #   - name: Static Code Analysis with Snyk
-    #     uses: snyk/actions/node@v3
-    #     with:
-    #       args: monitor
-    #     env:
-    #       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Static Code Analysis with Snyk
+        uses: snyk/actions/node@master
+        with:
+          args: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Static Application Security Testing (SAST)
         uses: github/codeql-action/init@v2

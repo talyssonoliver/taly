@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
     <div className="modal-overlay">
       <div className="modal">
         {title && <h2 className="modal-title">{title}</h2>}
-        <button className="modal-close" onClick={onClose}>
+        <button type="button" className="modal-close" onClick={onClose}>
           &times;
         </button>
         <div className="modal-content">{children}</div>
