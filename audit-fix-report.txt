@@ -1,0 +1,1322 @@
+{
+  "actions": [
+    {
+      "action": "review",
+      "module": "node-forge",
+      "resolves": [
+        {
+          "id": 1088227,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1088229,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1088746,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1093719,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1095012,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1095013,
+          "path": "apps__dashboard>webpack-dev-server>selfsigned>node-forge",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "xlsx",
+      "resolves": [
+        {
+          "id": 1094599,
+          "path": "serverless__cleanup-temp-files>xlsx",
+          "dev": false,
+          "bundled": false,
+          "optional": false
+        },
+        {
+          "id": 1096911,
+          "path": "serverless__cleanup-temp-files>xlsx",
+          "dev": false,
+          "bundled": false,
+          "optional": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "webpack-dev-middleware",
+      "resolves": [
+        {
+          "id": 1096729,
+          "path": "apps__dashboard>webpack-dev-server>webpack-dev-middleware",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "braces",
+      "resolves": [
+        {
+          "id": 1098094,
+          "path": "apps__dashboard>webpack-dev-server>chokidar>braces",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "micromatch",
+      "resolves": [
+        {
+          "id": 1098681,
+          "path": "apps__dashboard>webpack-dev-server>chokidar>anymatch>micromatch",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 1098681,
+          "path": "apps__booking>lint-staged>micromatch",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "http-proxy-middleware",
+      "resolves": [
+        {
+          "id": 1100223,
+          "path": "apps__dashboard>webpack-dev-server>http-proxy-middleware",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "jsonpath-plus",
+      "resolves": [
+        {
+          "id": 1100560,
+          "path": "serverless__cleanup-temp-files>serverless-offline>jsonpath-plus",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "ip",
+      "resolves": [
+        {
+          "id": 1101851,
+          "path": "apps__dashboard>webpack-dev-server>ip",
+          "dev": false,
+          "bundled": false,
+          "optional": false
+        }
+      ]
+    }
+  ],
+  "advisories": {
+    "1088227": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/digitalbazaar/forge/security/advisories/GHSA-5rrq-pxf6-6jx5\n- https://github.com/advisories/GHSA-5rrq-pxf6-6jx5",
+      "created": "2022-01-08T00:22:42.000Z",
+      "id": 1088227,
+      "npm_advisory_id": null,
+      "overview": "### Impact\nThe `forge.debug` API had a potential prototype pollution issue if called with untrusted input. The API was only used for internal debug purposes in a safe way and never documented or advertised.  It is suspected that uses of this API, if any exist, would likely not have used untrusted inputs in a vulnerable way.\n\n### Patches\nThe `forge.debug` API and related functions were removed in 1.0.0.\n\n### Workarounds\nDon't use the `forge.debug` API directly or indirectly with untrusted input.\n\n### References\n- https://www.huntr.dev/bounties/1-npm-node-forge/\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge).\n* Email us at support@digitalbazaar.com.",
+      "reported_by": null,
+      "title": "Prototype Pollution in node-forge debug API.",
+      "metadata": null,
+      "cves": [],
+      "access": "public",
+      "severity": "low",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.0.0",
+      "github_advisory_id": "GHSA-5rrq-pxf6-6jx5",
+      "recommendation": "Upgrade to version 1.0.0 or later",
+      "patched_versions": ">=1.0.0",
+      "updated": "2023-01-11T05:03:14.000Z",
+      "cvss": {
+        "score": 0,
+        "vectorString": null
+      },
+      "cwe": [
+        "CWE-1321"
+      ],
+      "url": "https://github.com/advisories/GHSA-5rrq-pxf6-6jx5"
+    },
+    "1088229": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/digitalbazaar/forge/security/advisories/GHSA-gf8q-jrpm-jvxq\n- https://nvd.nist.gov/vuln/detail/CVE-2022-0122\n- https://www.huntr.dev/bounties/41852c50-3c6d-4703-8c55-4db27164a4ae\n- https://github.com/advisories/GHSA-gf8q-jrpm-jvxq",
+      "created": "2022-01-08T00:22:02.000Z",
+      "id": 1088229,
+      "npm_advisory_id": null,
+      "overview": "### Impact\nThe regex used for the `forge.util.parseUrl` API would not properly parse certain inputs resulting in a parsed data structure that could lead to undesired behavior.\n\n### Patches\n`forge.util.parseUrl` and other very old related URL APIs were removed in 1.0.0 in favor of letting applications use the more modern WHATWG URL Standard API.\n\n### Workarounds\nEnsure code does not directly or indirectly call `forge.util.parseUrl` with untrusted input.\n\n### References\n- https://www.huntr.dev/bounties/41852c50-3c6d-4703-8c55-4db27164a4ae/\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at support@digitalbazaar.com\n",
+      "reported_by": null,
+      "title": "URL parsing in node-forge could lead to undesired behavior.",
+      "metadata": null,
+      "cves": [],
+      "access": "public",
+      "severity": "low",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.0.0",
+      "github_advisory_id": "GHSA-gf8q-jrpm-jvxq",
+      "recommendation": "Upgrade to version 1.0.0 or later",
+      "patched_versions": ">=1.0.0",
+      "updated": "2023-01-11T05:08:11.000Z",
+      "cvss": {
+        "score": 0,
+        "vectorString": null
+      },
+      "cwe": [
+        "CWE-601"
+      ],
+      "url": "https://github.com/advisories/GHSA-gf8q-jrpm-jvxq"
+    },
+    "1088746": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/digitalbazaar/forge/security/advisories/GHSA-2r2c-g63r-vccr\n- https://nvd.nist.gov/vuln/detail/CVE-2022-24773\n- https://github.com/digitalbazaar/forge/commit/3f0b49a0573ef1bb7af7f5673c0cfebf00424df1\n- https://github.com/digitalbazaar/forge/commit/bb822c02df0b61211836472e29b9790cc541cdb2\n- https://github.com/advisories/GHSA-2r2c-g63r-vccr",
+      "created": "2022-03-18T23:10:48.000Z",
+      "id": 1088746,
+      "npm_advisory_id": null,
+      "overview": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code is not properly checking `DigestInfo` for a proper ASN.1 structure. This can lead to successful verification with signatures that contain invalid structures but a valid digest.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)",
+      "reported_by": null,
+      "title": "Improper Verification of Cryptographic Signature in `node-forge`",
+      "metadata": null,
+      "cves": [
+        "CVE-2022-24773"
+      ],
+      "access": "public",
+      "severity": "moderate",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.3.0",
+      "github_advisory_id": "GHSA-2r2c-g63r-vccr",
+      "recommendation": "Upgrade to version 1.3.0 or later",
+      "patched_versions": ">=1.3.0",
+      "updated": "2023-01-27T05:00:57.000Z",
+      "cvss": {
+        "score": 5.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+      },
+      "cwe": [
+        "CWE-347"
+      ],
+      "url": "https://github.com/advisories/GHSA-2r2c-g63r-vccr"
+    },
+    "1093719": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2022-0122\n- https://github.com/digitalbazaar/forge/commit/db8016c805371e72b06d8e2edfe0ace0df934a5e\n- https://huntr.dev/bounties/41852c50-3c6d-4703-8c55-4db27164a4ae\n- https://github.com/advisories/GHSA-8fr3-hfg3-gpgp",
+      "created": "2022-01-21T23:36:19.000Z",
+      "id": 1093719,
+      "npm_advisory_id": null,
+      "overview": "parseUrl functionality in node-forge mishandles certain uses of backslash such as `https:/\\/\\/\\` and interprets the URI as a relative path. ",
+      "reported_by": null,
+      "title": "Open Redirect in node-forge",
+      "metadata": null,
+      "cves": [
+        "CVE-2022-0122"
+      ],
+      "access": "public",
+      "severity": "moderate",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.0.0",
+      "github_advisory_id": "GHSA-8fr3-hfg3-gpgp",
+      "recommendation": "Upgrade to version 1.0.0 or later",
+      "patched_versions": ">=1.0.0",
+      "updated": "2023-09-11T22:42:43.000Z",
+      "cvss": {
+        "score": 6.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+      },
+      "cwe": [
+        "CWE-601"
+      ],
+      "url": "https://github.com/advisories/GHSA-8fr3-hfg3-gpgp"
+    },
+    "1094599": {
+      "findings": [
+        {
+          "version": "0.18.5",
+          "paths": [
+            "serverless\\cleanup-temp-files > xlsx@0.18.5",
+            "serverless\\generate-reports > xlsx@0.18.5",
+            "serverless\\process-payment > xlsx@0.18.5",
+            "serverless\\send-email > xlsx@0.18.5",
+            "serverless\\shared > xlsx@0.18.5",
+            "serverless\\user-activity-logger > xlsx@0.18.5"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2023-30533\n- https://cdn.sheetjs.com/advisories/CVE-2023-30533\n- https://git.sheetjs.com/sheetjs/sheetjs/src/branch/master/CHANGELOG.md\n- https://git.sheetjs.com/sheetjs/sheetjs/issues/2667\n- https://git.sheetjs.com/sheetjs/sheetjs/issues/2986\n- https://github.com/advisories/GHSA-4r6h-8v6p-xvw6",
+      "created": "2023-04-24T09:30:19.000Z",
+      "id": 1094599,
+      "npm_advisory_id": null,
+      "overview": "All versions of SheetJS CE through 0.19.2 are vulnerable to \"Prototype Pollution\" when reading specially crafted files. Workflows that do not read arbitrary files (for example, exporting data to spreadsheet files) are unaffected.\n\nA non-vulnerable version cannot be found via npm, as the repository hosted on GitHub and the npm package `xlsx` are no longer maintained.",
+      "reported_by": null,
+      "title": "Prototype Pollution in sheetJS",
+      "metadata": null,
+      "cves": [
+        "CVE-2023-30533"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "xlsx",
+      "vulnerable_versions": "<0.19.3",
+      "github_advisory_id": "GHSA-4r6h-8v6p-xvw6",
+      "recommendation": "Upgrade to version 0.19.3 or later",
+      "patched_versions": ">=0.19.3",
+      "updated": "2023-11-06T05:04:13.000Z",
+      "cvss": {
+        "score": 7.8,
+        "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+      },
+      "cwe": [
+        "CWE-1321"
+      ],
+      "url": "https://github.com/advisories/GHSA-4r6h-8v6p-xvw6"
+    },
+    "1095012": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/digitalbazaar/forge/security/advisories/GHSA-cfm4-qjh2-4765\n- https://nvd.nist.gov/vuln/detail/CVE-2022-24771\n- https://github.com/digitalbazaar/forge/commit/3f0b49a0573ef1bb7af7f5673c0cfebf00424df1\n- https://github.com/digitalbazaar/forge/commit/bb822c02df0b61211836472e29b9790cc541cdb2\n- https://github.com/advisories/GHSA-cfm4-qjh2-4765",
+      "created": "2022-03-18T23:09:54.000Z",
+      "id": 1095012,
+      "npm_advisory_id": null,
+      "overview": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code is lenient in checking the digest algorithm structure. This can allow a crafted structure that steals padding bytes and uses unchecked portion of the PKCS#1 encoded message to forge a signature when a low public exponent is being used.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### References\n\nFor more information, please see\n[\"Bleichenbacher's RSA signature forgery based on implementation error\"](https://mailarchive.ietf.org/arch/msg/openpgp/5rnE9ZRN1AokBVj3VqblGlP63QE/)\nby Hal Finney.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)",
+      "reported_by": null,
+      "title": "Improper Verification of Cryptographic Signature in node-forge",
+      "metadata": null,
+      "cves": [
+        "CVE-2022-24771"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.3.0",
+      "github_advisory_id": "GHSA-cfm4-qjh2-4765",
+      "recommendation": "Upgrade to version 1.3.0 or later",
+      "patched_versions": ">=1.3.0",
+      "updated": "2023-11-29T00:36:22.000Z",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      },
+      "cwe": [
+        "CWE-347"
+      ],
+      "url": "https://github.com/advisories/GHSA-cfm4-qjh2-4765"
+    },
+    "1095013": {
+      "findings": [
+        {
+          "version": "0.10.0",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0",
+            "apps\\payments > webpack-dev-server@3.11.3 > selfsigned@1.10.14 > node-forge@0.10.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/digitalbazaar/forge/security/advisories/GHSA-x4jg-mjrx-434g\n- https://nvd.nist.gov/vuln/detail/CVE-2022-24772\n- https://github.com/digitalbazaar/forge/commit/3f0b49a0573ef1bb7af7f5673c0cfebf00424df1\n- https://github.com/digitalbazaar/forge/commit/bb822c02df0b61211836472e29b9790cc541cdb2\n- https://github.com/advisories/GHSA-x4jg-mjrx-434g",
+      "created": "2022-03-18T23:10:28.000Z",
+      "id": 1095013,
+      "npm_advisory_id": null,
+      "overview": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code does not check for tailing garbage bytes after decoding a `DigestInfo` ASN.1 structure. This can allow padding bytes to be removed and garbage data added to forge a signature when a low public exponent is being used.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### References\n\nFor more information, please see\n[\"Bleichenbacher's RSA signature forgery based on implementation error\"](https://mailarchive.ietf.org/arch/msg/openpgp/5rnE9ZRN1AokBVj3VqblGlP63QE/)\nby Hal Finney.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)",
+      "reported_by": null,
+      "title": "Improper Verification of Cryptographic Signature in node-forge",
+      "metadata": null,
+      "cves": [
+        "CVE-2022-24772"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "node-forge",
+      "vulnerable_versions": "<1.3.0",
+      "github_advisory_id": "GHSA-x4jg-mjrx-434g",
+      "recommendation": "Upgrade to version 1.3.0 or later",
+      "patched_versions": ">=1.3.0",
+      "updated": "2023-11-29T00:35:39.000Z",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      },
+      "cwe": [
+        "CWE-347"
+      ],
+      "url": "https://github.com/advisories/GHSA-x4jg-mjrx-434g"
+    },
+    "1096729": {
+      "findings": [
+        {
+          "version": "3.7.3",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3",
+            "apps\\payments > webpack-dev-server@3.11.3 > webpack-dev-middleware@3.7.3"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://github.com/webpack/webpack-dev-middleware/security/advisories/GHSA-wr3j-pwj9-hqq6\n- https://nvd.nist.gov/vuln/detail/CVE-2024-29180\n- https://github.com/webpack/webpack-dev-middleware/commit/189c4ac7d2344ec132a4689e74dc837ec5be0132\n- https://github.com/webpack/webpack-dev-middleware/commit/9670b3495da518fe667ff3428c5e4cb9f2f3d353\n- https://github.com/webpack/webpack-dev-middleware/commit/e10008c762e4d5821ed6990348dabf0d4d93a10e\n- https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82\n- https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21\n- https://github.com/webpack/webpack-dev-middleware/releases/tag/v5.3.4\n- https://github.com/webpack/webpack-dev-middleware/releases/tag/v6.1.2\n- https://github.com/webpack/webpack-dev-middleware/releases/tag/v7.1.0\n- https://github.com/advisories/GHSA-wr3j-pwj9-hqq6",
+      "created": "2024-03-21T18:59:28.000Z",
+      "id": 1096729,
+      "npm_advisory_id": null,
+      "overview": "### Summary\n_The **webpack-dev-middleware** middleware does not validate the supplied URL address sufficiently before returning the local file. It is possible to access any file on the developer's machine._\n\n### Details\nThe middleware can either work with the physical filesystem when reading the files or it can use a virtualized in-memory _memfs_ filesystem.\nIf _writeToDisk_ configuration option is set to **true**, the physical filesystem is used:\n[https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21](https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21)\n\nThe _**getFilenameFromUrl**_ method is used to parse URL and build the local file path.\nThe public path prefix is stripped from the URL, and the **unsecaped** path suffix is appended to the _outputPath_:\n[https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82](https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82)\nAs the URL is not unescaped and normalized automatically before calling the midlleware, it is possible to use _%2e_ and _%2f_ sequences to perform path traversal attack.\n\n### PoC\n_A blank project can be created containing the following configuration file **webpack.config.js**:_\n`module.exports = {\n  devServer: {\n    devMiddleware: {\n      writeToDisk: true\n    }\n  }\n};\n`\n\nWhen started, it is possible to access any local file, e.g. _/etc/passwd_:\n`$ curl localhost:8080/public/..%2f..%2f..%2f..%2f../etc/passwd`\n```\nroot:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\n```\n\n### Impact\nThe developers using _webpack-dev-server_ or _webpack-dev-middleware_ are affected by the issue. When the project is started, an attacker might access any file on the developer's machine and exfiltrate the content (e.g. password, configuration files, private source code, ...).\n\nIf the development server is listening on a public IP address (or **0.0.0.0**), an attacker on the local network can access the local files without any interaction from the victim (direct connection to the port).\n\nIf the server allows access from third-party domains (CORS, **_Allow-Access-Origin: *_** ), an attacker can send a malicious link to the victim. When visited, the client side script can connect to the local server and exfiltrate the local files.\n\n### Recommendation\nThe URL should be unescaped and normalized before any further processing.",
+      "reported_by": null,
+      "title": "Path traversal in webpack-dev-middleware",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-29180"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "webpack-dev-middleware",
+      "vulnerable_versions": "<=5.3.3",
+      "github_advisory_id": "GHSA-wr3j-pwj9-hqq6",
+      "recommendation": "Upgrade to version 5.3.4 or later",
+      "patched_versions": ">=5.3.4",
+      "updated": "2024-03-21T18:59:29.000Z",
+      "cvss": {
+        "score": 7.4,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N"
+      },
+      "cwe": [
+        "CWE-22"
+      ],
+      "url": "https://github.com/advisories/GHSA-wr3j-pwj9-hqq6"
+    },
+    "1096911": {
+      "findings": [
+        {
+          "version": "0.18.5",
+          "paths": [
+            "serverless\\cleanup-temp-files > xlsx@0.18.5",
+            "serverless\\generate-reports > xlsx@0.18.5",
+            "serverless\\process-payment > xlsx@0.18.5",
+            "serverless\\send-email > xlsx@0.18.5",
+            "serverless\\shared > xlsx@0.18.5",
+            "serverless\\user-activity-logger > xlsx@0.18.5"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-22363\n- https://cdn.sheetjs.com/advisories/CVE-2024-22363\n- https://cwe.mitre.org/data/definitions/1333.html\n- https://git.sheetjs.com/sheetjs/sheetjs/src/tag/v0.20.2\n- https://github.com/advisories/GHSA-5pgg-2g8v-p4x9",
+      "created": "2024-04-05T06:30:46.000Z",
+      "id": 1096911,
+      "npm_advisory_id": null,
+      "overview": "SheetJS Community Edition before 0.20.2 is vulnerable.to Regular Expression Denial of Service (ReDoS).",
+      "reported_by": null,
+      "title": "SheetJS Regular Expression Denial of Service (ReDoS)",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-22363"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "xlsx",
+      "vulnerable_versions": "<0.20.2",
+      "github_advisory_id": "GHSA-5pgg-2g8v-p4x9",
+      "recommendation": "Upgrade to version 0.20.2 or later",
+      "patched_versions": ">=0.20.2",
+      "updated": "2024-04-08T13:47:06.000Z",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": [
+        "CWE-1333"
+      ],
+      "url": "https://github.com/advisories/GHSA-5pgg-2g8v-p4x9"
+    },
+    "1098094": {
+      "findings": [
+        {
+          "version": "2.3.2",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-dev-server@3.11.3 > chokidar@2.1.8 > braces@2.3.2",
+            "apps\\payments > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10 > braces@2.3.2",
+            "apps\\payments > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10 > braces@2.3.2"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-4068\n- https://github.com/micromatch/braces/issues/35\n- https://devhub.checkmarx.com/cve-details/CVE-2024-4068\n- https://github.com/micromatch/braces/blob/98414f9f1fabe021736e26836d8306d5de747e0d/lib/parse.js#L308\n- https://github.com/micromatch/braces/pull/37\n- https://github.com/micromatch/braces/pull/40\n- https://github.com/micromatch/braces/commit/415d660c3002d1ab7e63dbf490c9851da80596ff\n- https://github.com/advisories/GHSA-grv7-fg5c-xmjg",
+      "created": "2024-05-14T18:30:54.000Z",
+      "id": 1098094,
+      "npm_advisory_id": null,
+      "overview": "The NPM package `braces` fails to limit the number of characters it can handle, which could lead to Memory Exhaustion. In `lib/parse.js,` if a malicious user sends \"imbalanced braces\" as input, the parsing will enter a loop, which will cause the program to start allocating heap memory without freeing it at any moment of the loop. Eventually, the JavaScript heap limit is reached, and the program will crash.\n",
+      "reported_by": null,
+      "title": "Uncontrolled resource consumption in braces",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-4068"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "braces",
+      "vulnerable_versions": "<3.0.3",
+      "github_advisory_id": "GHSA-grv7-fg5c-xmjg",
+      "recommendation": "Upgrade to version 3.0.3 or later",
+      "patched_versions": ">=3.0.3",
+      "updated": "2024-07-05T21:25:08.000Z",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": [
+        "CWE-400",
+        "CWE-1050"
+      ],
+      "url": "https://github.com/advisories/GHSA-grv7-fg5c-xmjg"
+    },
+    "1098681": {
+      "findings": [
+        {
+          "version": "3.1.10",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-resolve-dependencies@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > @jest/core@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runner@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > @jest/test-sequencer@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > babel-jest@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > @jest/transform@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-runtime@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > jest@26.6.3 > jest-cli@26.6.3 > jest-config@26.6.3 > jest-jasmine2@26.6.3 > jest-snapshot@26.6.2 > jest-haste-map@26.6.2 > sane@4.1.0 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-dev-server@3.11.3 > chokidar@2.1.8 > anymatch@2.0.0 > micromatch@3.1.10",
+            "apps\\payments > webpack-dev-server@3.11.3 > chokidar@2.1.8 > readdirp@2.2.1 > micromatch@3.1.10",
+            "apps\\payments > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1 > micromatch@3.1.10"
+          ]
+        },
+        {
+          "version": "4.0.5",
+          "paths": [
+            "apps\\booking > lint-staged@14.0.1 > micromatch@4.0.5"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-4067\n- https://github.com/micromatch/micromatch/issues/243\n- https://github.com/micromatch/micromatch/pull/247\n- https://devhub.checkmarx.com/cve-details/CVE-2024-4067\n- https://github.com/micromatch/micromatch/blob/2c56a8604b68c1099e7bc0f807ce0865a339747a/index.js#L448\n- https://github.com/micromatch/micromatch/commit/500d5d6f42f0e8dfa1cb5464c6cb420b1b6aaaa0\n- https://github.com/micromatch/micromatch/pull/266\n- https://github.com/micromatch/micromatch/commit/03aa8052171e878897eee5d7bb2ae0ae83ec2ade\n- https://advisory.checkmarx.net/advisory/CVE-2024-4067\n- https://github.com/micromatch/micromatch/releases/tag/4.0.8\n- https://github.com/advisories/GHSA-952p-6rrq-rcjv",
+      "created": "2024-05-14T18:30:54.000Z",
+      "id": 1098681,
+      "npm_advisory_id": null,
+      "overview": "The NPM package `micromatch` prior to version 4.0.8 is vulnerable to Regular Expression Denial of Service (ReDoS). The vulnerability occurs in `micromatch.braces()` in `index.js` because the pattern `.*` will greedily match anything. By passing a malicious payload, the pattern matching will keep backtracking to the input while it doesn't find the closing bracket. As the input size increases, the consumption time will also increase until it causes the application to hang or slow down. There was a merged fix but further testing shows the issue persisted prior to https://github.com/micromatch/micromatch/pull/266. This issue should be mitigated by using a safe pattern that won't start backtracking the regular expression due to greedy matching.\n",
+      "reported_by": null,
+      "title": "Regular Expression Denial of Service (ReDoS) in micromatch",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-4067"
+      ],
+      "access": "public",
+      "severity": "moderate",
+      "module_name": "micromatch",
+      "vulnerable_versions": "<4.0.8",
+      "github_advisory_id": "GHSA-952p-6rrq-rcjv",
+      "recommendation": "Upgrade to version 4.0.8 or later",
+      "patched_versions": ">=4.0.8",
+      "updated": "2024-08-28T13:12:27.000Z",
+      "cvss": {
+        "score": 5.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      "cwe": [
+        "CWE-1333"
+      ],
+      "url": "https://github.com/advisories/GHSA-952p-6rrq-rcjv"
+    },
+    "1100223": {
+      "findings": [
+        {
+          "version": "0.19.1",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1",
+            "apps\\payments > webpack-dev-server@3.11.3 > http-proxy-middleware@0.19.1"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-21536\n- https://github.com/chimurai/http-proxy-middleware/commit/0b4274e8cc9e9a2c5a06f35fbf456ccfcebc55a5\n- https://github.com/chimurai/http-proxy-middleware/commit/788b21e4aff38332d6319557d4a5b1b13b1f9a22\n- https://gist.github.com/mhassan1/28be67266d82a53708ed59ce5dc3c94a\n- https://security.snyk.io/vuln/SNYK-JS-HTTPPROXYMIDDLEWARE-8229906\n- https://github.com/advisories/GHSA-c7qv-q95q-8v27",
+      "created": "2024-10-19T06:30:30.000Z",
+      "id": 1100223,
+      "npm_advisory_id": null,
+      "overview": "Versions of the package http-proxy-middleware before 2.0.7, from 3.0.0 and before 3.0.3 are vulnerable to Denial of Service (DoS) due to an UnhandledPromiseRejection error thrown by micromatch. An attacker could kill the Node.js process and crash the server by making requests to certain paths.",
+      "reported_by": null,
+      "title": "Denial of service in http-proxy-middleware",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-21536"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "http-proxy-middleware",
+      "vulnerable_versions": "<2.0.7",
+      "github_advisory_id": "GHSA-c7qv-q95q-8v27",
+      "recommendation": "Upgrade to version 2.0.7 or later",
+      "patched_versions": ">=2.0.7",
+      "updated": "2024-10-22T19:47:42.000Z",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": [
+        "CWE-400"
+      ],
+      "url": "https://github.com/advisories/GHSA-c7qv-q95q-8v27"
+    },
+    "1100560": {
+      "findings": [
+        {
+          "version": "7.2.0",
+          "paths": [
+            "serverless\\cleanup-temp-files > serverless-offline@12.0.4 > jsonpath-plus@7.2.0",
+            "serverless\\generate-reports > serverless-offline@12.0.4 > jsonpath-plus@7.2.0"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-21534\n- https://github.com/JSONPath-Plus/JSONPath/commit/6b2f1b4c234292c75912b790bf7e2d7339d4ccd3\n- https://security.snyk.io/vuln/SNYK-JS-JSONPATHPLUS-7945884\n- https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8185019\n- https://github.com/JSONPath-Plus/JSONPath/issues/226\n- https://github.com/JSONPath-Plus/JSONPath/commit/b70aa713553caf838a63bac923195a5bc541fd72\n- https://github.com/JSONPath-Plus/JSONPath/issues/226#issuecomment-2424230316\n- https://github.com/JSONPath-Plus/JSONPath/compare/v9.0.0...v10.1.0\n- https://github.com/advisories/GHSA-pppg-cpfq-h7wr",
+      "created": "2024-10-11T15:30:32.000Z",
+      "id": 1100560,
+      "npm_advisory_id": null,
+      "overview": "Versions of the package jsonpath-plus before 10.0.7 are vulnerable to Remote Code Execution (RCE) due to improper input sanitization. An attacker can execute aribitrary code on the system by exploiting the unsafe default usage of vm in Node.\n\n**Note:**\n\nThere was an attempt to fix it in version [10.0.0](https://github.com/JSONPath-Plus/JSONPath/commit/6b2f1b4c234292c75912b790bf7e2d7339d4ccd3) but it could still be exploited using [different payloads](https://github.com/JSONPath-Plus/JSONPath/issues/226).",
+      "reported_by": null,
+      "title": "JSONPath Plus Remote Code Execution (RCE) Vulnerability",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-21534"
+      ],
+      "access": "public",
+      "severity": "critical",
+      "module_name": "jsonpath-plus",
+      "vulnerable_versions": "<10.0.7",
+      "github_advisory_id": "GHSA-pppg-cpfq-h7wr",
+      "recommendation": "Upgrade to version 10.0.7 or later",
+      "patched_versions": ">=10.0.7",
+      "updated": "2024-11-18T18:32:11.000Z",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwe": [
+        "CWE-94"
+      ],
+      "url": "https://github.com/advisories/GHSA-pppg-cpfq-h7wr"
+    },
+    "1101851": {
+      "findings": [
+        {
+          "version": "1.1.9",
+          "paths": [
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack-dev-middleware@7.4.2 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\dashboard > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > babel-loader@8.4.1 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > ts-loader@8.4.0 > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > webpack@5.97.1 > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > webpack-cli@4.10.0 > @webpack-cli/serve@1.7.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > webpack-cli@4.10.0 > webpack-dev-server@3.11.3 > ip@1.1.9",
+            "apps\\payments > webpack-dev-server@3.11.3 > bonjour@3.5.0 > multicast-dns@6.2.3 > dns-packet@1.3.4 > ip@1.1.9",
+            "apps\\payments > webpack-dev-server@3.11.3 > ip@1.1.9"
+          ]
+        }
+      ],
+      "found_by": null,
+      "deleted": null,
+      "references": "- https://nvd.nist.gov/vuln/detail/CVE-2024-29415\n- https://github.com/indutny/node-ip/issues/150\n- https://github.com/indutny/node-ip/pull/143\n- https://github.com/indutny/node-ip/pull/144\n- https://security.netapp.com/advisory/ntap-20250117-0010\n- https://github.com/advisories/GHSA-2p57-rm9w-gvfp",
+      "created": "2024-06-02T22:29:29.000Z",
+      "id": 1101851,
+      "npm_advisory_id": null,
+      "overview": "The ip package through 2.0.1 for Node.js might allow SSRF because some IP addresses (such as 127.1, 01200034567, 012.1.2.3, 000:0:0000::01, and ::fFFf:127.0.0.1) are improperly categorized as globally routable via isPublic. NOTE: this issue exists because of an incomplete fix for CVE-2023-42282.",
+      "reported_by": null,
+      "title": "ip SSRF improper categorization in isPublic",
+      "metadata": null,
+      "cves": [
+        "CVE-2024-29415"
+      ],
+      "access": "public",
+      "severity": "high",
+      "module_name": "ip",
+      "vulnerable_versions": "<=2.0.1",
+      "github_advisory_id": "GHSA-2p57-rm9w-gvfp",
+      "recommendation": "None",
+      "patched_versions": "<0.0.0",
+      "updated": "2025-01-17T21:31:39.000Z",
+      "cvss": {
+        "score": 8.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwe": [
+        "CWE-918"
+      ],
+      "url": "https://github.com/advisories/GHSA-2p57-rm9w-gvfp"
+    }
+  },
+  "muted": [],
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 2,
+      "moderate": 4,
+      "high": 8,
+      "critical": 1
+    },
+    "dependencies": 1931,
+    "devDependencies": 0,
+    "optionalDependencies": 0,
+    "totalDependencies": 1931
+  }
+}

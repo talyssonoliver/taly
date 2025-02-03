@@ -1,8 +1,39 @@
 {
 	"compilerOptions": {
-		"module": "commonjs"
+		"target": "ES2022",
+		"module": "ESNext",
+		"lib": ["ES2022", "DOM"],
+		"moduleResolution": "Node",
+		"allowJs": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"types": ["node"],
+		"baseUrl": ".",
+		"paths": {
+			"@taly/*": ["./apps/*", "./backend/*", "./serverless/*", "./shared/*"]
+		},
+		"outDir": "./dist",
+		"rootDir": "."
 	},
-	"exclude": [
-		"node_modules"
-	]
+	"include": [
+		"apps/**/*.ts",
+		"apps/**/*.tsx",
+		"backend/**/*.ts",
+		"serverless/**/*.ts",
+		"shared/**/*.ts"
+	],
+	"exclude": ["node_modules", "dist", "build", "tests"]
 }

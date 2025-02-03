@@ -8,11 +8,12 @@ This directory contains the Payments microfrontend of the application. It is res
   - **components/**: Reusable components specific to the Payments section.
     - `PaymentForm.tsx`: Component for handling payment submissions.
     - `PaymentHistory.tsx`: Component for displaying the history of payments.
+    - `TransactionCard.tsx`: Component for rendering payment transactions.
   - **pages/**: Contains the main pages for the Payments section.
-    - `PaymentsHome.tsx`: Main page for payment management.
-    - `PaymentDetails.tsx`: Page for showing details of a specific payment.
+    - `index.tsx`: Main page for payment management.
+    - `[id].tsx`: Dynamic page for showing details of a specific payment.
   - `main.tsx`: Entry point for the Payments application, setting up routing and rendering the main component.
-  - `app.module.ts`: Defines the application module, importing necessary components and setting up the application structure.
+  - `app.ts`: Defines the application module, importing necessary components and setting up the application structure.
 
 ## Getting Started
 

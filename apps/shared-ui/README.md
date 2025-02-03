@@ -1,5 +1,19 @@
 # microfrontend-app/microfrontend-app/shared/README.md
 
+## Structure
+
+- **components/**: Reusable UI components.
+  - `Button.tsx`
+  - `Modal.tsx`
+- **hooks/**: Custom React hooks.
+  - `useFetch.ts`
+- **utils/**: Utility functions for API calls and common tasks.
+  - `api.ts`
+  - `helpers.ts`
+- **styles/**: Theme and global styles.
+  - `theme.ts`
+  - `globals.css`
+
 # Shared Components Library
 
 This directory contains shared UI components, utilities, and styles that can be used across different microfrontend applications within the project.

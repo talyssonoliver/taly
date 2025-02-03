@@ -12,15 +12,15 @@ This directory contains the booking microfrontend application, which is responsi
     - `BookingHome.tsx`: Main page for booking management.
     - `BookingDetails.tsx`: Page for showing details of a specific booking.
   - `main.tsx`: Entry point for the booking application, setting up routing and rendering the main component.
-  - `app.module.ts`: Defines the application module, importing necessary components and setting up the application structure.
+  - `App.ts`: Defines the application module, importing necessary components and setting up the application structure.
 
 ## Getting Started
 
 To get started with the booking microfrontend, follow these steps:
 
-1. **Install Dependencies**: Run `npm install` in the booking directory to install the necessary dependencies.
-2. **Run the Application**: Use `npm start` to launch the booking application in development mode.
-3. **Build for Production**: Use `npm run build` to create an optimized build for production.
+1. **Install Dependencies**: Run `pnpm install` in the booking directory to install the necessary dependencies.
+2. **Run the Application**: Use `pnpm start` to launch the booking application in development mode.
+3. **Build for Production**: Use `pnpm run build` to create an optimized build for production.
 
 ## Contributing
 

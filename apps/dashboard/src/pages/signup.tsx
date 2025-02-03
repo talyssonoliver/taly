@@ -2,19 +2,25 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const Signup = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+const Signup: React.FC = () => {
+	const [email, setEmail] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
+	const [error, setError] = useState<string | null>(null);
 	const router = useRouter();
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setError(null); // Reset error state
+
 		try {
 			await axios.post("/api/auth/signup", { email, password });
 			router.push("/login");
 		} catch (err) {
-			setError(err.response.data.message);
+			if (axios.isAxiosError(err) && err.response) {
+				setError(err.response.data.message || "Signup failed");
+			} else {
+				setError("An unexpected error occurred");
+			}
 		}
 	};
 
@@ -23,7 +29,7 @@ const Signup = () => {
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
-					<label>Email</label>
+					<label htmlFor="email">Email</label>
 					<input
 						type="email"
 						value={email}
@@ -32,15 +38,16 @@ const Signup = () => {
 					/>
 				</div>
 				<div>
-					<label>Password</label>
+					<label htmlFor="password">Password</label>
 					<input
+						id="password"
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
 				</div>
-				{error && <p>{error}</p>}
+				{error && <p style={{ color: "red" }}>{error}</p>}
 				<button type="submit">Sign Up</button>
 			</form>
 		</div>

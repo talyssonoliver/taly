@@ -9,9 +9,34 @@ The `apps/` directory contains the core microfrontends of the Taly platform. Eac
 ```
 C:\taly\dir-taly\taly\apps
 ├── dashboard/         # Admin panel for salon owners
+│   ├── src/
+│   │   ├── components/   # Reusable dashboard components
+│   │   ├── hooks/        # Custom React hooks
+│   │   ├── services/     # API services for dashboard
+│   │   ├── pages/        # Dashboard pages
+│   │   └── styles/       # Styles and themes
 ├── booking/           # Public booking interface for customers
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── pages/
+│   │   └── styles/
 ├── payments/          # Payment management module
-├── shared-ui/         # Reusable UI components shared across apps
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── pages/
+│   │   └── styles/
+├── shared-ui/          # Reusable UI components, hooks, and utilities
+│   ├── src/
+│   │   ├── components/ 
+│   │   ├── hooks/      
+│   │   ├── utils/      
+│   │   ├── styles/     
+│   │   └── index.ts
+
 ```
 
 ### **1. Dashboard**
@@ -56,6 +81,18 @@ C:\taly\dir-taly\taly\apps
 - **Tech Stack**:
   - Storybook for component documentation.
   - Tailwind CSS for theming.
+
+### 5. Shared Hooks
+
+To simplify API calls and ensure consistency, a shared custom hook `useFetch` is provided in `shared-ui/src/hooks/useFetch.ts`. It handles API requests, manages loading state, and prevents memory leaks.
+
+#### Example usage:
+```tsx
+import { useFetch } from "@hooks/useFetch";
+import { BookingService } from "@services/bookingService";
+
+const { data: bookings, loading, error } = useFetch(BookingService.getAllBookings);
+
 
 ---
 

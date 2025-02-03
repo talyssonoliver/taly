@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+// biome-ignore lint/style/useImportType: <explanation>
+import React from "react";
+import { useState } from 'react';
+
 
 const BookingForm = () => {
     const [customerName, setCustomerName] = useState('');
@@ -6,10 +9,17 @@ const BookingForm = () => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
 
-    const handleSubmit = (e) => {
+    interface BookingFormData {
+        customerName: string;
+        service: string;
+        date: string;
+        time: string;
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Booking submitted:', { customerName, service, date, time });
+        const bookingData: BookingFormData = { customerName, service, date, time };
+        console.log('Booking submitted:', bookingData);
     };
 
     return (
