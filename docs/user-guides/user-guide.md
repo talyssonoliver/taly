@@ -22,12 +22,12 @@ Welcome to Taly! This guide is designed to help users navigate the platform, und
 ## Getting Started
 
 ### **1. Create an Account**
-- Visit [https://taly.com/signup](https://taly.com/signup).
+- Visit [https://taly.dev/signup](https://taly.dev/signup).
 - Choose your role: **Salon Owner** or **Customer**.
 - Provide your email, create a password, and verify your email address.
 
 ### **2. Log In**
-- Go to [https://taly.com/login](https://taly.com/login).
+- Go to [https://taly.dev/login](https://taly.dev/login).
 - Enter your credentials or use the social login options (Google/Facebook).
 
 ### **3. Dashboard Access**
@@ -71,7 +71,7 @@ Once logged in:
 ## For Customers
 
 ### **Booking an Appointment**
-1. Visit the salon’s booking page (e.g., `https://salonname.taly.com`).
+1. Visit the salon’s booking page (e.g., `https://salonname.taly.dev`).
 2. Select a service and a preferred date and time.
 3. Provide your contact details and confirm the booking.
 4. Receive a confirmation via email/SMS.
@@ -95,15 +95,15 @@ Once logged in:
 - Yes. Salon owners can navigate to the `Subscription` section in `Settings` to upgrade or downgrade their plan.
 
 ### **3. How do I contact customer support?**
-- Use the `Help` section in your dashboard or email us at [support@taly.com](mailto:support@taly.com).
+- Use the `Help` section in your dashboard or email us at [support@taly.dev](mailto:support@taly.dev).
 
 ---
 
 ## Contact Support
 
 For additional help, contact our support team:
-- **Email**: [support@taly.com](mailto:support@taly.com)
+- **Email**: [support@taly.dev](mailto:support@taly.dev)
 - **Phone**: +1-800-TALY-SUPPORT
-- **Live Chat**: Available on [https://taly.com](https://taly.com)
+- **Live Chat**: Available on [https://taly.dev](https://taly.dev)
 
 Thank you for using Taly! We’re here to help you grow your salon business effortlessly.

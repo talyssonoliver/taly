@@ -129,5 +129,5 @@ By contributing to Taly, you agree to adhere to our [Code of Conduct](docs/code-
 
 ## Contact
 If you have questions about contributing, feel free to reach out:
-- **Email**: dev-support@taly.com
+- **Email**: dev-support@taly.dev
 - **GitHub Issues**: [https://github.com/talyssonoliver/taly/issues](https://github.com/talyssonoliver/taly/issues)

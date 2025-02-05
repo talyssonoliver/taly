@@ -1,0 +1,47 @@
+﻿{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "lib": ["ES2022", "DOM"],
+        "moduleResolution": "Node",
+        "allowJs": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "paths": {
+            "@apps/*": ["../apps/*"],
+            "@backend/*": ["../backend/*"],
+            "@serverless/*": ["../serverless/*"],
+            "@shared/*": ["../shared/*"],
+            "@tests/*": ["../tests/*"]
+        },
+        "types": ["jest", "node"],
+        "outDir": "./dist",
+        "rootDir": "./"
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "tests/**/*.ts",
+        "jest.config.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build"
+    ]
+}

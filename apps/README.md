@@ -158,5 +158,5 @@ const { data: bookings, loading, error } = useFetch(BookingService.getAllBooking
 ## Contact
 
 For assistance or to report issues:
-- **Email**: dev-support@taly.com
+- **Email**: dev-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

@@ -156,7 +156,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://api.taly.com"
+			"value": "https://api.taly.dev"
 		},
 		{
 			"key": "token",

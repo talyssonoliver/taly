@@ -10,7 +10,7 @@ const nextConfig = {
 		API_BASE_URL: process.env.API_BASE_URL || "http://localhost:4000",
 	},
 	images: {
-		domains: ["cdn.example.com", "images.taly.com"],
+		domains: ["cdn.example.com", "images.taly.dev"],
 		formats: ["image/avif", "image/webp"],
 	},
 	async redirects() {

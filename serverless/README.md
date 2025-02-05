@@ -137,5 +137,5 @@ C:\taly\dir-taly\taly\serverless
 
 ## Contact
 For issues or suggestions regarding serverless functions:
-- **Email**: serverless-team@taly.com
+- **Email**: serverless-team@taly.dev
 - **Slack**: #serverless-functions

@@ -1,6 +1,4 @@
-// biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
-
 
 const Header: React.FC = () => {
 	return (

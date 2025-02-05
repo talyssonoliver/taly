@@ -1,0 +1,70 @@
+/* Global Styles */
+
+:root {
+	--color-primary: #007bff;
+	--color-secondary: #6c757d;
+	--color-success: #28a745;
+	--color-danger: #dc3545;
+	--color-warning: #ffc107;
+	--color-info: #17a2b8;
+	--color-light: #f8f9fa;
+	--color-dark: #343a40;
+
+	--font-main: Roboto, sans-serif;
+	--font-heading: Georgia, serif;
+
+	--spacing-small: 8px;
+	--spacing-medium: 16px;
+	--spacing-large: 24px;
+
+	--breakpoint-mobile: 576px;
+	--breakpoint-tablet: 768px;
+	--breakpoint-desktop: 992px;
+}
+
+body {
+	font-family: var(--font-main);
+	color: var(--color-dark);
+	background-color: var(--color-light);
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-heading);
+	color: var(--color-primary);
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: var(--spacing-medium);
+}
+
+button {
+	font-family: var(--font-main);
+	padding: var(--spacing-small) var(--spacing-medium);
+	border: none;
+	cursor: pointer;
+}
+
+button.primary {
+	background-color: var(--color-primary);
+	color: white;
+}
+
+button.secondary {
+	background-color: var(--color-secondary);
+	color: white;
+}
+
+@media (max-width: var(--breakpoint-tablet)) {
+	.container {
+		padding: var(--spacing-small);
+	}
+}

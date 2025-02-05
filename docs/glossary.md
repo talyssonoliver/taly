@@ -94,5 +94,5 @@ If you’d like to add or update terms:
 
 ## Contact
 For questions or suggestions about the glossary:
-- **Email**: docs-support@taly.com
+- **Email**: docs-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

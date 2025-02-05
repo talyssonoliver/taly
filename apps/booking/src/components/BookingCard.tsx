@@ -1,5 +1,6 @@
 import type React from "react";
-import type { Booking } from "../services/bookingService";
+import type { Booking } from "../../../../shared/types/booking.interface";
+
 
 export interface BookingCardProps {
 	booking: Booking;

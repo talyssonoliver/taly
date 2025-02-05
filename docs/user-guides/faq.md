@@ -15,7 +15,7 @@ Taly is tailored for:
 - **Customers**: Schedule appointments and interact with salons.
 
 ### **3. How do I sign up?**
-To sign up, visit [https://taly.com/signup](https://taly.com/signup) and follow the instructions to create an account. You can choose to sign up as a salon owner or a customer.
+To sign up, visit [https://taly.dev/signup](https://taly.dev/signup) and follow the instructions to create an account. You can choose to sign up as a salon owner or a customer.
 
 ### **4. What browsers are supported?**
 Taly supports the latest versions of:
@@ -110,10 +110,10 @@ Check the following:
 
 ### **18. Who do I contact for technical support?**
 Use the **Help** section in your dashboard or contact our support team at:
-- **Email**: [support@taly.com](mailto:support@taly.com)
+- **Email**: [support@taly.dev](mailto:support@taly.dev)
 - **Phone**: +1-800-TALY-SUPPORT
 
 ---
 
 ## Need Further Help?
-If your question isn’t answered here, please reach out to our support team via email or live chat on [https://taly.com](https://taly.com).
+If your question isn’t answered here, please reach out to our support team via email or live chat on [https://taly.dev](https://taly.dev).

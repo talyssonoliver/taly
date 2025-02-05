@@ -20,20 +20,26 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
-		"types": ["node"],
+		"jsx": "react-jsx",
 		"baseUrl": ".",
 		"paths": {
-			"@taly/*": ["./apps/*", "./backend/*", "./serverless/*", "./shared/*"]
+			"@apps/*": ["apps/*"],
+			"@backend/*": ["backend/*"],
+			"@serverless/*": ["serverless/*"],
+			"@shared/*": ["shared/*"],
+			"@tests/*": ["tests/*"]
 		},
+		"types": ["jest", "node"],
 		"outDir": "./dist",
-		"rootDir": "."
+		"rootDir": "./"
 	},
 	"include": [
 		"apps/**/*.ts",
 		"apps/**/*.tsx",
 		"backend/**/*.ts",
 		"serverless/**/*.ts",
-		"shared/**/*.ts"
+		"shared/**/*.ts",
+		"jest.config.ts"
 	],
-	"exclude": ["node_modules", "dist", "build", "tests"]
+	"exclude": ["node_modules", "dist", "build"]
 }

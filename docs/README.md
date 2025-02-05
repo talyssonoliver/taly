@@ -120,5 +120,5 @@ To contribute to the documentation:
 ## Contact
 
 For questions or suggestions regarding the documentation:
-- **Email**: docs-support@taly.com
+- **Email**: docs-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

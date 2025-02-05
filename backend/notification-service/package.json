@@ -4,8 +4,9 @@
 	"description": "Notification service for Taly project",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"build": "tsc",
+		"start": "nest start",
+		"start:dev": "nest start --watch",
+		"build": "nest build",
 		"test": "jest"
 	},
 	"author": "Talysson Da Silva Oliveira",

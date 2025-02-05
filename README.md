@@ -122,6 +122,6 @@ Taly is licensed under the MIT License. See `LICENSE.md` for more details.
 ## Contact
 
 For questions or support, contact the development team:
-- **Email**: support@taly.com
+- **Email**: support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)
-- **Slack**: Join our [community workspace](https://slack.taly.com)!
+- **Slack**: Join our [community workspace](https://slack.taly.dev)!

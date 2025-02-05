@@ -155,7 +155,7 @@ scrape_configs:
 client_id: your-client-id
 client_secret: your-client-secret
 redirect_uris:
-  - https://taly.com/oauth/callback
+  - https://taly.dev/oauth/callback
 scopes:
   - openid
   - profile
@@ -197,5 +197,5 @@ scopes:
 
 ## Contact
 For DevOps-related questions or issues:
-- **Email**: devops-support@taly.com
+- **Email**: devops-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

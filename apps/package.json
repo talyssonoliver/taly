@@ -1,6 +1,7 @@
 {
 	"name": "microfrontend-app",
 	"version": "1.0.0",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"start": "concurrently \"npm run start --prefix dashboard\" \"npm run start --prefix booking\" \"npm run start --prefix payments\"",
@@ -10,7 +11,7 @@
 	"dependencies": {
 		"@prisma/client": "^6.2.1",
 		"@types/react-dom": "^19.0.3",
-		"concurrently": "^6.0.0",
+		"concurrently": "^6.5.1",
 		"express": "^4.17.1",
 		"next": "^15.1.6",
 		"react": "^19.0.0",

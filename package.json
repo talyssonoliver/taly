@@ -3,20 +3,28 @@
 	"version": "1.0.0",
 	"description": "Monorepo for the Taly CRM platform, managing hair salons with microservices and microfrontends.",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "pnpm run build --recursive",
 		"dev": "pnpm run dev --recursive",
 		"lint": "pnpm run lint --recursive",
-		"test": "pnpm run test --recursive",
+		"test": "jest --config=jest.config.cjs",
 		"format": "pnpm run format --recursive",
 		"clean": "rimraf node_modules .turbo .next dist",
 		"deploy": "pnpm run deploy --recursive",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
+		"@nestjs/cli": "^11.0.2",
+		"@testing-library/jest-dom": "^6.0.0",
+		"@testing-library/react": "^14.3.1",
 		"@types/axios": "^0.14.4",
+		"@types/jest": "29.5.2",
+		"@types/node": "^20.9.0",
 		"@types/react": "^19.0.8",
+		"@types/testing-library__react": "^10.2.0",
 		"husky": "^9.1.7",
+		"jest": "^29.7.0",
 		"lint-staged": "^15.4.3",
 		"prettier": "^3.4.2",
 		"turbo": "^2.4.0"
@@ -57,6 +65,8 @@
 	"dependencies": {
 		"@tanstack/react-query": "^5.66.0",
 		"axios": "^1.4.0",
+		"dayjs": "^1.11.13",
+		"next": "^15.1.6",
 		"react-hot-toast": "^2.5.1",
 		"root": "github:tanstack/react-query"
 	}

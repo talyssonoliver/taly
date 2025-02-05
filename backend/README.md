@@ -163,5 +163,5 @@ Taly’s backend relies heavily on event-driven patterns to ensure seamless comm
 ## Contact
 
 For any backend-related questions or issues:
-- **Email**: backend-support@taly.com
+- **Email**: backend-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

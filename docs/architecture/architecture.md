@@ -143,5 +143,5 @@ The Taly platform is designed with a modern microservices architecture to ensure
 
 ## Contact
 For architectural questions or suggestions, reach out to the engineering team:
-- **Email**: architecture-team@taly.com
+- **Email**: architecture-team@taly.dev
 - **Slack**: #architecture-discussions

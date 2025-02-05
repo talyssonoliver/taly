@@ -1,20 +1,8 @@
-{
+﻿{
+	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "es6",
-		"module": "commonjs",
-		"jsx": "react-jsx",
-		"strict": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"outDir": "./dist",
-		"baseUrl": "./src",
-		"paths": {
-			"*": ["node_modules/*", "*"],
-			"@shared-ui/*": ["../../shared-ui/src/*"],
-			"@shared/*": ["../shared-ui/src/*"]
-		}
+		"outDir": "./dist"
 	},
-	"include": ["src/**/*"],
+	"include": ["./src"],
 	"exclude": ["node_modules", "dist"]
 }

@@ -1,12 +1,44 @@
-{
+﻿{
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es6",
+		"target": "ES2022",
+		"module": "ESNext",
+		"lib": ["ES2022", "DOM"],
+		"moduleResolution": "Node",
+		"allowJs": true,
 		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"forceConsistentCasingInFileNames": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"outDir": "./dist"
+		"resolveJsonModule": true,
+		"jsx": "react-jsx",
+		"baseUrl": ".",
+		"paths": {
+			"@apps/*": ["../apps/*"],
+			"@backend/*": ["../backend/*"],
+			"@serverless/*": ["../serverless/*"],
+			"@shared/*": ["../shared/*"],
+			"@tests/*": ["../tests/*"]
+		},
+		"types": ["jest", "node"],
+		"outDir": "./dist",
+		"rootDir": "../../"
 	},
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules", "**/*.spec.ts"]
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"../../tests/**/*.ts", 
+		"../../tests/**/*.tsx",
+		"jest.config.ts"
+	],
+	"exclude": ["node_modules", "dist", "build"]
 }

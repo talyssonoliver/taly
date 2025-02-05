@@ -73,5 +73,5 @@ C:\taly\dir-taly\taly\experiments
 
 ## Contact
 For questions about experiments or suggestions for new ideas, reach out to:
-- **Email**: experiments@taly.com
+- **Email**: experiments@taly.dev
 - **Slack**: #experiments

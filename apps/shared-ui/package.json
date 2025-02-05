@@ -1,6 +1,7 @@
 {
 	"name": "@taly/shared-ui",
 	"version": "1.0.0",
+	"type": "module",
 	"description": "Reusable UI components for the Taly platform",
 	"private": true,
 	"scripts": {
@@ -8,7 +9,7 @@
 		"build": "rollup -c",
 		"lint": "eslint . --ext .ts,.tsx",
 		"format": "prettier --write .",
-		"test": "jest --config=jest.config.js",
+		"test": "jest --config=jest.config.cjs",
 		"test:watch": "jest --watch",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

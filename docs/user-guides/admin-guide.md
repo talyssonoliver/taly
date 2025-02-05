@@ -21,12 +21,12 @@ This guide provides detailed instructions for salon owners and administrators to
 ## Getting Started
 
 ### **1. Create an Admin Account**
-1. Visit [https://taly.com/signup](https://taly.com/signup).
+1. Visit [https://taly.dev/signup](https://taly.dev/signup).
 2. Select the option to create a **Salon Owner** account.
 3. Fill in your business details and verify your email address.
 
 ### **2. Log In to Your Dashboard**
-1. Navigate to [https://taly.com/login](https://taly.com/login).
+1. Navigate to [https://taly.dev/login](https://taly.dev/login).
 2. Enter your admin credentials to access the dashboard.
 
 ---
@@ -153,6 +153,6 @@ The dashboard is your central hub for managing your salon operations. Key sectio
 ## Contact Support
 
 For assistance, contact our support team:
-- **Email**: [support@taly.com](mailto:support@taly.com)
+- **Email**: [support@taly.dev](mailto:support@taly.dev)
 - **Phone**: +1-800-TALY-ADMIN
-- **Live Chat**: Available on [https://taly.com](https://taly.com)
+- **Live Chat**: Available on [https://taly.dev](https://taly.dev)

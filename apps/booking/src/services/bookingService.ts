@@ -1,12 +1,5 @@
 import axios from "axios";
-
-export interface Booking {
-	id: string;
-	customerName: string;
-	service: string;
-	date: string;
-	status: "confirmed" | "pending" | "canceled";
-}
+import type { Booking } from "../../../../shared/types/booking.interface";
 
 const API_URL = "http://localhost:3000/api/bookings";
 

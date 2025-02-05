@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
 
-const queryClient = new QueryClient();
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+	const queryClient = useMemo(() => new QueryClient(), []);
 
-function App({ Component, pageProps }: AppProps) {
 	useEffect(() => {
 		console.log("Booking Microfrontend Loaded");
 	}, []);
@@ -27,6 +27,6 @@ function App({ Component, pageProps }: AppProps) {
 			<Toaster position="top-right" />
 		</QueryClientProvider>
 	);
-}
+};
 
 export default App;
