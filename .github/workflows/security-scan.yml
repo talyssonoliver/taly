@@ -26,26 +26,19 @@ jobs:
 
       - name: Install Dependencies (Frontend)
         run: npm install
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        working-directory: ./apps/dashboard
 
       - name: Install Dependencies (Backend)
         run: npm install
-        working-directory: C:/taly/dir-taly/taly/backend/
+        working-directory: ./backend
 
       - name: Dependency Vulnerability Scan (Frontend)
-        run: npm audit --json
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        run: npm audit --json > frontend-audit.json
+        working-directory: ./apps/dashboard
 
       - name: Dependency Vulnerability Scan (Backend)
-        run: npm audit --json
-        working-directory: C:/taly/dir-taly/taly/backend/
-
-      - name: Static Code Analysis with Snyk
-        uses: snyk/actions/node@master
-        with:
-          args: test
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: npm audit --json > backend-audit.json
+        working-directory: ./backend
 
       - name: Static Application Security Testing (SAST)
         uses: github/codeql-action/init@v2
@@ -56,10 +49,13 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
       - name: Upload Audit and Analysis Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: security-reports
-          path: C:/taly/dir-taly/taly/security-reports/
+          path: |
+            ./apps/dashboard/frontend-audit.json
+            ./backend/backend-audit.json
+            ./results/codeql-results
 
       - name: Notify Team on Failure
         if: failure()

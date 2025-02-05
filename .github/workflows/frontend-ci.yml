@@ -39,7 +39,7 @@ jobs:
         working-directory: C:/taly/dir-taly/taly/apps/dashboard/
 
       - name: Upload Build Artifacts (Optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dashboard-build
           path: C:/taly/dir-taly/taly/apps/dashboard/.next/
