@@ -22,33 +22,39 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.0
+
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
         working-directory: backend/
 
       - name: Setup Prisma
-        run: npm install prisma@latest --save-dev
+        run: pnpm add -D prisma@latest
         working-directory: backend/
 
       - name: Run Migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx prisma migrate deploy
+        run: pnpm prisma migrate deploy
         working-directory: backend/
 
-      - name: Test Database Schema (Optional)
+      - name: Validate Database Schema (Optional)
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx prisma validate
+        run: pnpm prisma validate
         working-directory: backend/
 
-      - name: Seed Database (Optional for Dev/Stage Environments)
+      - name: Seed Database (Optional for Dev/Stage)
         if: github.ref != 'refs/heads/main'
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: node prisma/seed.js
+        run: node prisma/seed.ts
         working-directory: backend/
 
-      - name: Notify Team (Optional)
+      - name: Notify Team on Failure
         if: failure()
-        run: echo "Database migration failed. Please investigate."
+        run: |
+          echo "⚠️ Database migration failed. Check logs: ${{ github.run_id }}"

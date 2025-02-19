@@ -1,6 +1,6 @@
 packages:
-  - 'apps/*'
-  - 'backend/*'
-  - 'serverless/*'
-  - 'shared'
-  - 'devops'
+  - "apps/*"
+  - "backend/*"
+  - "serverless/*"
+  - "shared"
+  - "devops"

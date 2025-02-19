@@ -7,7 +7,9 @@ We’re excited that you’re interested in contributing to Taly! Whether you’
 ## How to Contribute
 
 ### **1. Fork the Repository**
+
 Start by creating your own fork of the Taly repository:
+
 1. Navigate to the Taly GitHub repository: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)
 2. Click on the **Fork** button in the upper right corner.
 3. Clone your forked repository to your local machine:
@@ -19,6 +21,7 @@ Start by creating your own fork of the Taly repository:
 ---
 
 ### **2. Set Up Your Environment**
+
 1. Install project dependencies using `pnpm`:
    ```bash
    pnpm install
@@ -35,11 +38,15 @@ Start by creating your own fork of the Taly repository:
 ---
 
 ### **3. Create a New Branch**
+
 Create a branch to isolate your changes:
+
 ```bash
 git checkout -b feature/your-feature-name
 ```
+
 Use descriptive branch names, such as:
+
 - `feature/add-booking-calendar`
 - `fix/payment-api-error`
 - `docs/update-readme`
@@ -47,6 +54,7 @@ Use descriptive branch names, such as:
 ---
 
 ### **4. Make Your Changes**
+
 1. Write clean and well-documented code following the project’s [coding standards](docs/coding-guidelines.md).
 2. Ensure your changes do not break existing functionality by running tests:
    ```bash
@@ -58,7 +66,9 @@ Use descriptive branch names, such as:
 ---
 
 ### **5. Commit Your Changes**
+
 Write a clear and descriptive commit message using [Conventional Commits](https://www.conventionalcommits.org/):
+
 ```bash
 feat(auth): add Google OAuth integration
 
@@ -68,6 +78,7 @@ feat(auth): add Google OAuth integration
 ```
 
 Use prefixes such as:
+
 - **feat**: New features.
 - **fix**: Bug fixes.
 - **docs**: Documentation updates.
@@ -78,6 +89,7 @@ Use prefixes such as:
 ---
 
 ### **6. Push and Open a Pull Request**
+
 1. Push your branch to your fork:
    ```bash
    git push origin feature/your-feature-name
@@ -88,6 +100,7 @@ Use prefixes such as:
    - Provide a clear description of your changes and reference related issues if applicable.
 
 Example PR description:
+
 ```
 ### Description
 Added Google OAuth integration to the authentication service, allowing users to log in using their Google accounts.
@@ -108,6 +121,7 @@ Added Google OAuth integration to the authentication service, allowing users to 
 ---
 
 ### **7. Code Review Process**
+
 1. The Taly team will review your pull request.
 2. Be prepared to make updates based on feedback.
 3. Once approved, your changes will be merged into the `main` branch.
@@ -115,6 +129,7 @@ Added Google OAuth integration to the authentication service, allowing users to 
 ---
 
 ## Contribution Guidelines
+
 - Ensure code quality by following the [coding standards](docs/coding-guidelines.md).
 - Add tests for all new functionality.
 - Respect existing architecture and design patterns.
@@ -123,11 +138,14 @@ Added Google OAuth integration to the authentication service, allowing users to 
 ---
 
 ## Code of Conduct
+
 By contributing to Taly, you agree to adhere to our [Code of Conduct](docs/code-of-conduct.md). We value inclusivity and respect among all contributors.
 
 ---
 
 ## Contact
+
 If you have questions about contributing, feel free to reach out:
+
 - **Email**: dev-support@taly.dev
 - **GitHub Issues**: [https://github.com/talyssonoliver/taly/issues](https://github.com/talyssonoliver/taly/issues)

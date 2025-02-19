@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react";
-import { BookingService, type Booking } from "../services/bookingService";
+import { BookingService } from "../services/bookingService";
+import type { Booking } from "../../../../shared/types/booking.interface";
 
 const useBookings = () => {
-	const [bookings, setBookings] = useState<Booking[]>([]);
-	const [loading, setLoading] = useState(true);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		BookingService.getAllBookings()
-			.then((data: Booking[]) => {
-				setBookings(data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error("Cannot find bookings:", error);
-				setLoading(false);
-			});
-	}, []);
+  useEffect(() => {
+    BookingService.getAllBookings()
+      .then((data: Booking[]) => {
+        setBookings(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Cannot find bookings:", error);
+        setLoading(false);
+      });
+  }, []);
 
-	return { bookings, loading };
+  return { bookings, loading };
 };
 
 export default useBookings;

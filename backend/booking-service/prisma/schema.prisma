@@ -1,4 +1,3 @@
-// booking-service/prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,22 +9,44 @@ datasource db {
 }
 
 model Booking {
-  id              String   @id @default(uuid())
-  userId          String
-  salonId         String
-  bookingDateTime DateTime
-  serviceDetails  String
+  id         String        @id @default(uuid())
+  customerId String
+  serviceId  String
+  startTime  DateTime
+  endTime    DateTime
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id])
-  salon  Salon  @relation(fields: [salonId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id])
+  service  Service  @relation(fields: [serviceId], references: [id])
 }
 
-model User {
-  id       String    @id @default(uuid())
-  bookings Booking[]
+model Customer {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  phone     String?
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
-model Salon {
-  id       String    @id @default(uuid())
-  bookings Booking[]
+model Service {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  price       Decimal
+  duration    Int // duração em minutos
+  isActive    Boolean   @default(true)
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
 }

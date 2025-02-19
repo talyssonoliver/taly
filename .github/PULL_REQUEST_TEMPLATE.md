@@ -26,8 +26,6 @@ References: #[issue_number]
 <details>
 <summary>Expand to view screenshots</summary>
 
-
-
 </details>
 
 ## Checklist

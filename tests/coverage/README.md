@@ -111,12 +111,12 @@ Lines: 90%
 These thresholds are configured in the jest.config.js file:
 
 coverageThreshold: {
-  global: {
-    statements: 90,
-    branches: 85,
-    functions: 90,
-    lines: 90,
-  },
+global: {
+statements: 90,
+branches: 85,
+functions: 90,
+lines: 90,
+},
 },
 
 5. Analyzing Coverage Reports
@@ -188,4 +188,3 @@ Inspect logs and stack traces for errors in the test setup or execution.
 8. Conclusion
 
 Maintaining high test coverage is essential for ensuring the reliability and quality of the Taly CRM platform. This document serves as a guide for generating, analyzing, and improving coverage reports. By adhering to these practices, the development team can identify and address potential issues early, ensuring a robust and maintainable system.
-

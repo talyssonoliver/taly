@@ -8,7 +8,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 3 * * *' # Executes daily at 03:00 UTC
+    - cron: "0 3 * * *" # D 03:00 UTC
 
 jobs:
   security-scan:
@@ -24,21 +24,26 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.0
+
       - name: Install Dependencies (Frontend)
-        run: npm install
-        working-directory: ./apps/dashboard
+        run: pnpm install
+        working-directory: ./apps/dashboard/
 
       - name: Install Dependencies (Backend)
-        run: npm install
-        working-directory: ./backend
+        run: pnpm install
+        working-directory: ./backend/
 
       - name: Dependency Vulnerability Scan (Frontend)
-        run: npm audit --json > frontend-audit.json
-        working-directory: ./apps/dashboard
+        run: pnpm audit --json > frontend-audit.json
+        working-directory: ./apps/dashboard/
 
       - name: Dependency Vulnerability Scan (Backend)
-        run: npm audit --json > backend-audit.json
-        working-directory: ./backend
+        run: pnpm audit --json > backend-audit.json
+        working-directory: ./backend/
 
       - name: Static Application Security Testing (SAST)
         uses: github/codeql-action/init@v2
@@ -59,4 +64,4 @@ jobs:
 
       - name: Notify Team on Failure
         if: failure()
-        run: echo "Security scan failed. Please investigate immediately."
+        run: echo "🚨 Security scan failed. Please check reports!"

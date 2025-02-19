@@ -7,43 +7,40 @@ import Spinner from "../../../shared-ui/src/components/Spinner";
 import { ErrorMessage } from "../../../shared-ui/src/components/ErrorMessage";
 import type { Booking } from "../../../../shared/types/booking.interface";
 
-
-
-
 const BookingPage = () => {
-	const router = useRouter();
-	const { id } = router.query;
-	const [booking, setBooking] = useState<Booking | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { id } = router.query;
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		if (!id) return;
+  useEffect(() => {
+    if (!id) return;
 
-		const fetchBooking = async () => {
-			try {
-				setLoading(true);
-				const data = await BookingService.getBookingById(id as string);
-				setBooking(data);
-			} catch (err) {
-				setError("Failed to load booking details. Please try again later.");
-			} finally {
-				setLoading(false);
-			}
-		};
+    const fetchBooking = async () => {
+      try {
+        setLoading(true);
+        const data = await BookingService.getBookingById(id as string);
+        setBooking(data);
+      } catch (err) {
+        setError("Failed to load booking details. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		fetchBooking();
-	}, [id]);
+    fetchBooking();
+  }, [id]);
 
-	if (loading) return <Spinner />;
-	if (error) return <ErrorMessage message={error} />;
-	if (!booking) return <ErrorMessage message="Booking not found." />;
+  if (loading) return <Spinner />;
+  if (error) return <ErrorMessage message={error} />;
+  if (!booking) return <ErrorMessage message="Booking not found." />;
 
-	return (
-		<PublicLayout>
-			<BookingDetails booking={booking} />
-		</PublicLayout>
-	);
+  return (
+    <PublicLayout>
+      <BookingDetails booking={booking} />
+    </PublicLayout>
+  );
 };
 
 export default BookingPage;

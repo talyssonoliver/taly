@@ -1,28 +1,34 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"lib": ["DOM", "ESNext"],
-		"strict": true,
-		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "Node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"baseUrl": ".",
-		"paths": {
-			"@apps/*": ["apps/*"],
-			"@booking/*": ["apps/booking/*"],
-			"@dashboard/*": ["apps/dashboard/*"],
-			"@payments/*": ["apps/payments/*"],
-			"@shared/*": ["shared/*"],
-			"@shared-ui/*": ["apps/shared-ui/*"]
-		},
-		"noEmit": true,
-		"jsx": "react-jsx"
-	},
-	"include": ["apps/**/*", "shared/**/*"],
-	"exclude": ["node_modules", "dist", "build"]
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": "../..",
+    "paths": {
+      "@apps/*": ["apps/*"],
+      "@booking/*": ["apps/booking/*"],
+      "@dashboard/*": ["apps/dashboard/*"],
+      "@payments/*": ["apps/payments/*"],
+      "@shared/*": ["shared/*"],
+      "@shared-ui/*": ["apps/shared-ui/*"]
+    },
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "incremental": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "shared/**/*.ts",
+    "shared/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "apps/**/node_modules"
+  ]
 }

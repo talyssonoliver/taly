@@ -6,30 +6,30 @@ import type { NotificationService } from "../integrations/notification.service";
 
 @Injectable()
 export class AuthService {
-	constructor(
-		private readonly authRepository: AuthRepository,
-		private readonly notificationService: NotificationService,
-	) {}
+  constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly notificationService: NotificationService
+  ) {}
 
-	async signup(signupDto: SignupDto): Promise<void> {
-		const { name, email, password } = signupDto;
+  async signup(signupDto: SignupDto): Promise<void> {
+    const { name, email, password } = signupDto;
 
-		const userExists = await this.authRepository.findByEmail(email);
-		if (userExists) {
-			throw new BadRequestException("Email already in use");
-		}
+    const userExists = await this.authRepository.findByEmail(email);
+    if (userExists) {
+      throw new BadRequestException("Email already in use");
+    }
 
-		const passwordHash = await hashPassword(password);
-		const newUser = await this.authRepository.createUser({
-			name,
-			email,
-			passwordHash,
-		});
+    const passwordHash = await hashPassword(password);
+    const newUser = await this.authRepository.createUser({
+      name,
+      email,
+      passwordHash,
+    });
 
-		await this.notificationService.sendEmail({
-			to: email,
-			subject: "Confirm your email",
-			body: `Hello ${name}, please confirm your email.`,
-		});
-	}
+    await this.notificationService.sendEmail({
+      to: email,
+      subject: "Confirm your email",
+      body: `Hello ${name}, please confirm your email.`,
+    });
+  }
 }

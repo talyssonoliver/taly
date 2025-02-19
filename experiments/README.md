@@ -1,6 +1,7 @@
 # Experiments Directory - Purpose and Results
 
 ## Overview
+
 The `experiments/` directory is dedicated to prototyping, testing, and validating new ideas and technologies for the Taly platform. It serves as a sandbox environment where concepts can be explored before integrating them into the main codebase.
 
 ---
@@ -28,6 +29,7 @@ C:\taly\dir-taly\taly\experiments
 ## How to Use
 
 ### **For Prototyping**
+
 - Create a new subdirectory with a descriptive name (e.g., `poc-new-feature`).
 - Include necessary files, scripts, and documentation in the directory.
 - Use README files to outline:
@@ -36,6 +38,7 @@ C:\taly\dir-taly\taly\experiments
   - Outcomes and insights.
 
 ### **For Technology Evaluations**
+
 - Compare multiple tools by creating separate subdirectories.
 - Document criteria such as:
   - Ease of use
@@ -43,6 +46,7 @@ C:\taly\dir-taly\taly\experiments
   - Compatibility with the Taly platform
 
 ### **For Sharing Results**
+
 - Consolidate findings in a well-structured report.
 - Include diagrams, metrics, or visualizations to support conclusions.
 
@@ -51,11 +55,13 @@ C:\taly\dir-taly\taly\experiments
 ## Completed Experiments
 
 ### **Proof of Concept 1: Event Bus Integration**
+
 - **Goal**: Test RabbitMQ vs. Kafka for asynchronous communication.
 - **Outcome**: RabbitMQ was chosen for its simplicity and suitability for current scale.
 - **Details**: See `experiments/poc-1/` for configuration and benchmarks.
 
 ### **Proof of Concept 2: Serverless Functions**
+
 - **Goal**: Evaluate AWS Lambda for processing notifications.
 - **Outcome**: AWS Lambda demonstrated cost efficiency but had limitations in cold start times.
 - **Details**: See `experiments/poc-2/` for implementation notes.
@@ -72,6 +78,8 @@ C:\taly\dir-taly\taly\experiments
 ---
 
 ## Contact
+
 For questions about experiments or suggestions for new ideas, reach out to:
+
 - **Email**: experiments@taly.dev
 - **Slack**: #experiments

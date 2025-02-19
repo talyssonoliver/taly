@@ -1,9 +1,11 @@
 # Payment API Documentation
 
 ## Overview
+
 The Payment API handles payment processing, transaction history, and refund management for the Taly CRM platform. It provides endpoints for processing payments, retrieving transaction details, and handling refunds securely.
 
 ## Base URL
+
 ```
 https://api.taly.dev/payment
 ```
@@ -13,11 +15,13 @@ https://api.taly.dev/payment
 ## **1. Payment Processing**
 
 ### **1.1 Initiate a Payment**
+
 **Endpoint:** `POST /payment/charge`
 
 **Description:** Processes a new payment for a service or booking.
 
 **Request Body:**
+
 ```json
 {
   "userId": 1,
@@ -34,6 +38,7 @@ https://api.taly.dev/payment
 ```
 
 **Response:**
+
 ```json
 {
   "transactionId": 2001,
@@ -45,6 +50,7 @@ https://api.taly.dev/payment
 ```
 
 **Errors:**
+
 - `400 Bad Request` – Invalid payment data.
 - `402 Payment Required` – Payment declined.
 - `404 Not Found` – User or booking not found.
@@ -52,11 +58,13 @@ https://api.taly.dev/payment
 ---
 
 ### **1.2 Get Payment Details**
+
 **Endpoint:** `GET /payment/{transactionId}`
 
 **Description:** Retrieves details of a specific payment transaction.
 
 **Response:**
+
 ```json
 {
   "transactionId": 2001,
@@ -71,16 +79,19 @@ https://api.taly.dev/payment
 ```
 
 **Errors:**
+
 - `404 Not Found` – Transaction not found.
 
 ---
 
 ### **1.3 List User Payments**
+
 **Endpoint:** `GET /payment/user/{userId}`
 
 **Description:** Retrieves all payments made by a specific user.
 
 **Response:**
+
 ```json
 [
   {
@@ -99,6 +110,7 @@ https://api.taly.dev/payment
 ```
 
 **Errors:**
+
 - `404 Not Found` – No transactions found for the user.
 
 ---
@@ -106,11 +118,13 @@ https://api.taly.dev/payment
 ## **2. Refund Management**
 
 ### **2.1 Request a Refund**
+
 **Endpoint:** `POST /payment/refund`
 
 **Description:** Initiates a refund for a completed payment.
 
 **Request Body:**
+
 ```json
 {
   "transactionId": 2001,
@@ -119,6 +133,7 @@ https://api.taly.dev/payment
 ```
 
 **Response:**
+
 ```json
 {
   "refundId": 5001,
@@ -129,17 +144,20 @@ https://api.taly.dev/payment
 ```
 
 **Errors:**
+
 - `400 Bad Request` – Invalid refund request.
 - `404 Not Found` – Transaction not found or not eligible for refund.
 
 ---
 
 ### **2.2 Get Refund Status**
+
 **Endpoint:** `GET /payment/refund/{refundId}`
 
 **Description:** Retrieves the status of a refund request.
 
 **Response:**
+
 ```json
 {
   "refundId": 5001,
@@ -150,11 +168,13 @@ https://api.taly.dev/payment
 ```
 
 **Errors:**
+
 - `404 Not Found` – Refund request not found.
 
 ---
 
 ## **3. Security & Authentication**
+
 - **All requests require JSON Web Token (JWT)** for authentication.
 - **Use the `Authorization` header for authentication**:
   ```
@@ -166,9 +186,9 @@ https://api.taly.dev/payment
 ---
 
 ## **Contact & Support**
+
 For any issues, please contact the API support team at **support@taly.dev** or check the documentation at [Taly API Docs](https://api.taly.dev/docs).
 
 ---
 
 _Last updated: {{DATE}}_
-

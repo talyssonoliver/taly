@@ -1,5 +1,5 @@
 // biome-ignore lint/style/useImportType: <explanation>
-import React from 'react';
+import React from "react";
 
 interface ButtonProps {
   label: string;
@@ -8,9 +8,15 @@ interface ButtonProps {
   className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, className = '' }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  disabled = false,
+  className = "",
+}) => {
   return (
-    <button type="button"
+    <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={`btn ${className}`}

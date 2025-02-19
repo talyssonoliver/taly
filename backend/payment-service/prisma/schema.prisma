@@ -1,4 +1,3 @@
-// payment-service/prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,33 +8,50 @@ datasource db {
   directUrl = env("DATABASE_DIRECT_URL")
 }
 
-model Booking {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // Add other fields as needed
-
-  Payment Payment[]
-}
-
-
-model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  payments  Payment[]
-}
-
 model Payment {
-  id         String   @id @default(uuid())
-  userId     String
-  bookingId  String?
-  amount     Float
-  currency   String
-  status     String   // e.g., "pending", "completed", "refunded"
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String        @id @default(uuid())
+  bookingId     String?
+  customerId    String
+  amount        Decimal       @default(0.00)
+  currency      String
+  status        PaymentStatus @default(PENDING)
+  paymentMethod PaymentMethod
+  transactionId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
-  User       User     @relation(fields: [userId], references: [id])
-  Booking    Booking? @relation(fields: [bookingId], references: [id])
+  booking  Booking? @relation(fields: [bookingId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id])
+}
+
+model Booking {
+  id        String    @id @default(uuid())
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Customer {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+  STRIPE
+  PIX
+  CASH
 }

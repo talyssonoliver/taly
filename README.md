@@ -1,37 +1,44 @@
-# Taly - Salon Management SaaS Platform
+# Taly - Company Management SaaS Platform
 
 ## Overview
-Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for salon owners to streamline their business operations, manage appointments, handle payments, and gain insights through advanced analytics. Built with scalability, flexibility, and user-centric design at its core, Taly empowers salon owners to enhance customer satisfaction while optimizing operational efficiency.
+
+Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for company owners to streamline their business operations, manage appointments, handle payments, and gain insights through advanced analytics. Built with scalability, flexibility, and user-centric design at its core, Taly empowers company owners to enhance customer satisfaction while optimizing operational efficiency.
 
 ---
 
 ## Key Features
 
 ### **1. Appointment Scheduling**
+
 - User-friendly booking system with calendar integration.
 - Automated reminders via SMS and email to reduce no-shows.
 - Role-based access for staff to manage schedules efficiently.
 
 ### **2. Payment Processing**
+
 - Secure and seamless payment integration via Stripe and PayPal.
 - Automatic fee calculation based on subscription plans.
 - Detailed transaction history and refund support.
 
 ### **3. Subscription Plans**
+
 - **Free Plan**: Basic features with limited bookings.
 - **Pro Plan**: Advanced features with increased booking limits and dashboard access.
 - **Premium Plan**: Unlimited bookings, custom analytics, and priority support.
 
 ### **4. Custom Website**
-- Personalized website for salons to showcase services.
+
+- Personalized website for companies to showcase services.
 - Integrated booking functionality with domain customization (Pro & Premium plans).
 
 ### **5. Advanced Dashboard**
+
 - Real-time metrics on bookings, payments, and customer interactions.
 - Exportable reports in PDF/Excel formats.
 - Interactive charts and graphs powered by modern data visualization tools.
 
 ### **6. Notifications**
+
 - Multi-channel notifications for booking confirmations, reminders, and payment receipts.
 - Integration with Twilio (SMS) and Amazon SES (email).
 
@@ -40,16 +47,19 @@ Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for salon o
 ## Technology Stack
 
 ### **Frontend**
+
 - **Framework**: Next.js (React.js) with server-side rendering (SSR).
 - **UI**: Tailwind CSS and Material-UI for responsive design.
 - **State Management**: Redux Toolkit and React Query.
 
 ### **Backend**
+
 - **Framework**: NestJS (Node.js).
 - **Database**: PostgreSQL for relational data, Redis for caching.
 - **Authentication**: OAuth 2.0 and JWT.
 
 ### **DevOps**
+
 - **Orchestration**: Kubernetes for containerized microservices.
 - **CI/CD**: GitHub Actions for automated pipelines.
 - **Hosting**: AWS (EKS for backend, S3/CloudFront for frontend).
@@ -57,16 +67,17 @@ Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for salon o
 ---
 
 ## Project Structure
+
 ```
 C:\taly\dir-taly\taly
 ├── apps/
-│   ├── dashboard/         # Admin panel for salon owners
+│   ├── dashboard/         # Admin panel for company owners
 │   ├── booking/           # Public booking interface
 │   ├── payments/          # Payment management module
 │   └── shared-ui/         # Reusable components
 ├── backend/
 │   ├── auth-service/      # Authentication and authorization
-│   ├── user-service/      # User and salon profile management
+│   ├── user-service/      # User and company profile management
 │   ├── booking-service/   # Appointment scheduling
 │   ├── payment-service/   # Payment processing
 │   └── notification-service/ # Notifications (SMS/Email)
@@ -99,10 +110,12 @@ We welcome contributions to Taly! Here's how you can get started:
 ## Deployment
 
 1. **Prerequisites**:
+
    - Docker and Docker Compose installed.
    - Access to AWS credentials for infrastructure setup.
 
 2. **Run Locally**:
+
    ```bash
    pnpm run dev
    ```
@@ -122,6 +135,7 @@ Taly is licensed under the MIT License. See `LICENSE.md` for more details.
 ## Contact
 
 For questions or support, contact the development team:
+
 - **Email**: support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)
 - **Slack**: Join our [community workspace](https://slack.taly.dev)!

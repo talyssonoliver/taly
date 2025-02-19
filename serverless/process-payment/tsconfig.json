@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/serverless/process-payment",
+    "rootDir": ".",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@payment-utils/*": ["./utils/*"]
+    }
+  },
+  "include": ["handler.ts", "utils/**/*.ts"],
+  "exclude": ["node_modules", "../../dist", "**/*.test.ts"]
+}

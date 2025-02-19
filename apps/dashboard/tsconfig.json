@@ -1,8 +1,11 @@
 ﻿{
-	"extends": "../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "./dist"
-	},
-	"include": ["./src"],
-	"exclude": ["node_modules", "dist"]
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/apps/dashboard",
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "../../dist", "**/*.test.ts", "**/*.test.tsx"]
 }

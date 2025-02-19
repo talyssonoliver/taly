@@ -1,15 +1,20 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { SignupSchema, type SignupDto } from '../../../../shared/dto/signup.dto';
-import type { AuthService } from '../services/auth.service';
+import { Body, Controller, Post } from "@nestjs/common";
+import {
+  SignupSchema,
+  type SignupDto,
+} from "../../../../shared/dto/signup.dto";
+import type { AuthService } from "../services/auth.service";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signup')
-  async signup(@Body() body: SignupDto): Promise<{ message: string; }> {
-    const signupDto: SignupDto = SignupSchema.parse(body); 
+  @Post("signup")
+  async signup(@Body() body: SignupDto): Promise<{ message: string }> {
+    const signupDto: SignupDto = SignupSchema.parse(body);
     await this.authService.signup(signupDto);
-    return { message: 'User registered successfully. Please verify your email.' };
+    return {
+      message: "User registered successfully. Please verify your email.",
+    };
   }
 }

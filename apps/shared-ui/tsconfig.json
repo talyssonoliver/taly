@@ -1,8 +1,19 @@
 ﻿{
-	"extends": "../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "./dist"
-	},
-	"include": ["./src"],
-	"exclude": ["node_modules", "dist"]
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/apps/shared-ui",
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "../../dist",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts"
+  ]
 }

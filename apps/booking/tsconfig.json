@@ -1,15 +1,15 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "../../dist/apps/booking",
     "incremental": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["jest", "node"],
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
   },
-  "include": [
-    "./src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "../../dist", "**/*.test.ts", "**/*.test.tsx"]
 }

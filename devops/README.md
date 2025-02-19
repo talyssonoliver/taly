@@ -1,11 +1,13 @@
 # Taly DevOps - Infrastructure and Automation
 
 ## Overview
+
 The `devops/` directory contains all infrastructure and automation configurations for deploying, managing, and monitoring the Taly platform. It ensures a streamlined process for building, testing, and deploying the system across multiple environments with robust CI/CD pipelines, container orchestration, and cloud resource management.
 
 ---
 
 ## Directory Structure
+
 ```
 C:\taly\dir-taly\taly\devops
 ├── ci-cd/               # Continuous Integration and Deployment pipelines
@@ -22,6 +24,7 @@ C:\taly\dir-taly\taly\devops
 ## Key Components
 
 ### **1. CI/CD (Continuous Integration and Deployment)**
+
 - **Location**: `ci-cd/`
 - **Description**: Contains YAML pipelines for automating builds, tests, and deployments using GitHub Actions.
 - **Features**:
@@ -31,6 +34,7 @@ C:\taly\dir-taly\taly\devops
   - Nightly builds for testing and quality assurance.
 
 **Example Workflow**:
+
 ```yaml
 name: Backend CI/CD Pipeline
 on:
@@ -45,7 +49,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
       - run: pnpm install
       - run: pnpm test
       - run: pnpm build
@@ -60,6 +64,7 @@ jobs:
 ---
 
 ### **2. Kubernetes (K8s)**
+
 - **Location**: `k8s/`
 - **Description**: Manifests for deploying the Taly microservices to a Kubernetes cluster.
 - **Key Files**:
@@ -69,6 +74,7 @@ jobs:
   - `secrets.yml`: Manages sensitive data.
 
 **Example Deployment Manifest**:
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -85,18 +91,19 @@ spec:
         app: auth-service
     spec:
       containers:
-      - name: auth-service
-        image: taly/auth-service:latest
-        ports:
-        - containerPort: 3000
-        envFrom:
-        - secretRef:
-            name: auth-service-secrets
+        - name: auth-service
+          image: taly/auth-service:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: auth-service-secrets
 ```
 
 ---
 
 ### **3. Terraform**
+
 - **Location**: `terraform/`
 - **Description**: Manages cloud infrastructure resources, including databases, storage, and compute instances.
 - **Features**:
@@ -105,6 +112,7 @@ spec:
   - Define VPC, subnets, and security groups.
 
 **Example Configuration**:
+
 ```hcl
 provider "aws" {
   region = "us-east-1"
@@ -125,6 +133,7 @@ resource "aws_rds_instance" "taly_db" {
 ---
 
 ### **4. Monitoring**
+
 - **Location**: `monitoring/`
 - **Description**: Configurations for tracking system health, performance, and logs.
 - **Key Tools**:
@@ -133,16 +142,18 @@ resource "aws_rds_instance" "taly_db" {
   - **Logstash** and **Kibana**: Log aggregation and analysis.
 
 **Example Prometheus Config**:
+
 ```yaml
 scrape_configs:
-  - job_name: 'taly-services'
+  - job_name: "taly-services"
     static_configs:
-      - targets: ['auth-service:3000', 'user-service:3000']
+      - targets: ["auth-service:3000", "user-service:3000"]
 ```
 
 ---
 
 ### **5. Security**
+
 - **Location**: `security/`
 - **Description**: Contains configurations for securing the platform.
 - **Features**:
@@ -151,6 +162,7 @@ scrape_configs:
   - Network policies for Kubernetes.
 
 **Example OAuth Configuration**:
+
 ```yaml
 client_id: your-client-id
 client_secret: your-client-secret
@@ -165,6 +177,7 @@ scopes:
 ---
 
 ### **6. Logs**
+
 - **Location**: `logs/`
 - **Description**: Centralized log management for debugging and monitoring.
 - **Key Tools**:
@@ -177,12 +190,15 @@ scopes:
 ## How to Use
 
 ### **Run Infrastructure Locally**
+
 1. **Start Services with Docker Compose**:
+
    ```bash
    docker-compose up
    ```
 
 2. **Deploy to Kubernetes**:
+
    ```bash
    kubectl apply -f k8s/
    ```
@@ -196,6 +212,8 @@ scopes:
 ---
 
 ## Contact
+
 For DevOps-related questions or issues:
+
 - **Email**: devops-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

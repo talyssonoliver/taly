@@ -1,14 +1,16 @@
 # Taly Apps - Microfrontend Architecture
 
 ## Overview
+
 The `apps/` directory contains the core microfrontends of the Taly platform. Each app serves a distinct purpose, tailored to the roles and needs of the system's users. This microfrontend approach ensures modularity, scalability, and streamlined development workflows.
 
 ---
 
 ## Directory Structure
+
 ```
 C:\taly\dir-taly\taly\apps
-├── dashboard/         # Admin panel for salon owners
+├── dashboard/         # Admin panel for company owners
 │   ├── src/
 │   │   ├── components/   # Reusable dashboard components
 │   │   ├── hooks/        # Custom React hooks
@@ -31,19 +33,20 @@ C:\taly\dir-taly\taly\apps
 │   │   └── styles/
 ├── shared-ui/          # Reusable UI components, hooks, and utilities
 │   ├── src/
-│   │   ├── components/ 
-│   │   ├── hooks/      
-│   │   ├── utils/      
-│   │   ├── styles/     
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   ├── styles/
 │   │   └── index.ts
 
 ```
 
 ### **1. Dashboard**
-- **Purpose**: Provides salon owners with tools to manage their businesses, including bookings, payments, and analytics.
+
+- **Purpose**: Provides company owners with tools to manage their businesses, including bookings, payments, and analytics.
 - **Key Features**:
   - Metrics overview (appointments, revenue, customer interactions).
-  - Configurable settings for salons (e.g., staff permissions, service offerings).
+  - Configurable settings for companies (e.g., staff permissions, service offerings).
   - Reports with exportable insights.
 - **Tech Stack**:
   - Next.js for server-side rendering and SEO.
@@ -51,10 +54,11 @@ C:\taly\dir-taly\taly\apps
   - Integrated with backend services (e.g., `user-service`, `payment-service`).
 
 ### **2. Booking**
-- **Purpose**: A user-friendly public interface for customers to schedule appointments with salons.
+
+- **Purpose**: A user-friendly public interface for customers to schedule appointments with companies.
 - **Key Features**:
   - Interactive calendar for selecting available time slots.
-  - Integration with salon-specific configurations.
+  - Integration with company-specific configurations.
   - Responsive design for mobile and desktop users.
 - **Tech Stack**:
   - React.js with Next.js for fast rendering.
@@ -62,9 +66,10 @@ C:\taly\dir-taly\taly\apps
   - CSS-in-JS for scalable styles.
 
 ### **3. Payments**
-- **Purpose**: Handles all payment-related functionalities for salon owners and customers.
+
+- **Purpose**: Handles all payment-related functionalities for company owners and customers.
 - **Key Features**:
-  - Payment history for salon owners.
+  - Payment history for company owners.
   - Secure Stripe/PayPal integration for customers.
   - Refund management and transaction tracking.
 - **Tech Stack**:
@@ -73,6 +78,7 @@ C:\taly\dir-taly\taly\apps
   - API integrations with `payment-service` backend.
 
 ### **4. Shared-UI**
+
 - **Purpose**: Houses reusable UI components to ensure consistency across all apps.
 - **Key Features**:
   - Common components such as buttons, modals, inputs, and navigation bars.
@@ -87,7 +93,8 @@ C:\taly\dir-taly\taly\apps
 To simplify API calls and ensure consistency, a shared custom hook `useFetch` is provided in `shared-ui/src/hooks/useFetch.ts`. It handles API requests, manages loading state, and prevents memory leaks.
 
 #### Example usage:
-```tsx
+
+````tsx
 import { useFetch } from "@hooks/useFetch";
 import { BookingService } from "@services/bookingService";
 
@@ -101,14 +108,16 @@ const { data: bookings, loading, error } = useFetch(BookingService.getAllBooking
 1. Navigate to the specific app directory:
    ```bash
    cd apps/dashboard
-   ```
+````
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 3. Start the development server:
+
    ```bash
    pnpm dev
    ```
@@ -122,16 +131,19 @@ const { data: bookings, loading, error } = useFetch(BookingService.getAllBooking
 
 ## Contributing to Apps
 
-1. **Create a Feature Branch**: 
+1. **Create a Feature Branch**:
+
    ```bash
    git checkout -b feature/app-improvement
    ```
 
 2. **Follow Component Guidelines**:
+
    - Use shared components from `shared-ui` wherever possible.
    - Ensure components are responsive and accessible.
 
 3. **Write Tests**:
+
    - Unit tests for React components.
    - Integration tests for API interactions.
 
@@ -145,6 +157,7 @@ const { data: bookings, loading, error } = useFetch(BookingService.getAllBooking
 ## Deployment
 
 1. **Build the App**:
+
    ```bash
    pnpm build
    ```
@@ -158,5 +171,6 @@ const { data: bookings, loading, error } = useFetch(BookingService.getAllBooking
 ## Contact
 
 For assistance or to report issues:
+
 - **Email**: dev-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

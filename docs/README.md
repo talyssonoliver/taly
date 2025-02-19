@@ -1,11 +1,13 @@
 # Taly Documentation
 
 ## Overview
+
 The `docs/` directory serves as the central hub for all documentation related to the Taly platform. This includes architectural designs, deployment guides, API references, onboarding materials, and troubleshooting resources. The goal is to provide clear and comprehensive guidance to developers, DevOps engineers, and stakeholders.
 
 ---
 
 ## Directory Structure
+
 ```
 C:\taly\dir-taly\taly\docs
 ├── architecture/           # Architectural designs and decisions
@@ -24,6 +26,7 @@ C:\taly\dir-taly\taly\docs
 ## Key Sections
 
 ### **1. Architecture**
+
 - **Location**: `architecture/`
 - **Description**: Provides insights into the system’s design, including:
   - System overview diagrams.
@@ -34,6 +37,7 @@ C:\taly\dir-taly\taly\docs
   - `microservices.png`: Detailed microservices interactions.
 
 ### **2. Security**
+
 - **Location**: `security/`
 - **Description**: Guidelines to ensure the platform is secure.
   - OAuth 2.0 and JWT configurations.
@@ -44,6 +48,7 @@ C:\taly\dir-taly\taly\docs
   - `authentication.md`: Details on authentication mechanisms.
 
 ### **3. API Documentation**
+
 - **Location**: `api-docs/`
 - **Description**: Contains detailed documentation for all APIs in the platform.
   - Swagger/OpenAPI definitions.
@@ -54,6 +59,7 @@ C:\taly\dir-taly\taly\docs
   - `booking-api.md`: API documentation for booking management.
 
 ### **4. Deployment**
+
 - **Location**: `deployment/`
 - **Description**: Comprehensive deployment guides for all environments.
   - Environment setup (local, staging, production).
@@ -64,6 +70,7 @@ C:\taly\dir-taly\taly\docs
   - `deploy-backend.md`: Steps to deploy backend services.
 
 ### **5. Onboarding**
+
 - **Location**: `onboarding/`
 - **Description**: Resources for new team members to get up to speed.
   - Project introduction and goals.
@@ -74,6 +81,7 @@ C:\taly\dir-taly\taly\docs
   - `setup-local-environment.md`: How to set up a local development environment.
 
 ### **6. Troubleshooting**
+
 - **Location**: `troubleshooting/`
 - **Description**: Guides to resolve common issues encountered during development and deployment.
   - Debugging Kubernetes issues.
@@ -84,15 +92,17 @@ C:\taly\dir-taly\taly\docs
   - `ci-cd-issues.md`: Troubleshooting CI/CD failures.
 
 ### **7. User Guides**
+
 - **Location**: `user-guides/`
 - **Description**: Manuals and FAQs for administrators and end-users.
-  - Admin guide for managing salons and users.
+  - Admin guide for managing companies and users.
   - End-user guide for booking and payments.
 - **Key Files**:
   - `admin-guide.md`: Guide for platform administrators.
   - `user-guide.md`: Manual for end-users.
 
 ### **8. Testing**
+
 - **Location**: `testing/`
 - **Description**: Strategies and tools for ensuring code quality.
   - Unit, integration, and end-to-end testing guidelines.
@@ -106,7 +116,9 @@ C:\taly\dir-taly\taly\docs
 ## Contribution Guidelines
 
 To contribute to the documentation:
+
 1. **Create a new branch** for your changes:
+
    ```bash
    git checkout -b docs/update-section
    ```
@@ -120,5 +132,6 @@ To contribute to the documentation:
 ## Contact
 
 For questions or suggestions regarding the documentation:
+
 - **Email**: docs-support@taly.dev
 - **GitHub**: [https://github.com/talyssonoliver/taly](https://github.com/talyssonoliver/taly)

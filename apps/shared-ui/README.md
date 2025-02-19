@@ -37,8 +37,8 @@ This directory contains shared UI components, utilities, and styles that can be 
 To use the shared components in your microfrontend applications, import them as follows:
 
 ```javascript
-import { Button } from 'shared/src/components/Button';
-import { Modal } from 'shared/src/components/Modal';
+import { Button } from "shared/src/components/Button";
+import { Modal } from "shared/src/components/Modal";
 ```
 
 Make sure to include the shared library in your project's dependencies to access these components and utilities.

@@ -2,7 +2,7 @@ name: Nightly Build and Test
 
 on:
   schedule:
-    - cron: '0 2 * * *' # Executa diariamente às 02:00 UTC
+    - cron: "0 2 * * *" # D 02:00 UTC
 
 jobs:
   nightly-build:
@@ -18,49 +18,54 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.0
+
       - name: Install Dependencies (Frontend)
-        run: npm install
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        run: pnpm install
+        working-directory: ./apps/dashboard/
 
       - name: Install Dependencies (Backend)
-        run: npm install
-        working-directory: C:/taly/dir-taly/taly/backend/
+        run: pnpm install
+        working-directory: ./backend/
 
       - name: Lint Frontend Code
-        run: npm run lint
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        run: pnpm run lint
+        working-directory: ./apps/dashboard/
 
       - name: Lint Backend Code
-        run: npm run lint
-        working-directory: C:/taly/dir-taly/taly/backend/
+        run: pnpm run lint
+        working-directory: ./backend/
 
       - name: Run Frontend Tests
-        run: npm run test:ci
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        run: pnpm run test:ci
+        working-directory: ./apps/dashboard/
 
       - name: Run Backend Tests
-        run: npm run test:ci
-        working-directory: C:/taly/dir-taly/taly/backend/
+        run: pnpm run test:ci
+        working-directory: ./backend/
 
       - name: Build Frontend
-        run: npm run build
-        working-directory: C:/taly/dir-taly/taly/apps/dashboard/
+        run: pnpm run build
+        working-directory: ./apps/dashboard/
 
       - name: Build Backend
-        run: npm run build
-        working-directory: C:/taly/dir-taly/taly/backend/
+        run: pnpm run build
+        working-directory: ./backend/
 
       - name: E2E Tests
-        run: npm run test:e2e
-        working-directory: C:/taly/dir-taly/taly/tests/e2e/
+        run: pnpm run test:e2e
+        working-directory: ./tests/e2e/
 
       - name: Upload Test Reports
         uses: actions/upload-artifact@v4
         with:
           name: nightly-test-reports
-          path: C:/taly/dir-taly/taly/tests/reports/
+          path: ./tests/reports/
 
-      - name: Notify Team
+      - name: Notify Team on Failure
         if: failure()
-        run: echo "Nightly build or tests failed. Please investigate."
-
+        run: |
+          echo "❌ Frontend CI failed. Check logs: ${{ github.run_id }}"

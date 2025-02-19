@@ -1,22 +1,25 @@
 {
-	"name": "@taly/payment-service",
-	"version": "1.0.0",
-	"description": "Payment service for Taly project",
-	"main": "index.js",
-	"scripts": {
-		"start": "nest start",
-		"start:dev": "nest start --watch",
-		"build": "nest build",
-		"test": "jest"
-	},
-	"author": "Talysson Da Silva Oliveira",
-	"license": "MIT",
-	"dependencies": {
-		"express": "^4.17.1",
-		"typescript": "^5.7.3"
-	},
-	"devDependencies": {
-		"jest": "^27.0.6",
-		"ts-jest": "^27.0.5"
-	}
+  "name": "@taly/payment-service",
+  "version": "1.0.0",
+  "description": "Payment service for Taly project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "build": "nest build",
+    "test": "jest",
+    "lint": "eslint . --fix",
+    "format": "prettier --write ."
+  },
+  "author": "Talysson Da Silva Oliveira",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/common": "^11.0.10",
+    "@nestjs/core": "^11.0.10",
+    "@nestjs/platform-express": "^11.0.10",
+    "@prisma/client": "^6.3.1",
+    "express": "^4.18.2",
+    "stripe": "^13.0.0",
+    "zod": "^3.24.1"
+  }
 }

@@ -1,6 +1,6 @@
 # Booking Microfrontend
 
-This directory contains the booking microfrontend application, which is responsible for managing bookings within the overall microfrontend architecture. 
+This directory contains the booking microfrontend application, which is responsible for managing bookings within the overall microfrontend architecture.
 
 ## Structure
 

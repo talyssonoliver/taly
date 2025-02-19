@@ -2,7 +2,7 @@
 
 # Microfrontend Application
 
-This project is a microfrontend application designed to manage various aspects of a salon management system. It is structured into separate modules for dashboard, booking, payments, and shared UI components, allowing for independent development and deployment.
+This project is a microfrontend application designed to manage various aspects of a company management system. It is structured into separate modules for dashboard, booking, payments, and shared UI components, allowing for independent development and deployment.
 
 ## Project Structure
 
@@ -18,7 +18,7 @@ microfrontend-app
 
 ## Features
 
-- **Dashboard**: Provides an overview of salon operations, including reports and analytics.
+- **Dashboard**: Provides an overview of company operations, including reports and analytics.
 - **Booking**: Allows users to create and manage appointments with clients.
 - **Payments**: Facilitates payment processing and transaction history.
 - **Shared Components**: Contains reusable UI components and utility functions for consistent styling and functionality across modules.
@@ -26,12 +26,14 @@ microfrontend-app
 ## Getting Started
 
 1. Clone the repository:
+
    ```
    git clone <repository-url>
    cd microfrontend-app
    ```
 
 2. Install dependencies for each module:
+
    ```
    cd dashboard
    npm install
@@ -44,6 +46,7 @@ microfrontend-app
    ```
 
 3. Start the development server for each module:
+
    ```
    cd dashboard
    npm start
