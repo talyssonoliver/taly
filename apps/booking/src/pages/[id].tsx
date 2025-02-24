@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { BookingDetails } from "../components/BookingDetails";
-import { BookingService } from "../services/bookingService";
-import PublicLayout from "../layouts/PublicLayout";
-import Spinner from "../../../shared-ui/src/components/Spinner";
-import { ErrorMessage } from "../../../shared-ui/src/components/ErrorMessage";
-import type { Booking } from "../../../../shared/types/booking.interface";
+import { useRouter } from "next/router.js";
+import { BookingDetails } from "../components/BookingDetails.js";
+import { BookingService } from "../services/bookingService.js";
+import PublicLayout from "../layouts/PublicLayout.js";
+import Spinner from "../../../shared-ui/src/components/Spinner.js";
+import ErrorMessage from "../../../shared-ui/src/components/ErrorMessage.tsx";
+import type { Booking } from "shared/types/Booking.interface.js";
 
 const BookingPage = () => {
   const router = useRouter();

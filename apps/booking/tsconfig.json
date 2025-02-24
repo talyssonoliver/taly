@@ -1,12 +1,11 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/apps/booking",
-    "incremental": true,
-    "jsx": "preserve",
-    "types": ["jest", "node"],
-    "moduleResolution": "NodeNext",
+    "rootDir": "src",
+    "jsx": "react-jsx",
     "module": "NodeNext",
+    "incremental": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true
   },

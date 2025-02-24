@@ -1,19 +1,16 @@
 ﻿{
-  "extends": "../tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist/serverless",
+    "outDir": "../../dist/serverless/user-activity-logger",
     "rootDir": ".",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
-    "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true,
     "paths": {
-      "@shared/*": ["../shared/*"],
-      "@serverless-shared/*": ["./shared/*"],
-      "@serverless-utils/*": ["./utils/*"]
+      "@shared/*": ["../../shared/*"],
+      "@serverless-shared/*": ["../shared/*"],
+      "@user-activity-utils/*": ["./utils/*"]
     }
   },
-  "include": ["./*/src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "tests", "**/*.test.ts"]
+  "include": ["handler.ts", "utils/**/*.ts"],
+  "exclude": ["node_modules", "../../dist", "**/*.test.ts"]
 }

@@ -1,10 +1,12 @@
 ﻿{
-  "extends": "../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/apps/dashboard",
+    "rootDir": "src",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "../../dist", "**/*.test.ts", "**/*.test.tsx"]

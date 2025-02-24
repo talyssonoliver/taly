@@ -23,7 +23,8 @@
     "@types/aws-lambda": "^8.10.122",
     "@types/pdfkit": "^0.13.0",
     "serverless": "^3.40.0",
-    "serverless-offline": "^12.0.4"
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-typescript": "^2.1.5"
   },
   "engines": {
     "node": ">=22.14.0",

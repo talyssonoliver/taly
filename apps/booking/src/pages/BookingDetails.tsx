@@ -1,7 +1,6 @@
 import React from "react";
 
 const BookingDetails: React.FC = () => {
-  // Sample booking details data
   const booking = {
     id: "12345",
     customerName: "John Doe",

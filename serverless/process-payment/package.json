@@ -18,7 +18,7 @@
     "@aws-sdk/client-dynamodb": "^3.750.0",
     "dotenv": "^16.3.1",
     "stripe": "^12.6.0",
-    "paypal-rest-sdk": "^2.0.0"
+    "paypal-rest-sdk": "^1.8.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.122",

@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "outDir": "dist",
+    "outDir": "../../dist/serverless/send-email",
     "rootDir": "src",
     "resolveJsonModule": true,
     "noImplicitAny": true,

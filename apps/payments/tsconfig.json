@@ -1,13 +1,15 @@
 ﻿{
-  "extends": "../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/apps/payments",
+    "rootDir": "src",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [

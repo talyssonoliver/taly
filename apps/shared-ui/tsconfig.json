@@ -2,11 +2,14 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/apps/shared-ui",
+    "rootDir": "src",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [

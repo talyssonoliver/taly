@@ -1,0 +1,15 @@
+service: generate-reports
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+plugins:
+  - serverless-plugin-typescript
+
+functions:
+  generateReports:
+    handler: src/handler.handler
+    events:
+      - http:
+          path: reports
+          method: post
