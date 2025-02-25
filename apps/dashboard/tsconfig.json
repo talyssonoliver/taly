@@ -1,4 +1,4 @@
-﻿{
+{
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/apps/dashboard",
@@ -6,7 +6,8 @@
     "incremental": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "isolatedModules": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "../../dist", "**/*.test.ts", "**/*.test.tsx"]

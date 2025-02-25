@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/apps/booking",
     "rootDir": "src",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "module": "NodeNext",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
