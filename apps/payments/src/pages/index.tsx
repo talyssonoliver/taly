@@ -3,12 +3,6 @@ import { useEffect, useState } from "react";
 import TransactionCard from "../components/TransactionCard";
 import { PaymentService } from "../services/paymentService";
 
-interface Payment {
-  id: string;
-  amount: number;
-  status: string;
-}
-
 const PaymentsPage: React.FC = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

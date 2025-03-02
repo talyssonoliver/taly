@@ -5,6 +5,7 @@
     "rootDir": "src",
     "jsx": "preserve",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true

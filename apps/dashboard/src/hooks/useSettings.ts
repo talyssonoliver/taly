@@ -4,7 +4,18 @@ interface Settings {
   theme: string;
   notificationsEnabled: boolean;
   language: string;
+  id: string;
+  name: string;
+  value: string;
+  updatedAt: string;
 }
+
+const SettingSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  value: z.string(),
+  updatedAt: z.string(),
+});
 
 export const useSettings = () => {
   const [settings, setSettings] = useState<Settings | null>(null);
