@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": ["ES2022", "DOM"],
+    "noEmit": true,
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "next/*": ["node_modules/next/*"],
+      "@apps/*": ["apps/*"],
+      "@api/*": ["api/src/*"],
+      "@serverless/*": ["serverless/*"],
+      "@shared/*": ["shared/*"],
+      "@tests/*": ["tests/*"],
+      "@dashboard/*": ["apps/dashboard/*"],
+      "@booking/*": ["apps/booking/*"],
+      "@payments/*": ["apps/payments/*"],
+      "@serverless-shared/*": ["serverless/shared/*"]
+    },
+    "types": ["jest", "node"],
+    "outDir": "./dist",
+    "rootDir": "./",
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "api/**/*.ts",
+    "serverless/**/*.ts",
+    "shared/**/*.ts",
+    "tests/**/*.ts",
+    "jest.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "apps/**/node_modules"
+  ]
+}

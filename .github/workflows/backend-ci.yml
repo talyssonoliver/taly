@@ -1,0 +1,55 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: Taly
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: ./backend/auth-service
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        working-directory: ./backend/auth-service
+
+      - name: Run migrations
+        run: npx prisma migrate dev --name "init_auth_schema"
+        env:
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/Taly"
+        working-directory: ./backend/auth-service
+
+      - name: Run tests
+        run: pnpm test
+        working-directory: ./backend/auth-service

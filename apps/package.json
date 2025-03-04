@@ -1,0 +1,18 @@
+{
+  "name": "@taly/microfrontend",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "turbo run start",
+    "build": "turbo run build",
+    "test": "turbo run test"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.66.0",
+    "next": "^15.1.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^11.0.5"
+  }
+}

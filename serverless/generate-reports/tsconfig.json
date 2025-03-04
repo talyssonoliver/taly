@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/serverless/generate-reports",
+    "rootDir": "src",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@shared/*": ["../../shared/*"],
+      "@serverless-shared/*": ["../shared/*"],
+      "@report-utils/*": ["./utils/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "../../dist", "**/*.test.ts"]
+}

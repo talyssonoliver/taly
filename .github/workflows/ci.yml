@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "develop", "feature/*"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22.x"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.30.0
+          run_install: false # Deactived
+      - name: Install Dependencies
+        run: pnpm
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Run Tests
+        run: pnpm run test

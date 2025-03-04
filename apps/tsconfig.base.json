@@ -1,0 +1,36 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "../..",
+    "paths": {
+      "@apps/*": ["apps/*"],
+      "@booking/*": ["apps/booking/*"],
+      "@dashboard/*": ["apps/dashboard/*"],
+      "@payments/*": ["apps/payments/*"],
+      "@shared/*": ["shared/*"],
+      "@shared-ui/*": ["apps/shared-ui/*"]
+    },
+    "noEmit": true,
+    "module": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "NodeNext",
+    "allowJs": true,
+    "incremental": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "shared/**/*.ts",
+    "shared/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "apps/**/node_modules"
+  ]
+}

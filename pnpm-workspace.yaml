@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "backend/*"
+  - "serverless/*"
+  - "shared"
+  - "devops"

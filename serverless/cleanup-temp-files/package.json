@@ -1,0 +1,31 @@
+{
+  "name": "@taly/cleanup-temp-files",
+  "version": "1.0.0",
+  "description": "Serverless function to remove old temporary files from storage",
+  "private": true,
+  "scripts": {
+    "deploy": "serverless deploy",
+    "remove": "serverless remove",
+    "invoke-local": "serverless invoke local -f cleanupTempFiles",
+    "test": "jest --config=jest.config.cjs",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "build": "tsc",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.750.0",
+    "dotenv": "^16.3.1",
+    "jsonpath-plus": "^10.2.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.122",
+    "serverless": "^3.40.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-typescript": "^2.1.5"
+  },
+  "engines": {
+    "node": ">=22.14.0",
+    "pnpm": ">=10.4.0"
+  }
+}
