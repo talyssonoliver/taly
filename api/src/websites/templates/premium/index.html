@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{business_name}} - Home</title>
+<link rel="stylesheet" href="/styles.css">
+{{#if custom_css}}
+<style>
+{{{custom_css}}}
+</style>
+{{/if}}
+{{{custom_head}}}
+</head>
+<body class="premium-theme">
+<header class="premium-header">
+<div class="container">
+<div class="header-content">
+<div class="logo">
+{{#if business_logo}}
+<img src="{{business_logo}}" alt="{{business_name}} Logo">
+{{else}}
+<h1>{{business_name}}</h1>
+{{/if}}
+</div>
+<div class="header-right">
+<div class="header-info">
+<div class="info-item">
+<i class="fas fa-phone"></i>
+<span>{{business_phone|(555) 123-4567}}</span>
+</div>
+<div class="info-item">
+<i class="fas fa-envelope"></i>
+<span>{{business_email|info@yourbusiness.com}}</span>
+</div>
+<div class="info-item">
+<div class="social-icons mini">
+{{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+{{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+{{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+{{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+</div>
+</div>
+</div>
+<nav>
+<ul>
+<li><a href="/" class="active">Home</a></li>
+<li><a href="/services">Services</a></li>
+<li><a href="/booking">Book Now</a></li>
+<li><a href="/about">About Us</a></li>
+<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+</div>
+<div class="mobile-menu-toggle">
+<i class="fas fa-bars"></i>
+</div>
+</div>
+</div>
+</header>
+<div class="mobile-menu">
+    <div class="close-menu">
+        <i class="fas fa-times"></i>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/booking">Book Now</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="mobile-info">
+        <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <span>{{business_phone|(555) 123-4567}}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <span>{{business_email|info@yourbusiness.com}}</span>
+        </div>
+        <div class="social-icons">
+            {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+            {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+            {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+            {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+        </div>
+    </div>
+</div>
+
+<section class="premium-hero">
+    <div class="hero-slider">
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>{{hero_title|Welcome to {{business_name}}}}</h1>
+                <p>{{hero_subtitle|Your go-to destination for quality services}}</p>
+                <div class="hero-buttons">
+                    <a href="/booking" class="btn btn-primary">Book Now</a>
+                    <a href="/services" class="btn btn-secondary">Our Services</a>
+                </div>
+            </div>
+            <div class="slide-image" style="background-image: url('{{hero_image|https://via.placeholder.com/1920x1080'}}');"></div>
+            <div class="slide-overlay"></div>
+        </div>
+        <!-- Additional slides would be dynamically added based on content -->
+    </div>
+    <div class="slider-controls">
+        <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+        <div class="slide-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</section>
+
+<section class="premium-intro">
+    <div class="container">
+        <div class="intro-content">
+            <div class="section-heading">
+                <span class="subtitle">{{intro_subtitle|Welcome}}</span>
+                <h2>{{intro_title|Experience the Best Service}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <p>{{intro_content|At {{business_name}}, we are dedicated to providing exceptional service and building lasting relationships with our clients. Our team of professionals is committed to excellence in every aspect of our work.}}</p>
+            <a href="/about" class="btn btn-secondary">Learn More About Us</a>
+        </div>
+        <div class="intro-stats">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" data-count="{{stat_1_number|2500}}">0</div>
+                <div class="stat-text">{{stat_1_text|Happy Clients}}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="stat-number" data-count="{{stat_2_number|10}}">0</div>
+                <div class="stat-text">{{stat_2_text|Years Experience}}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="stat-number" data-count="{{stat_3_number|15}}">0</div>
+                <div class="stat-text">{{stat_3_text|Awards Won}}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-number" data-count="{{stat_4_number|5000}}">0</div>
+                <div class="stat-text">{{stat_4_text|Services Completed}}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="premium-services">
+    <div class="container">
+        <div class="section-heading centered">
+            <span class="subtitle">{{services_subtitle|What We Offer}}</span>
+            <h2>{{services_title|Our Services}}</h2>
+            <div class="heading-line"></div>
+        </div>
+        <div class="services-slider">
+            <div class="services-track">
+                {{#each services}}
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="{{this.icon|fas fa-spa}}"></i>
+                    </div>
+                    <h3>{{this.name}}</h3>
+                    <p>{{this.description}}</p>
+                    <div class="service-meta">
+                        <span class="duration"><i class="far fa-clock"></i> {{this.duration}} min</span>
+                        <span class="price">{{this.price}}</span>
+                    </div>
+                    <a href="/booking?service={{this.id}}" class="btn btn-primary">Book Now</a>
+                </div>
+                {{else}}
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Service 1</h3>
+                    <p>Description of Service 1 and what clients can expect from this service.</p>
+                    <div class="service-meta">
+                        <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                        <span class="price"></span>
+                    </div>
+                    <a href="/booking" class="btn btn-primary">Book Now</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-massage"></i>
+                    </div>
+                    <h3>Service 2</h3>
+                    <p>Description of Service 2 and what clients can expect from this service.</p>
+                    <div class="service-meta">
+                        <span class="duration"><i class="far fa-clock"></i> 45 min</span>
+                        <span class="price"></span>
+                    </div>
+                    <a href="/booking" class="btn btn-primary">Book Now</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <h3>Service 3</h3>
+                    <p>Description of Service 3 and what clients can expect from this service.</p>
+                    <div class="service-meta">
+                        <span class="duration"><i class="far fa-clock"></i> 30 min</span>
+                        <span class="price"></span>
+                    </div>
+                    <a href="/booking" class="btn btn-primary">Book Now</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Service 4</h3>
+                    <p>Description of Service 4 and what clients can expect from this service.</p>
+                    <div class="service-meta">
+                        <span class="duration"><i class="far fa-clock"></i> 90 min</span>
+                        <span class="price"></span>
+                    </div>
+                    <a href="/booking" class="btn btn-primary">Book Now</a>
+                </div>
+                {{/each}}
+            </div>
+            <div class="slider-arrows">
+                <button class="prev-service"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-service"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="/services" class="btn btn-secondary">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<section class="premium-about">
+    <div class="container">
+        <div class="about-flex">
+            <div class="about-image">
+                {{#if about_image}}
+                <img src="{{about_image}}" alt="About {{business_name}}">
+                {{else}}
+                <div class="image-placeholder"></div>
+                {{/if}}
+                <div class="experience-badge">
+                    <span class="years">{{experience_years|10}}</span>
+                    <span class="text">Years of Experience</span>
+                </div>
+            </div>
+            <div class="about-content">
+                <div class="section-heading">
+                    <span class="subtitle">{{about_subtitle|About Us}}</span>
+                    <h2>{{about_title|We Provide the Best Service Experience}}</h2>
+                    <div class="heading-line"></div>
+                </div>
+                <p>{{about_content|Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac felis vel odio tincidunt faucibus. Phasellus vitae tellus in purus scelerisque luctus. Mauris efficitur risus sit amet purus scelerisque.}}</p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="feature-text">
+                            {{feature_1|Professional Staff}}
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="feature-text">
+                            {{feature_2|Quality Service}}
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="feature-text">
+                            {{feature_3|Customer Satisfaction}}
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="feature-text">
+                            {{feature_4|Affordable Prices}}
+                        </div>
+                    </div>
+                </div>
+                <a href="/about" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="premium-cta" style="background-image: url('{{cta_background|https://via.placeholder.com/1920x1080}}');">
+    <div class="container">
+        <div class="cta-content">
+            <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+            <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+            <a href="/booking" class="btn btn-primary">Book Now</a>
+        </div>
+    </div>
+</section>
+
+<section class="premium-testimonials">
+    <div class="container">
+        <div class="section-heading centered">
+            <span class="subtitle">{{testimonials_subtitle|Testimonials}}</span>
+            <h2>{{testimonials_title|What Our Clients Say}}</h2>
+            <div class="heading-line"></div>
+        </div>
+        <div class="testimonials-slider">
+            <div class="testimonials-track">
+                {{#each testimonials}}
+                <div class="testimonial-item">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="rating">
+                        {{#times this.rating}}?{{/times}}
+                    </div>
+                    <p class="quote">"{{this.quote}}"</p>
+                    <div class="client-info">
+                        {{#if this.avatar}}
+                        <div class="client-avatar">
+                            <img src="{{this.avatar}}" alt="{{this.author}}">
+                        </div>
+                        {{/if}}
+                        <div class="client-details">
+                            <h4>{{this.author}}</h4>
+                            {{#if this.position}}<p>{{this.position}}</p>{{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="testimonial-item">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="rating">?????</div>
+                    <p class="quote">"I've been a customer for over a year and I'm always impressed by the quality of service."</p>
+                    <div class="client-info">
+                        <div class="client-details">
+                            <h4>Jane D.</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="rating">?????</div>
+                    <p class="quote">"The staff is professional and friendly. Highly recommended!"</p>
+                    <div class="client-info">
+                        <div class="client-details">
+                            <h4>John S.</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="rating">?????</div>
+                    <p class="quote">"Best service provider in town. Won't go anywhere else!"</p>
+                    <div class="client-info">
+                        <div class="client-details">
+                            <h4>Mary L.</h4>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="slider-dots testimonial-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="premium-footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        {{#if business_logo}}
+                        <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                        {{else}}
+                        <h3>{{business_name}}</h3>
+                        {{/if}}
+                    </div>
+                    <p>{{business_description|We are dedicated to providing exceptional service and building lasting relationships with our clients.}}</p>
+                    <div class="footer-social">
+                        <div class="social-icons">
+                            {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                            {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                            {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                            {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3>Our Services</h3>
+                    <ul>
+                        {{#each services}}
+                        <li><a href="/services#{{this.id}}">{{this.name}}</a></li>
+                        {{else}}
+                        <li><a href="/services">Service 1</a></li>
+                        <li><a href="/services">Service 2</a></li>
+                        <li><a href="/services">Service 3</a></li>
+                        <li><a href="/services">Service 4</a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{business_address|123 Main St, City, Country}}</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>{{business_phone|(555) 123-4567}}</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>{{business_email|info@yourbusiness.com}}</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>{{business_hours|Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+        
+        if (closeMenu) {
+            closeMenu.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Hero slider functionality
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slide-dots .dot');
+            const prevSlide = document.querySelector('.prev-slide');
+            const nextSlide = document.querySelector('.next-slide');
+            
+            let currentSlide = 0;
+            const slideCount = slides.length;
+            
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
+            
+            if (prevSlide) {
+                prevSlide.addEventListener('click', function() {
+                    let index = currentSlide - 1;
+                    if (index < 0) index = slideCount - 1;
+                    showSlide(index);
+                });
+            }
+            
+            if (nextSlide) {
+                nextSlide.addEventListener('click', function() {
+                    let index = currentSlide + 1;
+                    if (index >= slideCount) index = 0;
+                    showSlide(index);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    showSlide(index);
+                });
+            });
+            
+            // Auto-advance slider
+            setInterval(function() {
+                if (nextSlide) {
+                    nextSlide.click();
+                }
+            }, 5000);
+            
+            // Animated stats
+            const statElements = document.querySelectorAll('.stat-number');
+            
+            function animateStats() {
+                statElements.forEach(element => {
+                    const targetCount = parseInt(element.getAttribute('data-count'), 10);
+                    let currentCount = 0;
+                    const increment = targetCount / 50; // Animate over 50 steps
+                    
+                    const interval = setInterval(() => {
+                        currentCount += increment;
+                        if (currentCount >= targetCount) {
+                            element.textContent = targetCount;
+                            clearInterval(interval);
+                        } else {
+                            element.textContent = Math.floor(currentCount);
+                        }
+                    }, 30);
+                });
+            }
+            
+            // Use Intersection Observer to trigger stats animation when in view
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            if (document.querySelector('.intro-stats')) {
+                observer.observe(document.querySelector('.intro-stats'));
+            }
+            
+            // Services slider navigation
+            const prevService = document.querySelector('.prev-service');
+            const nextService = document.querySelector('.next-service');
+            const servicesTrack = document.querySelector('.services-track');
+            
+            if (prevService && nextService && servicesTrack) {
+                let position = 0;
+                const cardWidth = document.querySelector('.service-card').offsetWidth + 30; // card width + gap
+                const visibleCards = Math.floor(servicesTrack.offsetWidth / cardWidth);
+                const totalCards = document.querySelectorAll('.service-card').length;
+                const maxPosition = (totalCards - visibleCards) * cardWidth;
+                
+                prevService.addEventListener('click', function() {
+                    position = Math.max(position - cardWidth, 0);
+                    servicesTrack.style.transform = 	ranslateX(-px);
+                });
+                
+                nextService.addEventListener('click', function() {
+                    position = Math.min(position + cardWidth, maxPosition);
+                    servicesTrack.style.transform = 	ranslateX(-px);
+                });
+            }
+        });
+    </script>
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - Home</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <script>
+        (function() {
+            const style = document.createElement('style');
+            style.textContent = '{{{custom_css}}}';
+            document.head.appendChild(style);
+        })();
+    </script>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                {{#if business_logo}}
+                <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                {{else}}
+                <h1>{{business_name}}</h1>
+                {{/if}}
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/booking">Book Now</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>{{hero_title|Welcome to {{business_name}}}}</h1>
+                <p>{{hero_subtitle|Your go-to destination for quality services}}</p>
+                <a href="/booking" class="btn btn-primary">Book Now</a>
+                <a href="/services" class="btn btn-secondary">Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>{{features_title|Why Choose Us}}</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>{{feature_1_title|Quality Service}}</h3>
+                    <p>{{feature_1_description|We pride ourselves on providing top-notch service to all our clients.}}</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>{{feature_2_title|Professional Staff}}</h3>
+                    <p>{{feature_2_description|Our team of experts is dedicated to providing you with the best experience.}}</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>{{feature_3_title|Customer Satisfaction}}</h3>
+                    <p>{{feature_3_description|Your satisfaction is our top priority, and we go above and beyond to ensure it.}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-preview">
+        <div class="container">
+            <h2>{{services_preview_title|Our Services}}</h2>
+            <div class="services-grid">
+                {{#each services}}
+                <div class="service">
+                    <h3>{{this.name}}</h3>
+                    <p>{{this.description}}</p>
+                    <p class="price">From ${{this.price}}</p>
+                    <a href="/booking?service={{this.id}}" class="btn btn-secondary">Book Now</a>
+                </div>
+                {{else}}
+                <div class="service">
+                    <h3>Service 1</h3>
+                    <p>Description of Service 1</p>
+                    <p class="price">From </p>
+                    <a href="/booking" class="btn btn-secondary">Book Now</a>
+                </div>
+                <div class="service">
+                    <h3>Service 2</h3>
+                    <p>Description of Service 2</p>
+                    <p class="price">From </p>
+                    <a href="/booking" class="btn btn-secondary">Book Now</a>
+                </div>
+                <div class="service">
+                    <h3>Service 3</h3>
+                    <p>Description of Service 3</p>
+                    <p class="price">From </p>
+                    <a href="/booking" class="btn btn-secondary">Book Now</a>
+                </div>
+                {{/each}}
+            </div>
+            <div class="text-center">
+                <a href="/services" class="btn btn-primary">View All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>{{testimonials_title|What Our Clients Say}}</h2>
+            <div class="testimonials-grid">
+                {{#each testimonials}}
+                <div class="testimonial">
+                    <div class="rating">
+                        {{#times this.rating}}?{{/times}}
+                    </div>
+                    <p class="quote">"{{this.quote}}"</p>
+                    <p class="author">- {{this.author}}</p>
+                </div>
+                {{else}}
+                <div class="testimonial">
+                    <div class="rating">?????</div>
+                    <p class="quote">"I've been a customer for over a year and I'm always impressed by the quality of service."</p>
+                    <p class="author">- Jane D.</p>
+                </div>
+                <div class="testimonial">
+                    <div class="rating">?????</div>
+                    <p class="quote">"The staff is professional and friendly. Highly recommended!"</p>
+                    <p class="author">- John S.</p>
+                </div>
+                <div class="testimonial">
+                    <div class="rating">?????</div>
+                    <p class="quote">"Best service provider in town. Won't go anywhere else!"</p>
+                    <p class="author">- Mary L.</p>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+            <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+            <a href="/booking" class="btn btn-primary">Book Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h3>{{business_name}}</h3>
+                    {{/if}}
+                    <p>{{business_tagline}}</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> {{business_address|123 Main St, City, Country}}</p>
+                    <p><i class="fas fa-phone"></i> {{business_phone|(555) 123-4567}}</p>
+                    <p><i class="fas fa-envelope"></i> {{business_email|info@yourbusiness.com}}</p>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                        {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                        {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                        {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>� {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

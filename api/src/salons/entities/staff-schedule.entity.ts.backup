@@ -1,0 +1,66 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Salon } from "./salon.entity";
+import { User } from "../../users/entities/user.entity";
+import { DayOfWeek } from "./working-hours.entity";
+
+@Entity("staff_schedules")
+@ObjectType()
+export class StaffSchedule {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column()
+	@Field()
+	staffId: string;
+
+	@Column()
+	@Field()
+	salonId: string;
+
+	@Column({
+		type: "enum",
+		enum: DayOfWeek,
+	})
+	@Field()
+	dayOfWeek: DayOfWeek;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	startTime: string; // Format: 'HH:MM'
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	endTime: string; // Format: 'HH:MM'
+
+	@Column({ default: false })
+	@Field()
+	isUnavailable: boolean;
+
+	@ManyToOne(() => Salon)
+	@JoinColumn({ name: "salonId" })
+	@Field(() => Salon)
+	salon: Salon;
+
+	@ManyToOne(() => User)
+	@JoinColumn({ name: "staffId" })
+	@Field(() => User)
+	staff: User;
+
+	@CreateDateColumn()
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	@Field()
+	updatedAt: Date;
+}

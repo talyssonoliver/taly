@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - Services</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <style>
+        {{{custom_css}}}
+    </style>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                {{#if business_logo}}
+                <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                {{else}}
+                <h1>{{business_name}}</h1>
+                {{/if}}
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/services" class="active">Services</a></li>
+                    <li><a href="/booking">Book Now</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner">
+        <div class="container">
+            <h1>{{services_title|Our Services}}</h1>
+            <p>{{services_subtitle|Explore our range of professional services}}</p>
+        </div>
+    </section>
+
+    <section class="services-list">
+        <div class="container">
+            <div class="services-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                {{#each categories}}
+                <button class="filter-btn" data-filter="{{this.id}}">{{this.name}}</button>
+                {{/each}}
+            </div>
+
+            <div class="services-grid">
+                {{#each services}}
+                <div class="service" data-category="{{this.categoryId}}">
+                    <div class="service-info">
+                        <h3>{{this.name}}</h3>
+                        <p>{{this.description}}</p>
+                        <div class="service-meta">
+                            <span class="duration"><i class="far fa-clock"></i> {{this.duration}} min</span>
+                            <span class="price">{{this.price}}</span>
+                        </div>
+                        <a href="/booking?service={{this.id}}" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                {{else}}
+                <div class="service">
+                    <div class="service-info">
+                        <h3>Service 1</h3>
+                        <p>Detailed description of Service 1 and what clients can expect.</p>
+                        <div class="service-meta">
+                            <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                            <span class="price"></span>
+                        </div>
+                        <a href="/booking" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                <div class="service">
+                    <div class="service-info">
+                        <h3>Service 2</h3>
+                        <p>Detailed description of Service 2 and what clients can expect.</p>
+                        <div class="service-meta">
+                            <span class="duration"><i class="far fa-clock"></i> 45 min</span>
+                            <span class="price"></span>
+                        </div>
+                        <a href="/booking" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                <div class="service">
+                    <div class="service-info">
+                        <h3>Service 3</h3>
+                        <p>Detailed description of Service 3 and what clients can expect.</p>
+                        <div class="service-meta">
+                            <span class="duration"><i class="far fa-clock"></i> 30 min</span>
+                            <span class="price"></span>
+                        </div>
+                        <a href="/booking" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                <div class="service">
+                    <div class="service-info">
+                        <h3>Service 4</h3>
+                        <p>Detailed description of Service 4 and what clients can expect.</p>
+                        <div class="service-meta">
+                            <span class="duration"><i class="far fa-clock"></i> 90 min</span>
+                            <span class="price"></span>
+                        </div>
+                        <a href="/booking" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+            <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+            <a href="/booking" class="btn btn-primary">Book Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h3>{{business_name}}</h3>
+                    {{/if}}
+                    <p>{{business_tagline}}</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> {{business_address|123 Main St, City, Country}}</p>
+                    <p><i class="fas fa-phone"></i> {{business_phone|(555) 123-4567}}</p>
+                    <p><i class="fas fa-envelope"></i> {{business_email|info@yourbusiness.com}}</p>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                        {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                        {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                        {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <script>
+        // Basic service filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const services = document.querySelectorAll('.service');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    services.forEach(service => {
+                        if (filter === 'all' || service.getAttribute('data-category') === filter) {
+                            service.style.display = 'block';
+                        } else {
+                            service.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

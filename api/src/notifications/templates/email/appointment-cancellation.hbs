@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Cancelled</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #E74C3C;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    .appointment-details {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .appointment-details h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #eeeeee;
+      padding-bottom: 10px;
+    }
+    .appointment-details p {
+      margin: 5px 0;
+    }
+    .detail-label {
+      font-weight: bold;
+      color: #666666;
+    }
+    .footer {
+      font-size: 12px;
+      color: #999999;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #3498DB;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Your Appointment Has Been Cancelled</h1>
+    </div>
+    <div class="content">
+      <p>Dear {{user.firstName}},</p>
+      
+      <p>We're writing to confirm that your appointment has been cancelled:</p>
+      
+      <div class="appointment-details">
+        <h3>Cancelled Appointment Details</h3>
+        <p><span class="detail-label">Date:</span> {{formatDate date "MM/DD/YYYY"}}</p>
+        <p><span class="detail-label">Time:</span> {{formatTime time "h:mm A"}}</p>
+        <p><span class="detail-label">Service:</span> {{service}}</p>
+        {{#if provider}}
+        <p><span class="detail-label">Provider:</span> {{provider}}</p>
+        {{/if}}
+        {{#if location}}
+        <p><span class="detail-label">Location:</span> {{location}}</p>
+        {{/if}}
+        {{#if cancellationReason}}
+        <p><span class="detail-label">Cancellation Reason:</span> {{cancellationReason}}</p>
+        {{/if}}
+      </div>
+      
+      {{#if showRebookOption}}
+      <p>If you would like to reschedule this appointment, you can do so by clicking the button below:</p>
+      
+      <p>
+        <a href="{{bookingUrl}}" class="cta-button">Schedule New Appointment</a>
+      </p>
+      {{/if}}
+      
+      <p>We apologize for any inconvenience this may have caused. If you have any questions, please don't hesitate to contact us.</p>
+      
+      <p>Best regards,<br>The Team</p>
+    </div>
+    <div class="footer">
+      <p>This email was sent to {{user.email}}. If you have any questions, please contact us at support@example.com.</p>
+      <p>&copy; {{currentYear}} Your Company Name. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

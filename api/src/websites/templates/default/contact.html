@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{business_name}} - Contact Us</title>
+<link rel="stylesheet" href="/styles.css">
+{{#if custom_css}}
+<style>
+{{{custom_css}}}
+</style>
+{{/if}}
+{{{custom_head}}}
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo">
+{{#if business_logo}}
+<img src="{{business_logo}}" alt="{{business_name}} Logo">
+{{else}}
+<h1>{{business_name}}</h1>
+{{/if}}
+</div>
+<nav>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/services">Services</a></li>
+<li><a href="/booking">Book Now</a></li>
+<li><a href="/about">About Us</a></li>
+<li><a href="/contact" class="active">Contact</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<section class="page-banner">
+    <div class="container">
+        <h1>{{contact_title|Contact Us}}</h1>
+        <p>{{contact_subtitle|We'd love to hear from you. Reach out to us with any questions or feedback.}}</p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>{{contact_info_title|Get in Touch}}</h2>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Visit Us</h3>
+                        <p>{{business_address|123 Main Street<br>City, State ZIP<br>Country}}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Call Us</h3>
+                        <p>{{business_phone|(555) 123-4567}}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email Us</h3>
+                        <p>{{business_email|info@yourbusiness.com}}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Business Hours</h3>
+                        <p>{{business_hours|
+                            Monday - Friday: 9:00 AM - 6:00 PM<br>
+                            Saturday: 10:00 AM - 4:00 PM<br>
+                            Sunday: Closed
+                        }}</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                        {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                        {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                        {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-container">
+                <h2>{{contact_form_title|Send Us a Message}}</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name*</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address*</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject*</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message*</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+                <div class="form-message" style="display: none;">
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Thank you! Your message has been sent successfully. We'll get back to you shortly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <h2>{{map_title|Find Us}}</h2>
+        <div class="map-container">
+            <!-- Map iframe would be dynamically injected based on business address -->
+            <div class="map-placeholder">
+                <p>Map loading...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                {{#if business_logo}}
+                <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                {{else}}
+                <h3>{{business_name}}</h3>
+                {{/if}}
+                <p>{{business_tagline}}</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/booking">Book Now</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> {{business_address|123 Main St, City, Country}}</p>
+                <p><i class="fas fa-phone"></i> {{business_phone|(555) 123-4567}}</p>
+                <p><i class="fas fa-envelope"></i> {{business_email|info@yourbusiness.com}}</p>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                    {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                    {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                    {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<script>
+    // Basic form submission handler
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.querySelector('.form-message');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here would be form validation and submission logic
+                
+                // For demo purposes, show success message after brief delay
+                setTimeout(function() {
+                    contactForm.style.display = 'none';
+                    formMessage.style.display = 'block';
+                }, 1000);
+            });
+        }
+        
+        // Map loading logic would go here
+        // In a real implementation, we would use the Google Maps API or similar
+        setTimeout(function() {
+            const mapPlaceholder = document.querySelector('.map-placeholder');
+            if (mapPlaceholder) {
+                mapPlaceholder.innerHTML = '<div class="map-frame">Map would be displayed here</div>';
+            }
+        }, 1000);
+    });
+</script>
+
+{{#if custom_js}}
+<script>
+    {{{custom_js}}}
+</script>
+{{/if}}
+</body>
+</html>

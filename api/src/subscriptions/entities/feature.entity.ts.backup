@@ -1,0 +1,50 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Plan } from "./plan.entity";
+
+@Entity("features")
+@ObjectType()
+export class Feature {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column()
+	@Field()
+	name: string;
+
+	@Column({ type: "jsonb" })
+	@Field()
+	value: any;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	description: string;
+
+	@Column({ name: "feature_code", nullable: true })
+	@Field({ nullable: true })
+	featureCode: string;
+
+	@ManyToOne(
+		() => Plan,
+		(plan) => plan.features,
+	)
+	@JoinColumn({ name: "plan_id" })
+	plan: Plan;
+
+	@CreateDateColumn({ name: "created_at" })
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn({ name: "updated_at" })
+	@Field()
+	updatedAt: Date;
+}

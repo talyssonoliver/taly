@@ -1,0 +1,97 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Plan } from "./plan.entity";
+import {
+	SubscriptionStatus,
+	BillingPeriod,
+} from "../constants/subscription.constants";
+
+@Entity("subscriptions")
+@ObjectType()
+export class Subscription {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column({ name: "user_id" })
+	@Field()
+	userId: string;
+
+	@ManyToOne(() => Plan, { eager: true })
+	@JoinColumn({ name: "plan_id" })
+	@Field(() => Plan)
+	plan: Plan;
+
+	@Column({
+		type: "enum",
+		enum: SubscriptionStatus,
+		default: SubscriptionStatus.ACTIVE,
+	})
+	@Field()
+	status: SubscriptionStatus;
+
+	@Column({ name: "start_date" })
+	@Field()
+	startDate: Date;
+
+	@Column({ name: "end_date", nullable: true })
+	@Field({ nullable: true })
+	endDate: Date;
+
+	@Column({ name: "renewal_date", nullable: true })
+	@Field({ nullable: true })
+	renewalDate: Date;
+
+	@Column({ name: "cancelled_at", nullable: true })
+	@Field({ nullable: true })
+	cancelledAt: Date;
+
+	@Column({ name: "is_auto_renew", default: true })
+	@Field()
+	isAutoRenew: boolean;
+
+	@Column({ type: "decimal", precision: 10, scale: 2 })
+	@Field()
+	price: number;
+
+	@Column({ default: "USD" })
+	@Field()
+	currency: string;
+
+	@Column({
+		name: "billing_period",
+		type: "enum",
+		enum: BillingPeriod,
+		default: BillingPeriod.MONTHLY,
+	})
+	@Field()
+	billingPeriod: BillingPeriod;
+
+	@Column({ name: "payment_method_id", nullable: true })
+	@Field({ nullable: true })
+	paymentMethodId: string;
+
+	@Column({ name: "next_invoice_id", nullable: true })
+	@Field({ nullable: true })
+	nextInvoiceId: string;
+
+	@Column({ type: "jsonb", nullable: true })
+	@Field({ nullable: true })
+	metadata: Record<string, any>;
+
+	@CreateDateColumn({ name: "created_at" })
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn({ name: "updated_at" })
+	@Field()
+	updatedAt: Date;
+}

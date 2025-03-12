@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Reminder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #F5A623;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    .appointment-details {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .appointment-details h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #eeeeee;
+      padding-bottom: 10px;
+    }
+    .appointment-details p {
+      margin: 5px 0;
+    }
+    .detail-label {
+      font-weight: bold;
+      color: #666666;
+    }
+    .footer {
+      font-size: 12px;
+      color: #999999;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #F5A623;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 15px 5px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Appointment Reminder</h1>
+    </div>
+    <div class="content">
+      <p>Dear {{user.firstName}},</p>
+      
+      <p>This is a friendly reminder about your upcoming appointment:</p>
+      
+      <div class="appointment-details">
+        <h3>Appointment Details</h3>
+        <p><span class="detail-label">Date:</span> {{formatDate date "MM/DD/YYYY"}}</p>
+        <p><span class="detail-label">Time:</span> {{formatTime time "h:mm A"}}</p>
+        <p><span class="detail-label">Service:</span> {{service}}</p>
+        {{#if provider}}
+        <p><span class="detail-label">Provider:</span> {{provider}}</p>
+        {{/if}}
+        {{#if location}}
+        <p><span class="detail-label">Location:</span> {{location}}</p>
+        {{/if}}
+        {{#if notes}}
+        <p><span class="detail-label">Notes:</span> {{notes}}</p>
+        {{/if}}
+      </div>
+      
+      <p>We look forward to seeing you. If you need to reschedule or cancel, please let us know as soon as possible.</p>
+      
+      <p>
+        <a href="{{appointmentUrl}}" class="cta-button">View Appointment</a>
+        <a href="{{rescheduleUrl}}" class="cta-button">Reschedule</a>
+      </p>
+      
+      <p>Thank you!</p>
+      
+      <p>Best regards,<br>The Team</p>
+    </div>
+    <div class="footer">
+      <p>This email was sent to {{user.email}}. If you have any questions, please contact us at support@example.com.</p>
+      <p>&copy; {{currentYear}} Your Company Name. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

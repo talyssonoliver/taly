@@ -1,0 +1,79 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	OneToMany,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Feature } from "./feature.entity";
+import { BillingPeriod } from "../constants/subscription.constants";
+
+@Entity("plans")
+@ObjectType()
+export class Plan {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column()
+	@Field()
+	name: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	description: string;
+
+	@Column({ type: "decimal", precision: 10, scale: 2 })
+	@Field()
+	price: number;
+
+	@Column({ default: "USD" })
+	@Field()
+	currency: string;
+
+	@Column({
+		type: "enum",
+		enum: BillingPeriod,
+		default: BillingPeriod.MONTHLY,
+	})
+	@Field()
+	billingPeriod: BillingPeriod;
+
+	@Column({ name: "is_active", default: true })
+	@Field()
+	isActive: boolean;
+
+	@Column({ name: "is_public", default: true })
+	@Field()
+	isPublic: boolean;
+
+	@Column({ name: "trial_days", default: 0 })
+	@Field()
+	trialDays: number;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	tier: number;
+
+	@OneToMany(
+		() => Feature,
+		(feature) => feature.plan,
+		{ eager: true, cascade: true },
+	)
+	@Field(() => [Feature])
+	features: Feature[];
+
+	@Column({ type: "jsonb", nullable: true })
+	@Field({ nullable: true })
+	metadata: Record<string, any>;
+
+	@CreateDateColumn({ name: "created_at" })
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn({ name: "updated_at" })
+	@Field()
+	updatedAt: Date;
+}

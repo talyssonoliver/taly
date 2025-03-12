@@ -1,0 +1,67 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID, Float, Int } from "@nestjs/graphql";
+import { Salon } from "./salon.entity";
+
+@Entity("services")
+@ObjectType()
+export class Service {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column()
+	@Field()
+	name: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	description: string;
+
+	@Column({ type: "decimal", precision: 10, scale: 2 })
+	@Field(() => Float)
+	price: number;
+
+	@Column()
+	@Field(() => Int)
+	duration: number; // in minutes
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	image: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	category: string;
+
+	@Column({ default: true })
+	@Field()
+	isActive: boolean;
+
+	@Column()
+	@Field()
+	salonId: string;
+
+	@ManyToOne(
+		() => Salon,
+		(salon) => salon.services,
+	)
+	@JoinColumn({ name: "salonId" })
+	@Field(() => Salon)
+	salon: Salon;
+
+	@CreateDateColumn()
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	@Field()
+	updatedAt: Date;
+}

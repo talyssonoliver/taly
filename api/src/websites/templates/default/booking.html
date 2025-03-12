@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - Booking</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <style>
+        {{{custom_css}}}
+    </style>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                {{#if business_logo}}
+                <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                {{else}}
+                <h1>{{business_name}}</h1>
+                {{/if}}
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/booking" class="active">Book Now</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner">
+        <div class="container">
+            <h1>{{booking_title|Book an Appointment}}</h1>
+            <p>{{booking_subtitle|Schedule your appointment in a few simple steps}}</p>
+        </div>
+    </section>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-steps">
+                    <div class="step active" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Select Service</div>
+                    </div>
+                    <div class="step" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Choose Staff</div>
+                    </div>
+                    <div class="step" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Select Date & Time</div>
+                    </div>
+                    <div class="step" id="step-4">
+                        <div class="step-number">4</div>
+                        <div class="step-text">Your Information</div>
+                    </div>
+                    <div class="step" id="step-5">
+                        <div class="step-number">5</div>
+                        <div class="step-text">Confirmation</div>
+                    </div>
+                </div>
+
+                <div class="booking-form-container">
+                    <!-- Step 1: Select Service -->
+                    <div class="booking-form active" id="form-step-1">
+                        <h2>Select a Service</h2>
+                        <div class="services-selection">
+                            {{#each services}}
+                            <div class="service-option">
+                                <input type="radio" name="service" id="service-{{this.id}}" value="{{this.id}}" {{#if @first}}checked{{/if}}>
+                                <label for="service-{{this.id}}">
+                                    <div class="service-name">{{this.name}}</div>
+                                    <div class="service-details">
+                                        <span class="service-duration">{{this.duration}} min</span>
+                                        <span class="service-price">{{this.price}}</span>
+                                    </div>
+                                </label>
+                            </div>
+                            {{else}}
+                            <div class="service-option">
+                                <input type="radio" name="service" id="service-1" value="1" checked>
+                                <label for="service-1">
+                                    <div class="service-name">Service 1</div>
+                                    <div class="service-details">
+                                        <span class="service-duration">60 min</span>
+                                        <span class="service-price"></span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" name="service" id="service-2" value="2">
+                                <label for="service-2">
+                                    <div class="service-name">Service 2</div>
+                                    <div class="service-details">
+                                        <span class="service-duration">45 min</span>
+                                        <span class="service-price"></span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="service-option">
+                                <input type="radio" name="service" id="service-3" value="3">
+                                <label for="service-3">
+                                    <div class="service-name">Service 3</div>
+                                    <div class="service-details">
+                                        <span class="service-duration">30 min</span>
+                                        <span class="service-price"></span>
+                                    </div>
+                                </label>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="form-navigation">
+                            <button class="btn btn-primary next-step">Next Step</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Choose Staff -->
+                    <div class="booking-form" id="form-step-2">
+                        <h2>Choose Staff Member</h2>
+                        <div class="staff-selection">
+                            {{#each staff}}
+                            <div class="staff-option">
+                                <input type="radio" name="staff" id="staff-{{this.id}}" value="{{this.id}}" {{#if @first}}checked{{/if}}>
+                                <label for="staff-{{this.id}}">
+                                    <div class="staff-avatar">
+                                        {{#if this.avatar}}
+                                        <img src="{{this.avatar}}" alt="{{this.name}}">
+                                        {{else}}
+                                        <div class="avatar-placeholder"></div>
+                                        {{/if}}
+                                    </div>
+                                    <div class="staff-info">
+                                        <div class="staff-name">{{this.name}}</div>
+                                        <div class="staff-position">{{this.position}}</div>
+                                    </div>
+                                </label>
+                            </div>
+                            {{else}}
+                            <div class="staff-option">
+                                <input type="radio" name="staff" id="staff-1" value="1" checked>
+                                <label for="staff-1">
+                                    <div class="staff-avatar">
+                                        <div class="avatar-placeholder"></div>
+                                    </div>
+                                    <div class="staff-info">
+                                        <div class="staff-name">Staff 1</div>
+                                        <div class="staff-position">Position</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="staff-option">
+                                <input type="radio" name="staff" id="staff-2" value="2">
+                                <label for="staff-2">
+                                    <div class="staff-avatar">
+                                        <div class="avatar-placeholder"></div>
+                                    </div>
+                                    <div class="staff-info">
+                                        <div class="staff-name">Staff 2</div>
+                                        <div class="staff-position">Position</div>
+                                    </div>
+                                </label>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="form-navigation">
+                            <button class="btn btn-secondary prev-step">Previous Step</button>
+                            <button class="btn btn-primary next-step">Next Step</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Select Date & Time -->
+                    <div class="booking-form" id="form-step-3">
+                        <h2>Select Date & Time</h2>
+                        <div class="date-selection">
+                            <div class="month-selector">
+                                <button class="prev-month"><i class="fas fa-chevron-left"></i></button>
+                                <div class="current-month">June 2023</div>
+                                <button class="next-month"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-grid">
+                                <div class="day-label">Sun</div>
+                                <div class="day-label">Mon</div>
+                                <div class="day-label">Tue</div>
+                                <div class="day-label">Wed</div>
+                                <div class="day-label">Thu</div>
+                                <div class="day-label">Fri</div>
+                                <div class="day-label">Sat</div>
+                                
+                                <!-- Calendar days would be dynamically generated -->
+                                <div class="calendar-day disabled">28</div>
+                                <div class="calendar-day disabled">29</div>
+                                <div class="calendar-day disabled">30</div>
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <!-- ... more days ... -->
+                            </div>
+                        </div>
+                        <div class="time-selection">
+                            <h3>Available Times</h3>
+                            <div class="time-slots">
+                                <button class="time-slot">9:00 AM</button>
+                                <button class="time-slot">10:00 AM</button>
+                                <button class="time-slot">11:00 AM</button>
+                                <button class="time-slot">1:00 PM</button>
+                                <button class="time-slot">2:00 PM</button>
+                                <button class="time-slot">3:00 PM</button>
+                                <!-- More time slots would be dynamically generated -->
+                            </div>
+                        </div>
+                        <div class="form-navigation">
+                            <button class="btn btn-secondary prev-step">Previous Step</button>
+                            <button class="btn btn-primary next-step">Next Step</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Your Information -->
+                    <div class="booking-form" id="form-step-4">
+                        <h2>Your Information</h2>
+                        <form class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name*</label>
+                                    <input type="text" id="first-name" name="first-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name*</label>
+                                    <input type="text" id="last-name" name="last-name" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address*</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number*</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notes">Special Notes or Requests</label>
+                                <textarea id="notes" name="notes" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="terms" required>
+                                    I agree to the <a href="/terms">Terms and Conditions</a>
+                                </label>
+                            </div>
+                        </form>
+                        <div class="form-navigation">
+                            <button class="btn btn-secondary prev-step">Previous Step</button>
+                            <button class="btn btn-primary next-step">Review Booking</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Confirmation -->
+                    <div class="booking-form" id="form-step-5">
+                        <h2>Review Your Booking</h2>
+                        <div class="booking-summary">
+                            <div class="summary-item">
+                                <div class="summary-label">Service:</div>
+                                <div class="summary-value" id="summary-service">Service Name</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Staff:</div>
+                                <div class="summary-value" id="summary-staff">Staff Name</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Date:</div>
+                                <div class="summary-value" id="summary-date">June 15, 2023</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Time:</div>
+                                <div class="summary-value" id="summary-time">10:00 AM</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Duration:</div>
+                                <div class="summary-value" id="summary-duration">60 minutes</div>
+                            </div>
+                            <div class="summary-item total">
+                                <div class="summary-label">Total:</div>
+                                <div class="summary-value" id="summary-price"></div>
+                            </div>
+                        </div>
+                        <div class="booking-confirmation">
+                            <p>Please review your booking details above. Once confirmed, you'll receive a confirmation email.</p>
+                        </div>
+                        <div class="form-navigation">
+                            <button class="btn btn-secondary prev-step">Edit Booking</button>
+                            <button class="btn btn-primary" id="confirm-booking">Confirm Booking</button>
+                        </div>
+                    </div>
+
+                    <!-- Success Message (Hidden by default) -->
+                    <div class="booking-confirmation-message" style="display: none;">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Booking Confirmed!</h2>
+                        <p>Your appointment has been successfully booked. A confirmation email has been sent to your email address.</p>
+                        <div class="confirmation-details">
+                            <p><strong>Booking Reference:</strong> <span id="booking-reference">BK12345</span></p>
+                        </div>
+                        <a href="/" class="btn btn-primary">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h3>{{business_name}}</h3>
+                    {{/if}}
+                    <p>{{business_tagline}}</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            <div class="footer-contact">
+              <h3>Contact Us</h3>
+              <p><i class="fas fa-map-marker-alt"></i> {{business_address|123 Main St, City, Country}}</p>
+              <p><i class="fas fa-phone"></i> {{business_phone|(555) 123-4567}}</p>
+              <p><i class="fas fa-envelope"></i> {{business_email|info@yourbusiness.com}}</p>
+            </div>
+            <div class="footer-social">
+              <h3>Follow Us</h3>
+            <div class="social-icons">
+              {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+              {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+              {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+              {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+            </div>
+            </div>
+            </div>
+            <div class="footer-bottom">
+            <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+          </div>
+        </div>
+    </footer>
+    <!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<script>
+    // Basic booking form navigation
+    document.addEventListener('DOMContentLoaded', function() {
+        const steps = document.querySelectorAll('.booking-steps .step');
+        const forms = document.querySelectorAll('.booking-form');
+        const nextButtons = document.querySelectorAll('.next-step');
+        const prevButtons = document.querySelectorAll('.prev-step');
+        const confirmButton = document.getElementById('confirm-booking');
+        
+        let currentStep = 0;
+        
+        // Next button click
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Here would be form validation logic
+                
+                // Move to next step
+                forms[currentStep].classList.remove('active');
+                steps[currentStep].classList.remove('active');
+                
+                currentStep++;
+                
+                forms[currentStep].classList.add('active');
+                steps[currentStep].classList.add('active');
+            });
+        });
+        
+        // Previous button click
+        prevButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                forms[currentStep].classList.remove('active');
+                steps[currentStep].classList.remove('active');
+                
+                currentStep--;
+                
+                forms[currentStep].classList.add('active');
+                steps[currentStep].classList.add('active');
+            });
+        });
+        
+        // Confirm booking
+        confirmButton.addEventListener('click', function() {
+            // Here would be booking submission logic
+            
+            // Show confirmation message
+            document.querySelector('.booking-form-container').innerHTML = 
+                document.querySelector('.booking-confirmation-message').outerHTML;
+            document.querySelector('.booking-confirmation-message').style.display = 'block';
+        });
+    });
+</script>
+
+{{#if custom_js}}
+<script>
+    {{{custom_js}}}
+</script>
+{{/if}}
+</body>
+</html>

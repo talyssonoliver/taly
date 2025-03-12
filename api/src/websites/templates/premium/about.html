@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - About Us</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <style>
+        {{{custom_css}}}
+    </style>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body class="premium-theme">
+    <header class="premium-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h1>{{business_name}}</h1>
+                    {{/if}}
+                </div>
+                <div class="header-right">
+                    <div class="header-info">
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{business_phone|(555) 123-4567}}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{business_email|info@yourbusiness.com}}</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="social-icons mini">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/booking">Book Now</a></li>
+                            <li><a href="/about" class="active">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="close-menu">
+            <i class="fas fa-times"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/booking">Book Now</a></li>
+                <li><a href="/about" class="active">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-info">
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>{{business_phone|(555) 123-4567}}</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{business_email|info@yourbusiness.com}}</span>
+            </div>
+            <div class="social-icons">
+                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+            </div>
+        </div>
+    </div>
+
+    <section class="page-banner premium-banner" style="background-image: url('{{about_banner_image|https://via.placeholder.com/1920x600}}');">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="banner-content">
+                <h1>{{about_title|About Us}}</h1>
+                <p>{{about_subtitle|Learn more about our business and our story}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-story">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{story_subtitle|Our Story}}</span>
+                <h2>{{story_title|Our Journey to Excellence}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="story-container">
+                <div class="story-content">
+                    <p class="lead">{{story_lead|At {{business_name}}, we have a passion for delivering exceptional services that exceed our clients' expectations.}}</p>
+                    <p>{{story_content_1|Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac felis vel odio tincidunt faucibus. Phasellus vitae tellus in purus scelerisque luctus. Mauris efficitur risus sit amet purus scelerisque, ut varius nulla tincidunt.}}</p>
+                    <p>{{story_content_2|Nam sed metus vel ex ultrices sollicitudin. Duis vulputate purus nec libero tincidunt, non aliquet dolor dapibus. Fusce varius augue ac magna sollicitudin fermentum. Cras eu dui sed enim efficitur sollicitudin.}}</p>
+                </div>
+                <div class="story-image">
+                    {{#if story_image}}
+                    <img src="{{story_image}}" alt="Our Story">
+                    {{else}}
+                    <div class="image-placeholder"></div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-mission" style="background-image: url('{{mission_background|https://via.placeholder.com/1920x600}}');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="mission-content">
+                <div class="section-heading light">
+                    <span class="subtitle">{{mission_subtitle|Our Mission}}</span>
+                    <h2>{{mission_title|What Drives Us}}</h2>
+                    <div class="heading-line"></div>
+                </div>
+                <div class="mission-text">
+                    <p>{{mission_content|Our mission is to provide exceptional service and build lasting relationships with our clients. We strive to exceed expectations and deliver quality results in everything we do.}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-values">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{values_subtitle|Core Values}}</span>
+                <h2>{{values_title|What We Stand For}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>{{value_1_title|Excellence}}</h3>
+                    <p>{{value_1_content|We strive for excellence in everything we do, providing the highest quality service to our clients.}}</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>{{value_2_title|Integrity}}</h3>
+                    <p>{{value_2_content|We conduct our business with honesty, transparency, and respect for our clients and colleagues.}}</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>{{value_3_title|Community}}</h3>
+                    <p>{{value_3_content|We are committed to giving back to our community and making a positive impact.}}</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>{{value_4_title|Compassion}}</h3>
+                    <p>{{value_4_content|We approach every client with empathy and understanding, recognizing their unique needs.}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{team_subtitle|Our Team}}</span>
+                <h2>{{team_title|Meet the Professionals}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="team-grid">
+                {{#each team_members}}
+                <div class="team-member">
+                    <div class="member-image">
+                        {{#if this.photo}}
+                        <img src="{{this.photo}}" alt="{{this.name}}">
+                        {{else}}
+                        <div class="member-placeholder"></div>
+                        {{/if}}
+                    </div>
+                    <div class="member-info">
+                        <h3>{{this.name}}</h3>
+                        <p class="member-position">{{this.position}}</p>
+                        <p class="member-bio">{{this.bio}}</p>
+                        <div class="member-social">
+                            {{#if this.linkedin}}<a href="{{this.linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            {{#if this.twitter}}<a href="{{this.twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 1</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 1. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 2</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 2. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 3</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 3. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 4</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 4. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+
+    <section class="about-timeline">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{timeline_subtitle|Our History}}</span>
+                <h2>{{timeline_title|Key Milestones}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">{{timeline_1_year|2010}}</div>
+                    <div class="timeline-content">
+                        <h3>{{timeline_1_title|Founded}}</h3>
+                        <p>{{timeline_1_content|Our company was founded with a vision to provide exceptional services to our community.}}</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">{{timeline_2_year|2015}}</div>
+                    <div class="timeline-content">
+                        <h3>{{timeline_2_title|Expansion}}</h3>
+                        <p>{{timeline_2_content|We expanded our services and moved to a larger location to better serve our growing clientele.}}</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">{{timeline_3_year|2018}}</div>
+                    <div class="timeline-content">
+                        <h3>{{timeline_3_title|Recognition}}</h3>
+                        <p>{{timeline_3_content|We were recognized as a top provider in our industry, receiving several awards for excellence.}}</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">{{timeline_4_year|Today}}</div>
+                    <div class="timeline-content">
+                        <h3>{{timeline_4_title|Continuing Our Journey}}</h3>
+                        <p>{{timeline_4_content|We continue to grow and evolve, always striving to provide the best possible service to our clients.}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-cta" style="background-image: url('{{cta_background|https://via.placeholder.com/1920x1080}}');">
+        <div class="container">
+            <div class="cta-content">
+                <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+                <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+                <a href="/booking" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <div class="footer-logo">
+                            {{#if business_logo}}
+                            <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                            {{else}}
+                            <h3>{{business_name}}</h3>
+                            {{/if}}
+                        </div>
+                        <p>{{business_description|We are dedicated to providing exceptional service and building lasting relationships with our clients.}}</p>
+                        <div class="footer-social">
+                            <div class="social-icons">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/booking">Book Now</a></li>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-services">
+                        <h3>Our Services</h3>
+                        <ul>
+                            {{#each services}}
+                            <li><a href="/services#{{this.id}}">{{this.name}}</a></li>
+                            {{else}}
+                            <li><a href="/services">Service 1</a></li>
+                            <li><a href="/services">Service 2</a></li>
+                            <li><a href="/services">Service 3</a></li>
+                            <li><a href="/services">Service 4</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{business_address|123 Main St, City, Country}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>{{business_phone|(555) 123-4567}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>{{business_email|info@yourbusiness.com}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>{{business_hours|Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const closeMenu = document.querySelector('.close-menu');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closeMenu) {
+                closeMenu.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+    </script>
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

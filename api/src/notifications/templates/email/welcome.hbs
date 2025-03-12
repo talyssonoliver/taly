@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #3498DB;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    .footer {
+      font-size: 12px;
+      color: #999999;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .steps {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .step {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .step:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .step-number {
+      display: inline-block;
+      background-color: #3498DB;
+      color: white;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #3498DB;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+    .features {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .feature {
+      flex-basis: 48%;
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .feature h3 {
+      margin-top: 0;
+      color: #3498DB;
+    }
+    @media (max-width: 600px) {
+      .feature {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome to Our Platform!</h1>
+    </div>
+    <div class="content">
+      <p>Dear {{user.firstName}},</p>
+      
+      <p>Thank you for signing up! We're excited to have you on board. Here's what you can do to get started:</p>
+      
+      <div class="steps">
+        <div class="step">
+          <p><span class="step-number">1</span> <strong>Complete your profile</strong></p>
+          <p>Add your information and preferences to get the most out of our platform.</p>
+        </div>
+        
+        <div class="step">
+          <p><span class="step-number">2</span> <strong>Explore our features</strong></p>
+          <p>Discover all the tools and features available to you.</p>
+        </div>
+        
+        <div class="step">
+          <p><span class="step-number">3</span> <strong>Book your first appointment</strong></p>
+          <p>Ready to get started? Book your first appointment now!</p>
+        </div>
+      </div>
+      
+      <p>
+        <a href="{{dashboardUrl}}" class="cta-button">Go to Your Dashboard</a>
+      </p>
+      
+      <h3>Key Features</h3>
+      
+      <div class="features">
+        <div class="feature">
+          <h3>Online Booking</h3>
+          <p>Book appointments anytime, anywhere, with our easy-to-use booking system.</p>
+        </div>
+        
+        <div class="feature">
+          <h3>Reminders</h3>
+          <p>Never miss an appointment with our automated reminders.</p>
+        </div>
+        
+        <div class="feature">
+          <h3>Secure Payments</h3>
+          <p>Pay securely online with our integrated payment system.</p>
+        </div>
+        
+        <div class="feature">
+          <h3>24/7 Support</h3>
+          <p>Our support team is always available to assist you.</p>
+        </div>
+      </div>
+      
+      <p>If you have any questions, our support team is ready to help you at support@example.com.</p>
+      
+      <p>We're thrilled to have you with us and look forward to serving you!</p>
+      
+      <p>Best regards,<br>The Team</p>
+    </div>
+    <div class="footer">
+      <p>This email was sent to {{user.email}}.</p>
+      <p>&copy; {{currentYear}} Your Company Name. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

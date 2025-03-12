@@ -1,0 +1,308 @@
+import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+  Logger,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+import { PrismaService } from '../database/prisma.service';
+import { RegisterDto } from './dto/register.dto';
+import { UsersService } from '../users/users.service';
+import { Role } from '../common/enums/roles.enum';
+import { JwtPayload } from '../common/interfaces/jwt-payload.interface';
+import { TokenResponse } from './interfaces/token-response.interface';
+import { OAuthUser } from './interfaces/oauth-user.interface';
+import { MailService } from '../mail/mail.service';
+
+@Injectable()
+export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+    private readonly prisma: PrismaService,
+    private readonly mailService: MailService,
+  ) {}
+
+  async validateUser(email: string, password: string): Promise<any> {
+    try {
+      const user = await this.usersService.findByEmail(email);
+      
+      if (!user) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+      
+      if (!user.isActive) {
+        throw new UnauthorizedException('Account is deactivated');
+      }
+      
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+      
+      const { password: _, ...result } = user;
+      return result;
+    } catch (error) {
+      this.logger.error(`User validation failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async register(registerDto: RegisterDto): Promise<TokenResponse> {
+    const { email, password, firstName, lastName } = registerDto;
+    
+    try {
+      // Check if user already exists
+      const existingUser = await this.usersService.findByEmail(email);
+      
+      if (existingUser) {
+        throw new ConflictException('Email already registered');
+      }
+      
+      // Hash password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      
+      // Create new user
+      const newUser = await this.usersService.create({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        role: Role.USER,
+        isActive: true,
+      });
+      
+      // Generate tokens
+      return this.generateTokens(newUser);
+    } catch (error) {
+      this.logger.error(`Registration failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async login(user: any): Promise<TokenResponse> {
+    return this.generateTokens(user);
+  }
+
+  async oauthLogin(oauthUser: OAuthUser): Promise<TokenResponse> {
+    try {
+      const { email, firstName, lastName, provider, providerId } = oauthUser;
+      
+      // Check if user exists
+      let user = await this.usersService.findByEmail(email);
+      
+      if (!user) {
+        // Create new user from OAuth data
+        const randomPassword = uuidv4();
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(randomPassword, saltRounds);
+        
+        user = await this.usersService.create({
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role: Role.USER,
+          isActive: true,
+          provider,
+          providerId,
+        });
+        
+        // Send welcome email
+        await this.mailService.sendWelcomeEmail(user.email, user.firstName);
+      } else {
+        // Update OAuth info if needed
+        if (!user.providerId || user.provider !== provider) {
+          await this.usersService.update(user.id, {
+            provider,
+            providerId,
+          });
+        }
+      }
+      
+      // Generate tokens
+      return this.generateTokens(user);
+    } catch (error) {
+      this.logger.error(`OAuth login failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async forgotPassword(email: string): Promise<{ message: string }> {
+    try {
+      const user = await this.usersService.findByEmail(email);
+      
+      if (!user) {
+        // Don't reveal whether email exists for security
+        return { message: 'If your email is registered, you will receive a password reset link' };
+      }
+      
+      // Generate reset token
+      const resetToken = uuidv4();
+      const tokenExpiry = new Date();
+      tokenExpiry.setHours(tokenExpiry.getHours() + 1); // Token valid for 1 hour
+      
+      // Save reset token to database
+      await this.prisma.passwordReset.upsert({
+        where: { userId: user.id },
+        update: {
+          token: resetToken,
+          expiresAt: tokenExpiry,
+        },
+        create: {
+          userId: user.id,
+          token: resetToken,
+          expiresAt: tokenExpiry,
+        },
+      });
+      
+      // Send password reset email
+      const resetUrl = `${this.configService.get('FRONTEND_URL')}/reset-password/${resetToken}`;
+      await this.mailService.sendPasswordResetEmail(user.email, user.firstName, resetUrl);
+      
+      return { message: 'If your email is registered, you will receive a password reset link' };
+    } catch (error) {
+      this.logger.error(`Forgot password request failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    try {
+      // Find valid token
+      const passwordReset = await this.prisma.passwordReset.findFirst({
+        where: {
+          token,
+          expiresAt: {
+            gt: new Date(),
+          },
+        },
+      });
+      
+      if (!passwordReset) {
+        throw new BadRequestException('Invalid or expired reset token');
+      }
+      
+      // Hash new password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+      
+      // Update user's password
+      await this.usersService.update(passwordReset.userId, {
+        password: hashedPassword,
+      });
+      
+      // Delete used token
+      await this.prisma.passwordReset.delete({
+        where: { id: passwordReset.id },
+      });
+      
+      return { message: 'Password has been reset successfully' };
+    } catch (error) {
+      this.logger.error(`Password reset failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async changePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    try {
+      const user = await this.usersService.findById(userId);
+      
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      
+      // Verify current password
+      const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+      
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Current password is incorrect');
+      }
+      
+      // Hash new password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+      
+      // Update password
+      await this.usersService.update(userId, {
+        password: hashedPassword,
+      });
+      
+      return { message: 'Password changed successfully' };
+    } catch (error) {
+      this.logger.error(`Change password failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async logout(userId: string): Promise<{ message: string }> {
+    try {
+      // Invalidate refresh tokens (if you're using them)
+      await this.prisma.refreshToken.deleteMany({
+        where: { userId },
+      });
+      
+      return { message: 'Logged out successfully' };
+    } catch (error) {
+      this.logger.error(`Logout failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  async refreshToken(userId: string): Promise<TokenResponse> {
+    try {
+      const user = await this.usersService.findById(userId);
+      
+      if (!user) {
+        throw new UnauthorizedException('Invalid refresh token');
+      }
+      
+      return this.generateTokens(user);
+    } catch (error) {
+      this.logger.error(`Token refresh failed: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  private generateTokens(user: any): TokenResponse {
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      roles: [user.role],
+    };
+    
+    const accessToken = this.jwtService.sign(payload);
+    
+    // Generate refresh token if needed
+    // const refreshToken = this.jwtService.sign(payload, {
+    //   expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') || '7d',
+    // });
+    
+    return {
+      accessToken,
+      // refreshToken,
+      expiresIn: this.configService.get<string>('JWT_EXPIRES_IN') || '1d',
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+      },
+    };
+  }
+}

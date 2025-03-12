@@ -1,0 +1,3 @@
+Your appointment has been confirmed for {{formatDate date "MM/DD/YYYY"}} at {{formatTime time "h:mm A"}}. 
+Service: {{service}}. 
+Reply HELP for assistance or STOP to opt out of SMS notifications.

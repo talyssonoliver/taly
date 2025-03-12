@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: taly-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    networks:
+      - taly-network
+    depends_on:
+      - postgres
+      - redis
+    command: npm run start:dev
+
+  postgres:
+    container_name: taly-postgres
+    image: postgres:14-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_DATABASE:-taly}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - taly-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    container_name: taly-redis
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - taly-network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  taly-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:

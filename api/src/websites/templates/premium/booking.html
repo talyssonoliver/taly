@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - Book Now</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <style>
+        {{{custom_css}}}
+    </style>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body class="premium-theme">
+    <header class="premium-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h1>{{business_name}}</h1>
+                    {{/if}}
+                </div>
+                <div class="header-right">
+                    <div class="header-info">
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{business_phone|(555) 123-4567}}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{business_email|info@yourbusiness.com}}</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="social-icons mini">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/booking" class="active">Book Now</a></li>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="close-menu">
+            <i class="fas fa-times"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/booking" class="active">Book Now</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-info">
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>{{business_phone|(555) 123-4567}}</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{business_email|info@yourbusiness.com}}</span>
+            </div>
+            <div class="social-icons">
+                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+            </div>
+        </div>
+    </div>
+
+    <section class="page-banner premium-banner" style="background-image: url('{{booking_banner_image|https://via.placeholder.com/1920x600}}');">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="banner-content">
+                <h1>{{booking_title|Book an Appointment}}</h1>
+                <p>{{booking_subtitle|Schedule your appointment in a few simple steps}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-booking">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-process">
+                    <div class="process-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Service</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Provider</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Date & Time</div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Your Details</div>
+                        </div>
+                        <div class="step" data-step="5">
+                            <div class="step-number">5</div>
+                            <div class="step-label">Confirmation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-forms">
+                        <!-- Step 1: Select Service -->
+                        <div class="booking-form active" data-form="1">
+                            <div class="form-header">
+                                <h2>Select a Service</h2>
+                                <p>Choose the service you'd like to book</p>
+                            </div>
+                            <div class="services-list">
+                                {{#each services}}
+                                <div class="service-option">
+                                    <input type="radio" name="service" id="service-{{this.id}}" value="{{this.id}}" {{#if @first}}checked{{/if}}>
+                                    <label for="service-{{this.id}}">
+                                        <div class="service-icon">
+                                            <i class="{{this.icon|fas fa-spa}}"></i>
+                                        </div>
+                                        <div class="service-details">
+                                            <h3>{{this.name}}</h3>
+                                            <p>{{this.description}}</p>
+                                            <div class="service-meta">
+                                                <span class="duration"><i class="far fa-clock"></i> {{this.duration}} min</span>
+                                                <span class="price">{{this.price}}</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                {{else}}
+                                <div class="service-option">
+                                    <input type="radio" name="service" id="service-1" value="1" checked>
+                                    <label for="service-1">
+                                        <div class="service-icon">
+                                            <i class="fas fa-spa"></i>
+                                        </div>
+                                        <div class="service-details">
+                                            <h3>Service 1</h3>
+                                            <p>Description of Service 1 and what clients can expect.</p>
+                                            <div class="service-meta">
+                                                <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                                                <span class="price"></span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="service-option">
+                                    <input type="radio" name="service" id="service-2" value="2">
+                                    <label for="service-2">
+                                        <div class="service-icon">
+                                            <i class="fas fa-massage"></i>
+                                        </div>
+                                        <div class="service-details">
+                                            <h3>Service 2</h3>
+                                            <p>Description of Service 2 and what clients can expect.</p>
+                                            <div class="service-meta">
+                                                <span class="duration"><i class="far fa-clock"></i> 45 min</span>
+                                                <span class="price"></span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="service-option">
+                                    <input type="radio" name="service" id="service-3" value="3">
+                                    <label for="service-3">
+                                        <div class="service-icon">
+                                            <i class="fas fa-hands"></i>
+                                        </div>
+                                        <div class="service-details">
+                                            <h3>Service 3</h3>
+                                            <p>Description of Service 3 and what clients can expect.</p>
+                                            <div class="service-meta">
+                                                <span class="duration"><i class="far fa-clock"></i> 30 min</span>
+                                                <span class="price"></span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                {{/each}}
+                            </div>
+                            <div class="form-navigation">
+                                <button class="btn btn-primary next-step" data-next="2">Continue to Select Provider</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Select Provider -->
+                        <div class="booking-form" data-form="2">
+                            <div class="form-header">
+                                <h2>Select a Provider</h2>
+                                <p>Choose the professional you'd like to work with</p>
+                            </div>
+                            <div class="providers-list">
+                                {{#each staff}}
+                                <div class="provider-option">
+                                    <input type="radio" name="provider" id="provider-{{this.id}}" value="{{this.id}}" {{#if @first}}checked{{/if}}>
+                                    <label for="provider-{{this.id}}">
+                                        <div class="provider-avatar">
+                                            {{#if this.avatar}}
+                                            <img src="{{this.avatar}}" alt="{{this.name}}">
+                                            {{else}}
+                                            <div class="avatar-placeholder"></div>
+                                            {{/if}}
+                                        </div>
+                                        <div class="provider-details">
+                                            <h3>{{this.name}}</h3>
+                                            <p class="position">{{this.position}}</p>
+                                            <p class="bio">{{this.bio}}</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                {{else}}
+                                <div class="provider-option">
+                                    <input type="radio" name="provider" id="provider-1" value="1" checked>
+                                    <label for="provider-1">
+                                        <div class="provider-avatar">
+                                            <div class="avatar-placeholder"></div>
+                                        </div>
+                                        <div class="provider-details">
+                                            <h3>Provider 1</h3>
+                                            <p class="position">Position</p>
+                                            <p class="bio">Short bio description about this provider.</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="provider-option">
+                                    <input type="radio" name="provider" id="provider-2" value="2">
+                                    <label for="provider-2">
+                                        <div class="provider-avatar">
+                                            <div class="avatar-placeholder"></div>
+                                        </div>
+                                        <div class="provider-details">
+                                            <h3>Provider 2</h3>
+                                            <p class="position">Position</p>
+                                            <p class="bio">Short bio description about this provider.</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                {{/each}}
+                            </div>
+                            <div class="form-navigation">
+                                <button class="btn btn-secondary prev-step" data-prev="1">Back to Services</button>
+                                <button class="btn btn-primary next-step" data-next="3">Continue to Select Date & Time</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Select Date and Time -->
+                        <div class="booking-form" data-form="3">
+                            <div class="form-header">
+                                <h2>Select Date & Time</h2>
+                                <p>Choose when you'd like to book your appointment</p>
+                            </div>
+                            <div class="calendar-container">
+                                <div class="calendar-header">
+                                    <button class="prev-month"><i class="fas fa-chevron-left"></i></button>
+                                    <div class="current-month">June 2023</div>
+                                    <button class="next-month"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                                <div class="calendar">
+                                    <div class="weekdays">
+                                        <div>Sun</div>
+                                        <div>Mon</div>
+                                        <div>Tue</div>
+                                        <div>Wed</div>
+                                        <div>Thu</div>
+                                        <div>Fri</div>
+                                        <div>Sat</div>
+                                    </div>
+                                    <div class="days">
+                                        <!-- Calendar days would be dynamically generated -->
+                                        <div class="day disabled">28</div>
+                                        <div class="day disabled">29</div>
+                                        <div class="day disabled">30</div>
+                                        <div class="day">1</div>
+                                        <div class="day">2</div>
+                                        <div class="day">3</div>
+                                        <div class="day">4</div>
+                                        <!-- ... more days ... -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="time-slots">
+                                <h3>Available Times for <span class="selected-date">June 15, 2023</span></h3>
+                                <div class="slots-container">
+                                    <button class="time-slot">9:00 AM</button>
+                                    <button class="time-slot">10:00 AM</button>
+                                    <button class="time-slot">11:00 AM</button>
+                                    <button class="time-slot">1:00 PM</button>
+                                    <button class="time-slot">2:00 PM</button>
+                                    <button class="time-slot">3:00 PM</button>
+                                    <button class="time-slot">4:00 PM</button>
+                                    <button class="time-slot">5:00 PM</button>
+                                </div>
+                            </div>
+                            <div class="form-navigation">
+                                <button class="btn btn-secondary prev-step" data-prev="2">Back to Providers</button>
+                                <button class="btn btn-primary next-step" data-next="4">Continue to Your Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: Your Details -->
+                        <div class="booking-form" data-form="4">
+                            <div class="form-header">
+                                <h2>Your Details</h2>
+                                <p>Please provide your contact information</p>
+                            </div>
+                            <form class="contact-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="first-name">First Name*</label>
+                                        <input type="text" id="first-name" name="firstName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name">Last Name*</label>
+                                        <input type="text" id="last-name" name="lastName" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email">Email Address*</label>
+                                        <input type="email" id="email" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number*</label>
+                                        <input type="tel" id="phone" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="notes">Special Notes or Requests</label>
+                                    <textarea id="notes" name="notes" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="terms" required>
+                                        <span class="checkmark"></span>
+                                        I agree to the <a href="/terms">Terms and Conditions</a>
+                                    </label>
+                                </div>
+                            </form>
+                            <div class="form-navigation">
+                                <button class="btn btn-secondary prev-step" data-prev="3">Back to Date & Time</button>
+                                <button class="btn btn-primary next-step" data-next="5">Review Booking</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 5: Confirmation -->
+                        <div class="booking-form" data-form="5">
+                            <div class="form-header">
+                                <h2>Review Your Booking</h2>
+                                <p>Please confirm your appointment details</p>
+                            </div>
+                            <div class="booking-summary">
+                                <div class="summary-item">
+                                    <div class="summary-label">Service:</div>
+                                    <div class="summary-value" id="summary-service">Service Name</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Provider:</div>
+                                    <div class="summary-value" id="summary-provider">Provider Name</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Date:</div>
+                                    <div class="summary-value" id="summary-date">June 15, 2023</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Time:</div>
+                                    <div class="summary-value" id="summary-time">10:00 AM</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Duration:</div>
+                                    <div class="summary-value" id="summary-duration">60 minutes</div>
+                                </div>
+                                <div class="summary-item total">
+                                    <div class="summary-label">Total:</div>
+                                    <div class="summary-value" id="summary-price"></div>
+                                </div>
+                            </div>
+                            <div class="form-navigation">
+                                <button class="btn btn-secondary prev-step" data-prev="4">Back to Your Details</button>
+                                <button class="btn btn-primary" id="confirm-booking">Confirm Booking</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Confirmation Success Message (Hidden by default) -->
+                        <div class="booking-success" style="display: none;">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2>Booking Confirmed!</h2>
+                            <p>Your appointment has been successfully booked. We've sent a confirmation email to your email address.</p>
+                            <div class="booking-details">
+                                <p><strong>Booking Reference:</strong> <span id="booking-reference">BK12345</span></p>
+                            </div>
+                            <div class="booking-actions">
+                                <a href="/" class="btn btn-secondary">Return to Home</a>
+                                <a href="/contact" class="btn btn-primary">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Need Assistance?</h3>
+                        <p>If you need help with booking or have any questions, please don't hesitate to contact us.</p>
+                        <div class="contact-options">
+                            <div class="contact-option">
+                                <i class="fas fa-phone"></i>
+                                <span>{{business_phone|(555) 123-4567}}</span>
+                            </div>
+                            <div class="contact-option">
+                                <i class="fas fa-envelope"></i>
+                                <span>{{business_email|info@yourbusiness.com}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-section">
+                        <h3>Business Hours</h3>
+                        <div class="business-hours">
+                            <div class="hours-row">
+                                <span class="day">Monday - Friday:</span>
+                                <span class="hours">9:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Saturday:</span>
+                                <span class="hours">10:00 AM - 4:00 PM</span>
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Sunday:</span>
+                                <span class="hours">Closed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-section">
+                        <h3>Cancellation Policy</h3>
+                        <p>We require at least 24 hours notice for cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <div class="footer-logo">
+                            {{#if business_logo}}
+                            <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                            {{else}}
+                            <h3>{{business_name}}</h3>
+                            {{/if}}
+                        </div>
+                        <p>{{business_description|We are dedicated to providing exceptional service and building lasting relationships with our clients.}}</p>
+                        <div class="footer-social">
+                            <div class="social-icons">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/booking">Book Now</a></li>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-services">
+                        <h3>Our Services</h3>
+                        <ul>
+                            {{#each services}}
+                            <li><a href="/services#{{this.id}}">{{this.name}}</a></li>
+                            {{else}}
+                            <li><a href="/services">Service 1</a></li>
+                            <li><a href="/services">Service 2</a></li>
+                            <li><a href="/services">Service 3</a></li>
+                            <li><a href="/services">Service 4</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{business_address|123 Main St, City, Country}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>{{business_phone|(555) 123-4567}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>{{business_email|info@yourbusiness.com}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>{{business_hours|Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const closeMenu = document.querySelector('.close-menu');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closeMenu) {
+                closeMenu.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Booking form navigation
+            const steps = document.querySelectorAll('.process-steps .step');
+            const forms = document.querySelectorAll('.booking-form');
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const confirmButton = document.getElementById('confirm-booking');
+            
+            // Next step handling
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentForm = parseInt(this.closest('.booking-form').getAttribute('data-form'));
+                    const nextForm = parseInt(this.getAttribute('data-next'));
+                    
+                    // Add validation here before proceeding
+                    
+                    // Hide current form and show next form
+                    document.querySelector(.booking-form[data-form="\"]).classList.remove('active');
+                    document.querySelector(.booking-form[data-form="\"]).classList.add('active');
+                    
+                    // Update steps
+                    document.querySelector(.step[data-step="\"]).classList.remove('active');
+                    document.querySelector(.step[data-step="\"]).classList.add('active');
+                    
+                    // Scroll to top of form container
+                    document.querySelector('.booking-forms').scrollTop = 0;
+                    
+                    // If on the summary step, populate summary data
+                    if (nextForm === 5) {
+                        populateSummary();
+                    }
+                });
+            });
+            
+            // Previous step handling
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentForm = parseInt(this.closest('.booking-form').getAttribute('data-form'));
+                    const prevForm = parseInt(this.getAttribute('data-prev'));
+                    
+                    // Hide current form and show previous form
+                    document.querySelector(.booking-form[data-form="\"]).classList.remove('active');
+                    document.querySelector(.booking-form[data-form="\"]).classList.add('active');
+                    
+                    // Update steps
+                    document.querySelector(.step[data-step="\"]).classList.remove('active');
+                    document.querySelector(.step[data-step="\"]).classList.add('active');
+                    
+                    // Scroll to top of form container
+                    document.querySelector('.booking-forms').scrollTop = 0;
+                });
+            });
+            
+            // Confirm booking
+            if (confirmButton) {
+                confirmButton.addEventListener('click', function() {
+                    // Here would be booking submission logic
+                    
+                    // Show success message
+                    document.querySelector('.booking-forms').innerHTML = 
+                        document.querySelector('.booking-success').outerHTML;
+                    document.querySelector('.booking-success').style.display = 'block';
+                    
+                    // Set reference number
+                    document.getElementById('booking-reference').textContent = 'BK' + Math.floor(100000 + Math.random() * 900000);
+                    document.getElementById('confirmation-date').textContent = document.getElementById('summary-date').textContent;
+                    document.getElementById('confirmation-time').textContent = document.getElementById('summary-time').textContent;
+                });
+            }
+            
+            // Calendar functionality
+            const daysContainer = document.querySelector('.days');
+            const currentMonthElement = document.querySelector('.current-month');
+            const prevMonthButton = document.querySelector('.prev-month');
+            const nextMonthButton = document.querySelector('.next-month');
+            const selectedDateElement = document.querySelector('.selected-date');
+            
+            let currentDate = new Date();
+            let selectedDate = null;
+            
+            // Render calendar for current month
+            renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            
+            // Previous month button
+            if (prevMonthButton) {
+                prevMonthButton.addEventListener('click', function() {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                });
+            }
+            
+            // Next month button
+            if (nextMonthButton) {
+                nextMonthButton.addEventListener('click', function() {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                });
+            }
+            
+            // Render calendar function
+            function renderCalendar(year, month) {
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDay = firstDay.getDay(); // 0 = Sunday
+                
+                // Update month display
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                currentMonthElement.textContent = \ \;
+                
+                // Clear existing calendar
+                daysContainer.innerHTML = '';
+                
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < startingDay; i++) {
+                    const previousMonth = new Date(year, month, 0);
+                    const day = previousMonth.getDate() - (startingDay - i - 1);
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'day disabled';
+                    dayElement.textContent = day;
+                    daysContainer.appendChild(dayElement);
+                }
+                
+                // Add days of the current month
+                const today = new Date();
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'day';
+                    dayElement.textContent = i;
+                    
+                    // Add 'today' class to current day
+                    if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Disable past days
+                    const dayDate = new Date(year, month, i);
+                    if (dayDate < new Date().setHours(0, 0, 0, 0)) {
+                        dayElement.classList.add('disabled');
+                    } else {
+                        // Add click handler for valid days
+                        dayElement.addEventListener('click', function() {
+                            document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
+                            this.classList.add('selected');
+                            
+                            selectedDate = new Date(year, month, i);
+                            const formattedDate = \ \, \;
+                            selectedDateElement.textContent = formattedDate;
+                            
+                            // Here would be code to fetch available time slots for this date
+                        });
+                    }
+                    
+                    daysContainer.appendChild(dayElement);
+                }
+                
+                // Add empty cells for days after the last day of the month
+                const remainingCells = 42 - (startingDay + daysInMonth); // 6 rows * 7 days = 42
+                for (let i = 1; i <= remainingCells; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'day disabled';
+                    dayElement.textContent = i;
+                    daysContainer.appendChild(dayElement);
+                }
+            }
+            
+            // Time slot selection
+            const timeSlots = document.querySelectorAll('.time-slot');
+            
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    timeSlots.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Populate booking summary
+            function populateSummary() {
+                // Get service details
+                const selectedService = document.querySelector('input[name="service"]:checked');
+                const serviceName = selectedService.closest('.service-option').querySelector('h3').textContent;
+                const servicePrice = selectedService.closest('.service-option').querySelector('.price').textContent;
+                const serviceDuration = selectedService.closest('.service-option').querySelector('.duration').textContent.replace('min', 'minutes');
+                
+                // Get provider details
+                const selectedProvider = document.querySelector('input[name="provider"]:checked');
+                const providerName = selectedProvider.closest('.provider-option').querySelector('h3').textContent;
+                
+                // Get date and time
+                const selectedDay = document.querySelector('.day.selected');
+                const selectedTimeSlot = document.querySelector('.time-slot.selected');
+                const date = selectedDateElement ? selectedDateElement.textContent : 'Not selected';
+                const time = selectedTimeSlot ? selectedTimeSlot.textContent : 'Not selected';
+                
+                // Get user details
+                const firstName = document.getElementById('first-name').value;
+                const lastName = document.getElementById('last-name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const notes = document.getElementById('notes').value;
+                
+                // Populate summary
+                document.getElementById('summary-service').textContent = serviceName;
+                document.getElementById('summary-provider').textContent = providerName;
+                document.getElementById('summary-date').textContent = date;
+                document.getElementById('summary-time').textContent = time;
+                document.getElementById('summary-duration').textContent = serviceDuration;
+                document.getElementById('summary-name').textContent = \ \;
+                document.getElementById('summary-email').textContent = email;
+                document.getElementById('summary-phone').textContent = phone;
+                document.getElementById('summary-price').textContent = servicePrice;
+                
+                // Handle notes
+                if (notes.trim() !== '') {
+                    document.getElementById('summary-notes').textContent = notes;
+                    document.getElementById('summary-notes-container').style.display = 'flex';
+                } else {
+                    document.getElementById('summary-notes-container').style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

@@ -1,0 +1,2 @@
+Your appointment on {{formatDate date "MM/DD/YYYY"}} at {{formatTime time "h:mm A"}} has been cancelled. 
+Please contact us at {{contactNumber}} to reschedule. Reply HELP for assistance.

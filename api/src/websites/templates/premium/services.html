@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - Services</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <style>
+        {{{custom_css}}}
+    </style>
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body class="premium-theme">
+    <header class="premium-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h1>{{business_name}}</h1>
+                    {{/if}}
+                </div>
+                <div class="header-right">
+                    <div class="header-info">
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{business_phone|(555) 123-4567}}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{business_email|info@yourbusiness.com}}</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="social-icons mini">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services" class="active">Services</a></li>
+                            <li><a href="/booking">Book Now</a></li>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="close-menu">
+            <i class="fas fa-times"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/services" class="active">Services</a></li>
+                <li><a href="/booking">Book Now</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-info">
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>{{business_phone|(555) 123-4567}}</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{business_email|info@yourbusiness.com}}</span>
+            </div>
+            <div class="social-icons">
+                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+            </div>
+        </div>
+    </div>
+
+    <section class="page-banner premium-banner" style="background-image: url('{{services_banner_image|https://via.placeholder.com/1920x600}}');">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="banner-content">
+                <h1>{{services_title|Our Services}}</h1>
+                <p>{{services_subtitle|Explore our range of professional services}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-intro">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{intro_subtitle|What We Offer}}</span>
+                <h2>{{intro_title|Professional Services for Every Need}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="intro-text">
+                <p>{{intro_text|At {{business_name}}, we offer a wide range of professional services designed to meet your needs. Our team of experts is dedicated to providing the highest quality service and ensuring your complete satisfaction.}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-categories">
+        <div class="container">
+            <div class="categories-wrapper">
+                <div class="categories-nav">
+                    <button class="category-btn active" data-filter="all">All Services</button>
+                    {{#each categories}}
+                    <button class="category-btn" data-filter="{{this.id}}">{{this.name}}</button>
+                    {{else}}
+                    <button class="category-btn" data-filter="cat1">Category 1</button>
+                    <button class="category-btn" data-filter="cat2">Category 2</button>
+                    <button class="category-btn" data-filter="cat3">Category 3</button>
+                    {{/each}}
+                </div>
+                
+                <div class="services-grid">
+                    {{#each services}}
+                    <div class="service-item" data-category="{{this.categoryId}}">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">
+                                    <i class="{{this.icon|fas fa-spa}}"></i>
+                                </div>
+                                <h3>{{this.name}}</h3>
+                            </div>
+                            <div class="service-body">
+                                <p>{{this.description}}</p>
+                                <div class="service-meta">
+                                    <div class="meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>{{this.duration}} min</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span>{{this.price}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-footer">
+                                <a href="/booking?service={{this.id}}" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="service-item" data-category="cat1">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-spa"></i>
+                                </div>
+                                <h3>Service 1</h3>
+                            </div>
+                            <div class="service-body">
+                                <p>Detailed description of Service 1 and what clients can expect from this service.</p>
+                                <div class="service-meta">
+                                    <div class="meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>60 min</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-footer">
+                                <a href="/booking" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-item" data-category="cat2">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-massage"></i>
+                                </div>
+                                <h3>Service 2</h3>
+                            </div>
+                            <div class="service-body">
+                                <p>Detailed description of Service 2 and what clients can expect from this service.</p>
+                                <div class="service-meta">
+                                    <div class="meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>45 min</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-footer">
+                                <a href="/booking" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-item" data-category="cat3">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-hands"></i>
+                                </div>
+                                <h3>Service 3</h3>
+                            </div>
+                            <div class="service-body">
+                                <p>Detailed description of Service 3 and what clients can expect from this service.</p>
+                                <div class="service-meta">
+                                    <div class="meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>30 min</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-footer">
+                                <a href="/booking" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-item" data-category="cat1">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h3>Service 4</h3>
+                            </div>
+                            <div class="service-body">
+                                <p>Detailed description of Service 4 and what clients can expect from this service.</p>
+                                <div class="service-meta">
+                                    <div class="meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>90 min</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-footer">
+                                <a href="/booking" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-cta" style="background-image: url('{{cta_background|https://via.placeholder.com/1920x1080}}');">
+        <div class="container">
+            <div class="cta-content">
+                <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+                <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+                <a href="/booking" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-faq">
+        <div class="container">
+            <div class="section-heading centered">
+                <span class="subtitle">{{faq_subtitle|FAQ}}</span>
+                <h2>{{faq_title|Frequently Asked Questions}}</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{faq_1_question|How do I schedule an appointment?}}</h3>
+                        <div class="toggle-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{faq_1_answer|You can schedule an appointment online through our booking page, by calling our office, or by sending us an email. We'll respond as quickly as possible to confirm your appointment.}}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{faq_2_question|What is your cancellation policy?}}</h3>
+                        <div class="toggle-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{faq_2_answer|We require at least 24 hours notice for cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee.}}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{faq_3_question|Do you accept insurance?}}</h3>
+                        <div class="toggle-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{faq_3_answer|We accept most major insurance plans. Please contact our office with your insurance information before your appointment so we can verify coverage.}}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{faq_4_question|What forms of payment do you accept?}}</h3>
+                        <div class="toggle-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{faq_4_answer|We accept cash, credit cards (Visa, MasterCard, American Express, Discover), debit cards, and HSA/FSA cards.}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-info">
+                        <div class="footer-logo">
+                            {{#if business_logo}}
+                            <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                            {{else}}
+                            <h3>{{business_name}}</h3>
+                            {{/if}}
+                        </div>
+                        <p>{{business_description|We are dedicated to providing exceptional service and building lasting relationships with our clients.}}</p>
+                        <div class="footer-social">
+                            <div class="social-icons">
+                                {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                                {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                                {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                                {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/booking">Book Now</a></li>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-services">
+                        <h3>Our Services</h3>
+                        <ul>
+                            {{#each services}}
+                            <li><a href="/services#{{this.id}}">{{this.name}}</a></li>
+                            {{else}}
+                            <li><a href="/services">Service 1</a></li>
+                            <li><a href="/services">Service 2</a></li>
+                            <li><a href="/services">Service 3</a></li>
+                            <li><a href="/services">Service 4</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{business_address|123 Main St, City, Country}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>{{business_phone|(555) 123-4567}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>{{business_email|info@yourbusiness.com}}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>{{business_hours|Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const closeMenu = document.querySelector('.close-menu');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closeMenu) {
+                closeMenu.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Category filtering
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const serviceItems = document.querySelectorAll('.service-item');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    serviceItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // FAQ accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', function() {
+                    item.classList.toggle('active');
+                    
+                    const icon = this.querySelector('.toggle-icon i');
+                    icon.classList.toggle('fa-plus');
+                    icon.classList.toggle('fa-minus');
+                });
+            });
+        });
+    </script>
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

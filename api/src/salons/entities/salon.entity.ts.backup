@@ -1,0 +1,117 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	OneToMany,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { User } from "../../users/entities/user.entity";
+import { Service } from "./service.entity";
+import { WorkingHours } from "./working-hours.entity";
+
+@Entity("salons")
+@ObjectType()
+export class Salon {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column()
+	@Field()
+	name: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	description: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	address: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	city: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	state: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	zipCode: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	country: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	phone: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	email: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	website: string;
+
+	@Column({ type: "decimal", precision: 10, scale: 8, nullable: true })
+	@Field({ nullable: true })
+	latitude: number;
+
+	@Column({ type: "decimal", precision: 11, scale: 8, nullable: true })
+	@Field({ nullable: true })
+	longitude: number;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	coverImage: string;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	logoImage: string;
+
+	@Column({ type: "simple-array", nullable: true })
+	@Field(() => [String], { nullable: true })
+	images: string[];
+
+	@Column({ default: true })
+	@Field()
+	isActive: boolean;
+
+	@Column()
+	@Field()
+	ownerId: string;
+
+	@ManyToOne(() => User)
+	@JoinColumn({ name: "ownerId" })
+	@Field(() => User)
+	owner: User;
+
+	@OneToMany(
+		() => Service,
+		(service) => service.salon,
+	)
+	@Field(() => [Service], { nullable: true })
+	services: Service[];
+
+	@OneToMany(
+		() => WorkingHours,
+		(workingHours) => workingHours.salon,
+	)
+	@Field(() => [WorkingHours], { nullable: true })
+	workingHours: WorkingHours[];
+
+	@CreateDateColumn()
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	@Field()
+	updatedAt: Date;
+}

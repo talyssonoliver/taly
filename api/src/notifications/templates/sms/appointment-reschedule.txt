@@ -1,0 +1,3 @@
+Your appointment has been rescheduled to {{formatDate newDate "MM/DD/YYYY"}} at {{formatTime newTime "h:mm A"}}. 
+Previous time: {{formatDate oldDate "MM/DD/YYYY"}} at {{formatTime oldTime "h:mm A"}}. 
+Reply HELP for assistance.

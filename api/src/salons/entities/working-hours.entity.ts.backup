@@ -1,0 +1,68 @@
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Salon } from "./salon.entity";
+
+export enum DayOfWeek {
+	MONDAY = "MONDAY",
+	TUESDAY = "TUESDAY",
+	WEDNESDAY = "WEDNESDAY",
+	THURSDAY = "THURSDAY",
+	FRIDAY = "FRIDAY",
+	SATURDAY = "SATURDAY",
+	SUNDAY = "SUNDAY",
+}
+
+@Entity("working_hours")
+@ObjectType()
+export class WorkingHours {
+	@PrimaryGeneratedColumn("uuid")
+	@Field(() => ID)
+	id: string;
+
+	@Column({
+		type: "enum",
+		enum: DayOfWeek,
+	})
+	@Field()
+	dayOfWeek: DayOfWeek;
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	openTime: string; // Format: 'HH:MM'
+
+	@Column({ nullable: true })
+	@Field({ nullable: true })
+	closeTime: string; // Format: 'HH:MM'
+
+	@Column({ default: false })
+	@Field()
+	isClosed: boolean;
+
+	@Column()
+	@Field()
+	salonId: string;
+
+	@ManyToOne(
+		() => Salon,
+		(salon) => salon.workingHours,
+	)
+	@JoinColumn({ name: "salonId" })
+	@Field(() => Salon)
+	salon: Salon;
+
+	@CreateDateColumn()
+	@Field()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	@Field()
+	updatedAt: Date;
+}
