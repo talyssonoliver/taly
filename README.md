@@ -1,8 +1,28 @@
 # Taly - Company Management SaaS Platform
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+  - [Appointment Scheduling](#1-appointment-scheduling)
+  - [Payment Processing](#2-payment-processing)
+  - [Subscription Plans](#3-subscription-plans)
+  - [Custom Website](#4-custom-website)
+  - [Advanced Dashboard](#5-advanced-dashboard)
+  - [Notifications](#6-notifications)
+- [Technology Stack](#technology-stack)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+  - [DevOps](#devops)
+- [Project Structure](#project-structure)
+- [How to Contribute](#how-to-contribute)
+- [Deployment](#deployment)
+- [License](#license)
+- [Contact](#contact)
+
 ## Overview
 
-Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for company owners to streamline their business operations, manage appointments, handle payments, and gain insights through advanced analytics. Built with scalability, flexibility, and user-centric design at its core, Taly empowers company owners to enhance customer satisfaction while optimizing operational efficiency.
+Taly is an all-in-one Software-as-a-Service (SaaS) platform designed specifically for service-based businesses (salons, spas, consultants, etc.) to streamline their operations. It enables business owners to efficiently manage appointments, process payments, and gain actionable insights through comprehensive analytics. Built with scalability, flexibility, and user-centric design principles, Taly empowers businesses to enhance customer satisfaction while optimizing their operational efficiency.
 
 ---
 
@@ -10,37 +30,39 @@ Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for company
 
 ### **1. Appointment Scheduling**
 
-- User-friendly booking system with calendar integration.
-- Automated reminders via SMS and email to reduce no-shows.
-- Role-based access for staff to manage schedules efficiently.
+- Intuitive booking interface with seamless calendar integration (Google Calendar, iCal, Outlook)
+- Smart automated reminders via SMS and email with configurable timing to minimize no-shows
+- Role-based staff access with customizable permissions for schedule management
 
 ### **2. Payment Processing**
 
-- Secure and seamless payment integration via Stripe and PayPal.
-- Automatic fee calculation based on subscription plans.
-- Detailed transaction history and refund support.
+- PCI-compliant payment integration via Stripe, PayPal, and Square
+- Smart fee calculation based on subscription plans with transparent pricing
+- Comprehensive transaction history with one-click refund capabilities and automated receipts
 
 ### **3. Subscription Plans**
 
-- **Free Plan**: Basic features with limited bookings.
-- **Pro Plan**: Advanced features with increased booking limits and dashboard access.
-- **Premium Plan**: Unlimited bookings, custom analytics, and priority support.
+- **Free Plan**: Essential features with up to 30 monthly bookings and basic reporting
+- **Pro Plan ($29/month)**: Enhanced features with up to 500 monthly bookings and advanced analytics
+- **Premium Plan ($79/month)**: Unlimited bookings, custom analytics dashboard, priority support, and white-labeling
 
 ### **4. Custom Website**
 
-- Personalized website for companies to showcase services.
-- Integrated booking functionality with domain customization (Pro & Premium plans).
+- Drag-and-drop website builder with industry-specific templates
+- SEO-optimized booking pages with conversion-focused design
+- Custom domain integration with SSL certification (Pro & Premium plans)
 
 ### **5. Advanced Dashboard**
 
-- Real-time metrics on bookings, payments, and customer interactions.
-- Exportable reports in PDF/Excel formats.
-- Interactive charts and graphs powered by modern data visualization tools.
+- Real-time business metrics with customizable KPI tracking
+- Exportable reports in multiple formats with scheduled delivery options
+- Interactive data visualization with trend analysis and forecasting tools
 
 ### **6. Notifications**
 
-- Multi-channel notifications for booking confirmations, reminders, and payment receipts.
-- Integration with Twilio (SMS) and Amazon SES (email).
+- Omnichannel communication system with appointment confirmations, reminders, and follow-ups
+- Enterprise-grade integration with Twilio (SMS/Voice), Amazon SES (email), and Firebase (push notifications)
+- Customizable notification templates with dynamic content insertion
 
 ---
 
@@ -48,44 +70,52 @@ Taly is an all-in-one Software-as-a-Service (SaaS) platform designed for company
 
 ### **Frontend**
 
-- **Framework**: Next.js (React.js) with server-side rendering (SSR).
-- **UI**: Tailwind CSS and Material-UI for responsive design.
-- **State Management**: Redux Toolkit and React Query.
+- **Framework**: Next.js 14 with App Router for optimized rendering
+- **UI**: Tailwind CSS with shadcn/ui components for consistent design
+- **State Management**: TanStack Query (React Query) and Zustand for efficient state handling
 
 ### **Backend**
 
-- **Framework**: NestJS (Node.js).
-- **Database**: PostgreSQL for relational data, Redis for caching.
-- **Authentication**: OAuth 2.0 and JWT.
+- **Framework**: NestJS 10 with modular architecture
+- **Database**: PostgreSQL 16 with TimescaleDB for time-series data, Redis for caching
+- **Authentication**: Auth.js with JWT tokens and multi-factor authentication support
 
 ### **DevOps**
 
-- **Orchestration**: Kubernetes for containerized microservices.
-- **CI/CD**: GitHub Actions for automated pipelines.
-- **Hosting**: AWS (EKS for backend, S3/CloudFront for frontend).
+- **Orchestration**: Kubernetes with Helm charts for service management
+- **CI/CD**: GitHub Actions with comprehensive testing pipelines
+- **Hosting**: AWS EKS for containerized backend, Vercel for frontend applications
 
 ---
 
 ## Project Structure
 
 ```
-C:\taly\dir-taly\taly
+\taly
 ├── apps/
-│   ├── dashboard/         # Admin panel for company owners
-│   ├── booking/           # Public booking interface
-│   ├── payments/          # Payment management module
-│   └── shared-ui/         # Reusable components
-├── backend/
-│   ├── auth-service/      # Authentication and authorization
-│   ├── user-service/      # User and company profile management
-│   ├── booking-service/   # Appointment scheduling
-│   ├── payment-service/   # Payment processing
-│   └── notification-service/ # Notifications (SMS/Email)
-├── serverless/            # Serverless functions (e.g., email templates, reports)
-├── shared/                # Common utilities and libraries
-├── devops/                # CI/CD, infrastructure as code, monitoring
-├── docs/                  # Documentation and architecture diagrams
-└── README.md              # Project overview
+│ ├── dashboard/ # Admin panel (Next.js)
+│ ├── booking/ # Public booking interface (Next.js) - Very basic for MVP
+│ ├── payments/ # Payment management (Next.js) - May be integrated into dashboard for MVP
+│ └── shared-ui/ # Reusable UI components
+├── api/ # Backend (NestJS - Monolith)
+│ ├── src/
+│ │ ├── appointments/ # Appointment logic
+│ │ ├── auth/ # Authentication
+│ │ ├── clients/ # Client management (simplified for MVP)
+│ │ ├── config/ # Configuration files
+│ │ ├── database/ # Prisma setup
+│ │ ├── mail/ # Email sending
+│ │ ├── notifications/ # SMS/Email notifications (simplified for MVP)
+│ │ ├── payments/ # Payment processing (basic)
+│ │ ├── companies/ # Managin Company data
+│ │ ├── subscriptions/ # Subscription management (simplified for MVP)
+│ │ ├── users/ # User management
+│ │ └── websites/ # Website builder (deferred)
+├── serverless/ # Serverless functions (e.g., email sending)
+├── shared/ # Common utilities, DTOs, types, etc.
+├── devops/ # CI/CD, infrastructure-as-code
+├── docs/ # Documentation
+└── README.md # This file
 ```
 
 ---
