@@ -1,0 +1,62 @@
+[
+	{
+		"id": "user-admin-1",
+		"email": "admin@taly.dev",
+		"firstName": "Admin",
+		"lastName": "User",
+		"role": "ADMIN",
+		"isActive": true,
+		"createdAt": "2023-01-15T08:00:00Z",
+		"updatedAt": "2023-01-15T08:00:00Z"
+	},
+	{
+		"id": "user-stylist-1",
+		"email": "stylist1@example.com",
+		"firstName": "Alice",
+		"lastName": "Smith",
+		"role": "STAFF",
+		"isActive": true,
+		"createdAt": "2023-02-20T09:30:00Z",
+		"updatedAt": "2023-02-20T09:30:00Z"
+	},
+	{
+		"id": "user-stylist-2",
+		"email": "stylist2@example.com",
+		"firstName": "Bob",
+		"lastName": "Jones",
+		"role": "STAFF",
+		"isActive": true,
+		"createdAt": "2023-03-10T14:00:00Z",
+		"updatedAt": "2023-03-10T14:00:00Z"
+	},
+	{
+		"id": "user-client-1",
+		"email": "client1@example.com",
+		"firstName": "Charlie",
+		"lastName": "Brown",
+		"role": "CLIENT",
+		"isActive": true,
+		"createdAt": "2023-04-01T10:15:00Z",
+		"updatedAt": "2023-04-01T10:15:00Z"
+	},
+	{
+		"id": "user-client-2",
+		"email": "client2@example.com",
+		"firstName": "Diana",
+		"lastName": "Miller",
+		"role": "CLIENT",
+		"isActive": true,
+		"createdAt": "2023-04-05T16:45:00Z",
+		"updatedAt": "2023-04-05T16:45:00Z"
+	},
+	{
+		"id": "user-client-3",
+		"email": "client3@example.com",
+		"firstName": "Eve",
+		"lastName": "Lee",
+		"role": "CLIENT",
+		"isActive": false,
+		"createdAt": "2023-04-05T16:45:00Z",
+		"updatedAt": "2023-04-05T16:45:00Z"
+	}
+]

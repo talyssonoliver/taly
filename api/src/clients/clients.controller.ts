@@ -30,7 +30,7 @@ import type { AddClientNoteDto } from './dto/add-client-note.dto';
 import type { ImportClientsDto } from './dto/import-clients.dto';
 import { PaginationUtil } from '../common/utils/pagination.util';
 import { FileInterceptor } from '@nestjs/platform-express';
-import type { Multer } from 'multer';
+import type { Express } from 'express';
 import { Client } from './entities/client.entity';
 
 @ApiTags('Clients')
@@ -127,7 +127,7 @@ export class ClientsController {
     @Body() addNoteDto: AddClientNoteDto,
     @CurrentUser() user,
   ) {
-    this.logger.log("Adding note to client with ID: " );
+    this.logger.log("Adding note to client with ID: ");
     const client = await this.clientsService.findById(id);
     
     if (!client) {
@@ -188,8 +188,8 @@ export class ClientsController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @Roles(Role.ADMIN)
-  async importClients(
-    @UploadedFile() file: Multer.File,
+  async importClients(@Body() importClientsDto: ImportClientsDto,
+    @UploadedFile() file: Express.Multer.File,
     @Body() importClientsDto: ImportClientsDto,
   ) {
     this.logger.log("Importing clients from file: ");

@@ -1,0 +1,57 @@
+# devops/ci-cd/serverless-pipeline.yml
+name: Serverless CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'serverless/**'  # Trigger on changes in the serverless directory
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'serverless/**'
+
+jobs:
+  deploy-serverless:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Install Serverless Framework
+      run: npm install -g serverless
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }} # e.g., us-east-1
+
+    - name: Deploy Serverless Functions
+      run: serverless deploy --stage prod # Consider using a stage variable
+      working-directory: ./serverless
+
+    - name: Notify on Success (Example)
+      if: success()
+      run: |
+        echo "✅ Serverless deployment successful on branch ${{ github.ref }}! <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+      # Consider using a Slack or other notification action
+
+    - name: Notify on Failure (Example)
+      if: failure()
+      run: |
+        echo "❌ Serverless deployment failed on branch ${{ github.ref }}! <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+      # Consider using a Slack or other notification action

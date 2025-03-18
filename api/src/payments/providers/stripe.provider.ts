@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import type { ConfigService } from '@nestjs/config';
 import * as Stripe from 'stripe';
-import { PaymentProvider as IPaymentProvider } from '../interfaces/payment-provider.interface';
-import { CardDetails } from '../interfaces/payment-provider.interface';
+import type { PaymentProvider as IPaymentProvider } from '../interfaces/payment-provider.interface';
+import type { CardDetails } from '../interfaces/payment-provider.interface';
 
 @Injectable()
 export class StripeProvider implements IPaymentProvider {
@@ -27,7 +27,7 @@ export class StripeProvider implements IPaymentProvider {
       // Create a payment intent
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount: Math.round(amount * 100), // Stripe requires amount in cents
-        currency: 'usd',
+        currency: 'gbp',
         payment_method: token,
         confirm: true,
         description,
@@ -61,8 +61,8 @@ export class StripeProvider implements IPaymentProvider {
         type: 'card',
         card: {
           number: cardDetails.number,
-          exp_month: parseInt(cardDetails.expiryMonth, 10),
-          exp_year: parseInt(cardDetails.expiryYear, 10),
+          exp_month: Number.parseInt(cardDetails.expiryMonth, 10),
+          exp_year: Number.parseInt(cardDetails.expiryYear, 10),
           cvc: cardDetails.cvc,
         },
       });
@@ -70,7 +70,7 @@ export class StripeProvider implements IPaymentProvider {
       // Create a payment intent
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount: Math.round(amount * 100), // Stripe requires amount in cents
-        currency: 'usd',
+        currency: 'gbp',
         payment_method: paymentMethod.id,
         confirm: true,
         description,
@@ -102,7 +102,7 @@ export class StripeProvider implements IPaymentProvider {
       // Create a payment intent
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount: Math.round(amount * 100), // Stripe requires amount in cents
-        currency: 'usd',
+        currency: 'gbp',
         payment_method: paymentMethodId,
         confirm: true,
         description,
@@ -198,8 +198,8 @@ export class StripeProvider implements IPaymentProvider {
         type: 'card',
         card: {
           number: cardDetails.number,
-          exp_month: parseInt(cardDetails.expiryMonth, 10),
-          exp_year: parseInt(cardDetails.expiryYear, 10),
+          exp_month: Number.parseInt(cardDetails.expiryMonth, 10),
+          exp_year: Number.parseInt(cardDetails.expiryYear, 10),
           cvc: cardDetails.cvc,
         },
       });

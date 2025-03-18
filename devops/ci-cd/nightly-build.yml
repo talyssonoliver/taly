@@ -1,0 +1,61 @@
+# devops/ci-cd/nightly-build.yml
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Run linters (All projects)
+      run: pnpm lint
+
+    - name: Run tests (All projects)
+      run: pnpm test
+
+    - name: Build backend
+      run: pnpm build
+      working-directory: ./backend
+
+    - name: Build frontend (dashboard)
+      run: pnpm build
+      working-directory: ./apps/dashboard
+    
+    - name: Build frontend (booking)
+      run: pnpm build
+      working-directory: ./apps/booking
+
+    - name: Build frontend (payments)
+      run: pnpm build
+      working-directory: ./apps/payments
+
+    # Add steps for running end-to-end tests, if applicable
+    # - name: Run E2E Tests
+    #   run: pnpm run test:e2e
+
+    - name: Notify on Success (Example)
+      if: success()
+      run: |
+        echo "✅ Nightly build successful! :rocket:"
+      # Consider using a Slack or other notification action
+
+    - name: Notify on Failure (Example)
+      if: failure()
+      run: |
+        echo "❌ Nightly build failed! :boom:"
+      # Consider using a Slack or other notification action

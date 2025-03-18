@@ -29,7 +29,7 @@ export class Plan {
 	@Field()
 	price: number;
 
-	@Column({ default: "USD" })
+	@Column({ default: "GBP" })
 	@Field()
 	currency: string;
 

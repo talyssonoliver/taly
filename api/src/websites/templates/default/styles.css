@@ -1,0 +1,183 @@
+/* Basic reset and global styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	color: #333;
+	background-color: #f4f4f4;
+}
+
+.container {
+	width: 85%;
+	margin: auto;
+	overflow: hidden;
+}
+
+/* Header Styles */
+header {
+	background: #333;
+	color: #fff;
+	padding: 1rem 0;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+}
+
+header nav ul {
+	padding: 0;
+	list-style: none;
+}
+
+header nav ul li {
+	display: inline;
+	margin-right: 20px;
+}
+
+header nav ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Page Banner Styles */
+.page-banner {
+	background-color: #e9ecef;
+	padding: 20px 0;
+	text-align: center;
+}
+
+/* About Story Styles */
+.about-story {
+	padding: 20px 0;
+}
+
+.about-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.about-content {
+	text-align: left;
+}
+
+.image-placeholder {
+	background-color: #ddd;
+	width: 100%;
+	height: 300px; 
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #666;
+}
+/* Mission Section */
+.about-mission {
+	padding: 20px 0;
+	text-align: center;
+	background-color: #f8f9fa;
+}
+.mission-container {
+	margin: 0 auto;
+}
+
+/* Team Section */
+.team-section {
+	padding: 20px 0;
+}
+
+.team-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	padding-top: 20px;
+}
+
+.team-member {
+	text-align: center;
+}
+
+.member-image {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin: 0 auto;
+	background-color: #ddd;
+	overflow: hidden;
+}
+.member-placeholder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ddd;
+}
+
+.team-member img {
+	width: 100%;
+	height: auto;
+}
+
+/* Values Section */
+.about-values {
+	padding: 20px 0;
+	text-align: center;
+}
+
+.values-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	padding-top: 20px;
+}
+
+.value-card {
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+/* CTA Section */
+.cta {
+	background-color: #333;
+	color: #fff;
+	padding: 20px 0;
+	text-align: center;
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #333;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.btn-primary {
+	background-color: #007bff;
+}
+
+/* Footer Styles */
+footer {
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding: 20px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.about-grid {
+		grid-template-columns: 1fr;
+	}
+	.container {
+		width: 90%;
+	}
+}

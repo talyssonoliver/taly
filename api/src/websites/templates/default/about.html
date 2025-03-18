@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{business_name}} - About Us</title>
+    <link rel="stylesheet" href="/styles.css">
+    {{#if custom_css}}
+    <link rel="stylesheet" href="{{custom_css}}">
+    {{/if}}
+    {{{custom_head}}}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                {{#if business_logo}}
+                <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                {{else}}
+                <h1>{{business_name}}</h1>
+                {{/if}}
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/booking">Book Now</a></li>
+                    <li><a href="/about" class="active">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner">
+        <div class="container">
+            <h1>{{about_title|About Us}}</h1>
+            <p>{{about_subtitle|Learn more about our business and our story}}</p>
+        </div>
+    </section>
+
+    <section class="about-story">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>{{about_story_title|Our Story}}</h2>
+                    <p>{{about_story_content|Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac felis vel odio tincidunt faucibus. Phasellus vitae tellus in purus scelerisque luctus. Mauris efficitur risus sit amet purus scelerisque, ut varius nulla tincidunt.}}</p>
+                    <p>{{about_story_content_2|Nam sed metus vel ex ultrices sollicitudin. Duis vulputate purus nec libero tincidunt, non aliquet dolor dapibus. Fusce varius augue ac magna sollicitudin fermentum. Cras eu dui sed enim efficitur sollicitudin.}}</p>
+                </div>
+                <div class="about-image">
+                    {{#if about_image}}
+                    <img src="{{about_image}}" alt="About {{business_name}}">
+                    {{else}}
+                    <div class="image-placeholder"></div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-mission">
+        <div class="container">
+            <div class="mission-container">
+                <h2>{{mission_title|Our Mission}}</h2>
+                <p>{{mission_content|Our mission is to provide exceptional service and build lasting relationships with our clients. We strive to exceed expectations and deliver quality results in everything we do.}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <h2>{{team_title|Meet Our Team}}</h2>
+            <div class="team-grid">
+                {{#each team_members}}
+                <div class="team-member">
+                    <div class="member-image">
+                        {{#if this.photo}}
+                        <img src="{{this.photo}}" alt="{{this.name}}">
+                        {{else}}
+                        <div class="member-placeholder"></div>
+                        {{/if}}
+                    </div>
+                    <h3>{{this.name}}</h3>
+                    <p class="member-position">{{this.position}}</p>
+                    <p class="member-bio">{{this.bio}}</p>
+                    <div class="member-social">
+                        {{#if this.linkedin}}<a href="{{this.linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                        {{#if this.twitter}}<a href="{{this.twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                    </div>
+                </div>
+                {{else}}
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 1</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 1. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 2</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 2. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <div class="member-placeholder"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 3</h3>
+                        <p class="member-position">Position</p>
+                        <p class="member-bio">Bio description for Team Member 3. This team member specializes in certain services and has X years of experience.</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+
+    <section class="about-values">
+        <div class="container">
+            <h2>{{values_title|Our Values}}</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>{{value_1_title|Excellence}}</h3>
+                    <p>{{value_1_content|We strive for excellence in everything we do, providing the highest quality service to our clients.}}</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>{{value_2_title|Integrity}}</h3>
+                    <p>{{value_2_content|We conduct our business with honesty, transparency, and respect for our clients and colleagues.}}</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>{{value_3_title|Community}}</h3>
+                    <p>{{value_3_content|We are committed to giving back to our community and making a positive impact.}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>{{cta_title|Ready to Experience Our Services?}}</h2>
+            <p>{{cta_subtitle|Book an appointment today and see the difference for yourself.}}</p>
+            <a href="/booking" class="btn btn-primary">Book Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    {{#if business_logo}}
+                    <img src="{{business_logo}}" alt="{{business_name}} Logo">
+                    {{else}}
+                    <h3>{{business_name}}</h3>
+                    {{/if}}
+                    <p>{{business_tagline}}</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> {{business_address|123 Main St, City, Country}}</p>
+                    <p><i class="fas fa-phone"></i> {{business_phone|(555) 123-4567}}</p>
+                    <p><i class="fas fa-envelope"></i> {{business_email|info@yourbusiness.com}}</p>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        {{#if social_facebook}}<a href="{{social_facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>{{/if}}
+                        {{#if social_instagram}}<a href="{{social_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>{{/if}}
+                        {{#if social_twitter}}<a href="{{social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>{{/if}}
+                        {{#if social_linkedin}}<a href="{{social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>{{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© {{current_year}} {{business_name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    {{#if custom_js}}
+    <script>
+        {{{custom_js}}}
+    </script>
+    {{/if}}
+</body>
+</html>

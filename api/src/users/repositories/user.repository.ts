@@ -3,6 +3,7 @@ import type { PrismaService } from "../../database/prisma.service";
 import type { CreateUserDto } from "../dto/create-user.dto";
 import type { UpdateUserDto } from "../dto/update-user.dto";
 import type { User } from "../interfaces/user.interface";
+import { Prisma } from "@prisma/client";
 
 interface FindOptions {
 	skip?: number;

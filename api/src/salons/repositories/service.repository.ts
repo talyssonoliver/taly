@@ -2,31 +2,54 @@
 import type { PrismaService } from "../../database/prisma.service";
 import type { CreateServiceDto } from "../dto/create-service.dto";
 import type { UpdateServiceDto } from "../dto/update-service.dto";
-import type { Prisma } from "@prisma/client";
+import type { Service } from "@prisma/client";
 
-// Define Service type based on Prisma's generated types
-type Service = Prisma.ServiceGetPayload<{
-	include: {
-		salon: {
-			select: {
-				id: true;
-				name: true;
-				ownerId?: true;
-			};
-		};
-	};
-}>;
+// Define interface for salon information included with service
+interface SalonInfo {
+	id: string;
+	name: string;
+	ownerId?: string;
+}
 
+// Define the complete service entity with included relations
+interface ServiceWithRelations extends Service {
+	salon: SalonInfo;
+}
+
+interface ServiceWhereInput {
+	id?: string | { equals?: string; in?: string[] };
+	salonId?: string | { equals?: string };
+	name?: string | { contains?: string; mode?: "insensitive" | "default" };
+	price?: number | { gte?: number; lte?: number };
+	[key: string]: unknown; // For other dynamic filters
+}
+
+interface ServiceOrderByInput {
+	id?: "asc" | "desc";
+	name?: "asc" | "desc";
+	price?: "asc" | "desc";
+	createdAt?: "asc" | "desc";
+	updatedAt?: "asc" | "desc";
+	[key: string]: "asc" | "desc" | undefined;
+}
+
+interface ServiceInclude {
+	salon?:
+		| boolean
+		| { select?: { id?: boolean; name?: boolean; ownerId?: boolean } };
+}
+
+// Define repository method parameter interfaces
 interface FindManyOptions {
 	skip?: number;
 	take?: number;
-	where?: Prisma.ServiceWhereInput;
-	orderBy?: Prisma.ServiceOrderByWithRelationInput;
-	include?: Prisma.ServiceInclude;
+	where?: ServiceWhereInput;
+	orderBy?: ServiceOrderByInput | ServiceOrderByInput[];
+	include?: ServiceInclude;
 }
 
 interface CountOptions {
-	where?: Prisma.ServiceWhereInput;
+	where?: ServiceWhereInput;
 }
 
 @Injectable()
@@ -35,7 +58,7 @@ export class ServiceRepository {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-	async findMany(options: FindManyOptions): Promise<Service[]> {
+	async findMany(options: FindManyOptions): Promise<ServiceWithRelations[]> {
 		try {
 			const { skip, take, where, orderBy, include } = options;
 
@@ -52,7 +75,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations[]>;
 		} catch (error) {
 			this.logger.error(
 				`Error finding services: ${error.message}`,
@@ -78,7 +101,7 @@ export class ServiceRepository {
 		}
 	}
 
-	async findById(id: string): Promise<Service | null> {
+	async findById(id: string): Promise<ServiceWithRelations | null> {
 		try {
 			return this.prisma.service.findUnique({
 				where: { id },
@@ -91,7 +114,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations | null>;
 		} catch (error) {
 			this.logger.error(
 				`Error finding service by ID ${id}: ${error.message}`,
@@ -101,7 +124,10 @@ export class ServiceRepository {
 		}
 	}
 
-	async findByIdForSalon(id: string, salonId: string): Promise<Service | null> {
+	async findByIdForSalon(
+		id: string,
+		salonId: string,
+	): Promise<ServiceWithRelations | null> {
 		try {
 			return this.prisma.service.findFirst({
 				where: {
@@ -117,7 +143,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations | null>;
 		} catch (error) {
 			this.logger.error(
 				`Error finding service by ID ${id} for salon ${salonId}: ${error.message}`,
@@ -127,7 +153,9 @@ export class ServiceRepository {
 		}
 	}
 
-	async create(data: CreateServiceDto & { salonId: string }): Promise<Service> {
+	async create(
+		data: CreateServiceDto & { salonId: string },
+	): Promise<ServiceWithRelations> {
 		try {
 			return this.prisma.service.create({
 				data,
@@ -139,7 +167,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations>;
 		} catch (error) {
 			this.logger.error(
 				`Error creating service: ${error.message}`,
@@ -149,7 +177,10 @@ export class ServiceRepository {
 		}
 	}
 
-	async update(id: string, data: UpdateServiceDto): Promise<Service> {
+	async update(
+		id: string,
+		data: UpdateServiceDto,
+	): Promise<ServiceWithRelations> {
 		try {
 			return this.prisma.service.update({
 				where: { id },
@@ -162,7 +193,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations>;
 		} catch (error) {
 			this.logger.error(
 				`Error updating service ${id}: ${error.message}`,
@@ -172,7 +203,7 @@ export class ServiceRepository {
 		}
 	}
 
-	async delete(id: string): Promise<Service> {
+	async delete(id: string): Promise<ServiceWithRelations> {
 		try {
 			return this.prisma.service.delete({
 				where: { id },
@@ -184,7 +215,7 @@ export class ServiceRepository {
 						},
 					},
 				},
-			});
+			}) as Promise<ServiceWithRelations>;
 		} catch (error) {
 			this.logger.error(
 				`Error deleting service ${id}: ${error.message}`,

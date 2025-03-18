@@ -20,11 +20,11 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { Public } from '../common/decorators/public.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Role } from '../common/enums/roles.enum';
-import { PaymentsService } from './payments.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
-import { ProcessPaymentDto } from './dto/process-payment.dto';
-import { RefundPaymentDto } from './dto/refund-payment.dto';
-import { PaymentMethodDto } from './dto/payment-method.dto';
+import type { PaymentsService } from './payments.service';
+import type { CreatePaymentDto } from './dto/create-payment.dto';
+import type { ProcessPaymentDto } from './dto/process-payment.dto';
+import type { RefundPaymentDto } from './dto/refund-payment.dto';
+import type { PaymentMethodDto } from './dto/payment-method.dto';
 import { PaginationUtil } from '../common/utils/pagination.util';
 import { PaymentStatus } from '../common/enums/payment-status.enum';
 
@@ -48,7 +48,7 @@ export class PaymentsController {
     @Query('limit') limit = 10,
     @Query('status') status?: PaymentStatus,
   ) {
-    this.logger.log("Finding all payments with page=" + page + ", limit=" + limit + (status ? ", status=" + status : ""));
+    this.logger.log(`Finding all payments with page=${page}, limit=${limit}${status ? `, status=${status}` : ""}`);
     const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.paymentsService.findAll(pageNum, limitNum, { status });
   }
@@ -58,11 +58,11 @@ export class PaymentsController {
   @ApiParam({ name: 'id', description: 'Payment ID' })
   @Roles(Role.ADMIN, Role.STAFF)
   async findOne(@Param('id') id: string) {
-    this.logger.log(Finding payment with ID: );
-    const payment = await this.paymentsService.findById(id);
+      this.logger.log(`Finding payment with ID: ${id}`);
+      const payment = await this.paymentsService.findById(id);
     
     if (!payment) {
-      throw new NotFoundException(Payment with ID  not found);
+      throw new NotFoundException(`Payment with ID ${id} not found`);
     }
     
     return payment;
@@ -75,12 +75,12 @@ export class PaymentsController {
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @Roles(Role.ADMIN, Role.STAFF)
   async findByUser(
-    @Param('userId') userId: string,
-    @Query('page') page = 1,
-    @Query('limit') limit = 10,
-  ) {
-    this.logger.log(Finding payments for user ID: );
-    const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
+      @Param('userId') userId: string,
+      @Query('page') page = 1,
+      @Query('limit') limit = 10,
+    ) {
+      this.logger.log(`Finding payments for user ID: ${userId}`);
+      const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.paymentsService.findByUserId(userId, pageNum, limitNum);
   }
 
@@ -89,12 +89,12 @@ export class PaymentsController {
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   async findMyPayments(
-    @CurrentUser() user,
-    @Query('page') page = 1,
-    @Query('limit') limit = 10,
-  ) {
-    this.logger.log(Finding payments for current user ID: );
-    const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
+      @CurrentUser() user,
+      @Query('page') page = 1,
+      @Query('limit') limit = 10,
+    ) {
+      this.logger.log(`Finding payments for current user ID: ${user.id}`);
+      const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.paymentsService.findByUserId(user.id, pageNum, limitNum);
   }
 
@@ -102,26 +102,26 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Create a new payment' })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() createPaymentDto: CreatePaymentDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(Creating payment for appointment: );
-    return this.paymentsService.create(createPaymentDto, user.id);
+      @Body() createPaymentDto: CreatePaymentDto,
+      @CurrentUser() user,
+    ) {
+      this.logger.log('Creating payment for appointment');
+      return this.paymentsService.create(createPaymentDto, user.id);
   }
 
   @Post('process')
   @ApiOperation({ summary: 'Process a payment' })
   @HttpCode(HttpStatus.OK)
   async process(
-    @Body() processPaymentDto: ProcessPaymentDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(Processing payment: );
-    
-    const payment = await this.paymentsService.findById(processPaymentDto.paymentId);
+      @Body() processPaymentDto: ProcessPaymentDto,
+      @CurrentUser() user,
+    ) {
+      this.logger.log(`Processing payment: ${processPaymentDto.paymentId}`);
+      
+      const payment = await this.paymentsService.findById(processPaymentDto.paymentId);
     
     if (!payment) {
-      throw new NotFoundException(Payment with ID  not found);
+      throw new NotFoundException(`Payment with ID ${processPaymentDto.paymentId} not found`);
     }
     
     // Check if user is authorized to process this payment
@@ -137,12 +137,12 @@ export class PaymentsController {
   @HttpCode(HttpStatus.OK)
   @Roles(Role.ADMIN, Role.STAFF)
   async refund(
-    @Body() refundPaymentDto: RefundPaymentDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(Refunding payment: );
-    
-    const payment = await this.paymentsService.findById(refundPaymentDto.paymentId);
+      @Body() refundPaymentDto: RefundPaymentDto,
+      @CurrentUser() user,
+    ) {
+      this.logger.log(`Refunding payment: ${refundPaymentDto.paymentId}`);
+      
+      const payment = await this.paymentsService.findById(refundPaymentDto.paymentId);
     
     if (!payment) {
       throw new NotFoundException(Payment with ID  not found);
@@ -155,32 +155,32 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Add a payment method' })
   @HttpCode(HttpStatus.CREATED)
   async addPaymentMethod(
-    @Body() paymentMethodDto: PaymentMethodDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(Adding payment method for user: );
-    return this.paymentsService.addPaymentMethod(paymentMethodDto, user.id);
+      @Body() paymentMethodDto: PaymentMethodDto,
+      @CurrentUser() user,
+    ) {
+      this.logger.log(`Adding payment method for user: ${user.id}`);
+      return this.paymentsService.addPaymentMethod(paymentMethodDto, user.id);
   }
 
   @Get('methods')
   @ApiOperation({ summary: 'Get user payment methods' })
   async getPaymentMethods(@CurrentUser() user) {
-    this.logger.log(Getting payment methods for user: );
-    return this.paymentsService.getPaymentMethods(user.id);
+      this.logger.log(`Getting payment methods for user: ${user.id}`);
+      return this.paymentsService.getPaymentMethods(user.id);
   }
 
   @Get('methods/:id')
   @ApiOperation({ summary: 'Get payment method by ID' })
   @ApiParam({ name: 'id', description: 'Payment Method ID' })
   async getPaymentMethod(
-    @Param('id') id: string,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(Getting payment method with ID: );
-    const paymentMethod = await this.paymentsService.getPaymentMethodById(id);
+      @Param('id') id: string,
+      @CurrentUser() user,
+    ) {
+      this.logger.log(`Getting payment method with ID: ${id}`);
+      const paymentMethod = await this.paymentsService.getPaymentMethodById(id);
     
     if (!paymentMethod) {
-      throw new NotFoundException(Payment method with ID  not found);
+      throw new NotFoundException(`Payment method with ID ${id} not found`);
     }
     
     // Check if user is authorized to access this payment method
@@ -196,8 +196,8 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Handle Stripe webhook events' })
   @HttpCode(HttpStatus.OK)
   async stripeWebhook(@Body() event: any) {
-    this.logger.log(Received Stripe webhook event: );
-    return this.paymentsService.handleStripeWebhook(event);
+      this.logger.log(`Received Stripe webhook event: ${event.type}`);
+      return this.paymentsService.handleStripeWebhook(event);
   }
 
   @Public()
@@ -205,7 +205,7 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Handle PayPal webhook events' })
   @HttpCode(HttpStatus.OK)
   async paypalWebhook(@Body() event: any) {
-    this.logger.log(Received PayPal webhook event: );
-    return this.paymentsService.handlePaypalWebhook(event);
+      this.logger.log(`Received PayPal webhook event: ${event.type}`);
+      return this.paymentsService.handlePaypalWebhook(event);
   }
 }

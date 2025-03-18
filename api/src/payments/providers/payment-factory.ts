@@ -1,5 +1,5 @@
 import { Injectable, Logger, Inject } from '@nestjs/common';
-import { PaymentProvider } from '../interfaces/payment-provider.interface';
+import type { PaymentProvider } from '../interfaces/payment-provider.interface';
 import { PaymentProvider as PaymentProviderEnum } from '../entities/payment.entity';
 
 @Injectable()

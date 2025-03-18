@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: taly-cache  # Use the same namespace as Memcached
+spec:
+  replicas: 1        # Start with 1 replica for Redis (can scale up)
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.0-alpine  # Use a specific version
+        ports:
+        - containerPort: 6379    # Default Redis port
+        resources:
+          limits:
+            memory: "512Mi"   # Example: Limit to 512MB
+            cpu: "500m"      # Example: Limit to 1/2 CPU
+          requests:
+            memory: "256Mi"   # Example: Request at least 256MB
+            cpu: "250m"      # Example
+        env:        
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secrets  # Reference a Kubernetes Secret
+              key: redis-password # Key within the secret.
+        # Example of using a config file (create a ConfigMap)
+        # volumeMounts:
+        # - name: redis-config
+        #   mountPath: /usr/local/etc/redis/redis.conf
+        #   subPath: redis.conf
+        livenessProbe: # Example of liveness probe
+           exec: # Check health using redis-cli
+             command:
+               - redis-cli
+               - -h
+               - 127.0.0.1
+               - -p
+               - "6379"
+               - -a
+               - ${REDIS_PASSWORD}
+               - ping
+           initialDelaySeconds: 30
+           periodSeconds: 10
+        # For persistent Redis:
+        volumeMounts:
+          - name: redis-data
+            mountPath: /data  # Mount the volume at /data
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvc   # Reference a PersistentVolumeClaim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: taly-cache
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379        # Expose Redis port
+      targetPort: 6379
+  type: ClusterIP      # Internal access only
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+  namespace: taly-cache
+spec:
+  accessModes:
+    - ReadWriteOnce   # Access mode: ReadWriteOnce means the volume can be mounted as read-write by a single node
+  resources:
+    requests:
+      storage: 5Gi     # Request 5GB of storage
+  storageClassName: standard # Use the default storage class.  You might have a specific one.

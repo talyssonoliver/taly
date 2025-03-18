@@ -27,7 +27,7 @@ https://api.taly.dev/payment
   "userId": 1,
   "bookingId": 101,
   "amount": 49.99,
-  "currency": "USD",
+  "currency": "GBP",
   "paymentMethod": "credit_card",
   "cardDetails": {
     "cardNumber": "4111111111111111",
@@ -44,7 +44,7 @@ https://api.taly.dev/payment
   "transactionId": 2001,
   "status": "successful",
   "amount": 49.99,
-  "currency": "USD",
+  "currency": "GBP",
   "timestamp": "2024-06-10T10:00:00Z"
 }
 ```
@@ -71,7 +71,7 @@ https://api.taly.dev/payment
   "userId": 1,
   "bookingId": 101,
   "amount": 49.99,
-  "currency": "USD",
+  "currency": "GBP",
   "status": "successful",
   "paymentMethod": "credit_card",
   "timestamp": "2024-06-10T10:00:00Z"
@@ -97,13 +97,13 @@ https://api.taly.dev/payment
   {
     "transactionId": 2001,
     "amount": 49.99,
-    "currency": "USD",
+    "currency": "GBP",
     "status": "successful"
   },
   {
     "transactionId": 2002,
     "amount": 29.99,
-    "currency": "USD",
+    "currency": "GBP",
     "status": "pending"
   }
 ]

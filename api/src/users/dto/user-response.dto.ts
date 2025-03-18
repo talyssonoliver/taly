@@ -2,6 +2,35 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Exclude, Expose, Type } from "class-transformer";
 import { Role } from "../../common/enums/roles.enum";
 
+// Define the Staff entity interface
+interface StaffEntity {
+	id: string;
+	userId: string;
+	department?: string;
+	position?: string;
+	employeeId?: string;
+	hireDate?: Date;
+}
+
+// Define the User entity interface
+interface UserEntity {
+	id: string;
+	email: string;
+	firstName: string;
+	lastName?: string;
+	role: Role;
+	isActive: boolean;
+	avatar?: string;
+	phone?: string;
+	address?: string;
+	provider?: string;
+	providerId?: string;
+	createdAt: Date;
+	updatedAt: Date;
+	staff?: StaffEntity;
+	password: string;
+}
+
 // Use proper typing for staff data
 class StaffDto {
 	@ApiProperty({ description: "Staff ID" })
@@ -130,7 +159,7 @@ export class UserResponseDto {
 		return "";
 	}
 
-	static fromEntity(entity: any): UserResponseDto {
+	static fromEntity(entity: UserEntity): UserResponseDto {
 		const dto = new UserResponseDto();
 		Object.assign(dto, {
 			id: entity.id,
