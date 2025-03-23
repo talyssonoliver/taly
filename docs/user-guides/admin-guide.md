@@ -24,24 +24,29 @@ This guide provides detailed instructions for company owners and administrators 
 ### **1. Create an Admin Account**
 
 1. Visit [https://taly.dev/signup](https://taly.dev/signup).
-2. Select the option to create a **Company Owner** account.
-3. Fill in your business details and verify your email address.
+2. Select "Create Business Account" and choose "Company Owner" role.
+3. Complete the registration form with your business email and strong password (minimum 8 characters with numbers and special characters).
+4. Verify your email by clicking the link sent to your inbox within 24 hours.
+5. Complete your business profile with your company name, industry type, and contact information.
 
 ### **2. Log In to Your Dashboard**
 
 1. Navigate to [https://taly.dev/login](https://taly.dev/login).
-2. Enter your admin credentials to access the dashboard.
+2. Enter your registered email and password.
+3. Enable "Remember me" for convenient access on trusted devices.
+4. If you've enabled 2FA, complete the verification process.
 
 ---
 
 ## Dashboard Overview
 
-The dashboard is your central hub for managing your company operations. Key sections include:
+The dashboard serves as your operational command center with these key components:
 
-- **Bookings**: View, update, and manage all appointments.
-- **Payments**: Track transactions and issue refunds.
-- **Analytics**: Monitor business performance metrics.
-- **Settings**: Customize your company profile, working hours, and other preferences.
+- **Bookings Panel**: Real-time appointment calendar with status indicators (confirmed, pending, completed, canceled).
+- **Payments Section**: Financial snapshot showing recent transactions, pending payments, and monthly revenue trends.
+- **Analytics Overview**: Visual metrics displaying booking volume, customer retention rate, and revenue generation.
+- **Quick Actions**: Shortcut buttons for common tasks like creating appointments, adding customers, and generating reports.
+- **Notifications Center**: System alerts for important events like new bookings, payment confirmations, and schedule conflicts.
 
 ---
 
@@ -50,17 +55,30 @@ The dashboard is your central hub for managing your company operations. Key sect
 ### **1. Add or Update Company Details**
 
 1. Go to **Settings > Company Profile**.
-2. Edit details such as:
-   - Business name
-   - Address and contact information
-   - Services offered
-3. Save your changes.
+2. In the "Basic Information" tab, you can edit:
+   - Business name and logo (recommended size: 512x512px, PNG/SVG format)
+   - Physical address with Google Maps integration
+   - Contact information (phone, email, website)
+   - Business description (up to 500 characters)
+   - Industry category and subcategories
+3. Click "Save Changes" to update your profile. Changes appear immediately across your booking pages.
 
 ### **2. Add Staff Members**
 
-1. Navigate to **Settings > Staff Management**.
-2. Add staff by entering their name, role, and contact information.
-3. Assign permissions based on their role (e.g., booking management, payment handling).
+1. Navigate to **Settings > Staff Management > Add New Staff**.
+2. Enter the staff member's:
+   - Full name and professional title
+   - Contact email (they'll receive an invitation)
+   - Work phone number (optional)
+   - Profile photo (optional, recommended size: 400x400px)
+3. Assign their role from the dropdown: Admin, Manager, or Staff
+4. Set their permissions by checking the appropriate boxes:
+   - Booking management (view/create/edit/delete)
+   - Customer data access (view/edit)
+   - Payment processing (view/refund)
+   - Analytics access (view only/export)
+5. Define their working schedule by selecting available days and hours
+6. Click "Send Invitation" to create their account
 
 ---
 
@@ -68,19 +86,34 @@ The dashboard is your central hub for managing your company operations. Key sect
 
 ### **1. View Appointments**
 
-- Access the **Bookings** section to see all upcoming and past appointments.
-- Filter bookings by date, status, or staff member.
+- Access the interactive calendar from the **Bookings** main navigation item.
+- Toggle between daily, weekly, and monthly views using the view selector.
+- Filter bookings by:
+  - Staff member (dropdown)
+  - Service type (checkbox selection)
+  - Status (confirmed, pending, completed, canceled)
+  - Date range (calendar picker)
+- Color-coding indicates appointment status and service type for quick visual reference.
+- Hover over appointments to see quick details; click to open the full appointment card.
 
 ### **2. Add or Update a Booking**
 
-1. Click on **Add Booking** to manually create an appointment.
-2. Enter customer details, service type, and time slot.
-3. To update a booking, select it and modify the required fields.
+1. Click the "+" button or select an empty time slot on the calendar.
+2. In the booking form:
+   - Customer: Search existing customers or add new customer details
+   - Service: Select from your service catalog
+   - Date/Time: Choose appointment date and duration
+   - Staff: Assign to specific staff member
+   - Notes: Add private notes visible only to staff
+   - Status: Set initial status (default: confirmed)
+3. For existing bookings, click the appointment in the calendar and select "Edit" to modify any details.
+4. Use the "Save" button to confirm changes and trigger appropriate notifications.
 
 ### **3. Cancel or Reschedule**
 
-- Use the booking details view to cancel or reschedule appointments.
-- Notify customers automatically via email or SMS.
+- To cancel: Open the appointment, click "Actions" > "Cancel Appointment", select a cancellation reason, and determine if a refund is required.
+- To reschedule: Open the appointment, click "Actions" > "Reschedule", select a new available time slot, and add an optional reason.
+- Both actions trigger automated notifications to customers via their preferred channel (email/SMS).
 
 ---
 

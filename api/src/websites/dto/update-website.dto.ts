@@ -1,15 +1,16 @@
-import {
-  IsString,
-  IsUUID,
-  IsOptional,
-  IsBoolean,
-  IsObject,
-  ValidateNested,
-} from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsDate,
+  IsObject,
+  IsOptional,
+  IsString,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
+import { AnalyticsSettingsDto, SeoSettingsDto } from './create-website.dto';
 import { ThemeSettingsDto } from './theme-settings.dto';
-import { SeoSettingsDto, AnalyticsSettingsDto } from './create-website.dto';
 
 export class UpdateWebsiteDto {
   @ApiPropertyOptional({ description: 'Website name' })
@@ -31,6 +32,17 @@ export class UpdateWebsiteDto {
   @IsOptional()
   @IsBoolean()
   isPublished?: boolean;
+
+  @ApiPropertyOptional({ description: 'Website URL' })
+  @IsOptional()
+  @IsString()
+  url?: string;
+
+  @ApiPropertyOptional({ description: 'Published date' })
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  publishedAt?: Date;
 
   @ApiPropertyOptional({ description: 'Theme settings' })
   @IsOptional()

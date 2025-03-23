@@ -5,7 +5,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '../../users/entities/user.entity';
-import { Salon } from '../../salons/entities/salon.entity';
+import { Salon } from '../../companies/entities/salon.entity';
 import { ClientNote } from './client-note.entity';
 export enum Gender {
   MALE = 'MALE',
@@ -88,7 +88,7 @@ export class Client {
   updatedAt: Date;
   @Field()
   get fullName(): string {
-    return ${this.firstName} ;
+    return $this.firstName;
   }
 }
 

@@ -82,22 +82,41 @@ This glossary defines key terms, concepts, and acronyms used throughout the Taly
 
 ### **S**
 
-- **Scaling**: The process of adjusting resources (e.g., servers) to meet demand. Taly uses Kubernetes for scaling services.
-- **Serverless**: A cloud computing model where applications run in stateless containers. Taly employs serverless functions for specific tasks, like email notifications.
-- **Stripe**: A payment processing platform integrated into Taly for secure transactions.
+- **Scaling**: The systematic process of increasing or decreasing computational resources to match application demand. Taly implements both horizontal scaling (adding more service instances) and vertical scaling (increasing resources per instance) managed through Kubernetes HPA (Horizontal Pod Autoscaler).
+
+- **Serverless**: A cloud execution model where infrastructure management is abstracted away from developers. Taly uses AWS Lambda for event-driven, stateless functions that handle specific workloads like notification delivery, report generation, and image processing, with automatic scaling from zero to peak demand.
+
+- **Service Mesh**: An infrastructure layer that manages service-to-service communication in the Taly platform, implemented with Istio to provide traffic management, security policies, and observability across microservices.
+
+- **Stripe Connect**: The payment processing platform integrated into Taly for marketplace-style payment distribution, allowing business owners to accept payments while Taly handles platform fees with automated reconciliation.
 
 ### **T**
 
-- **Terraform**: A tool for defining and provisioning infrastructure as code. Used in Taly to manage cloud resources.
-- **Twilio**: A communications platform used in Taly for sending SMS notifications.
+- **Terraform**: An infrastructure-as-code tool used in Taly for declaratively defining and provisioning cloud resources across AWS, with modular architecture for reusable components, environment separation, and automated testing.
+
+- **Tailwind CSS**: A utility-first CSS framework used throughout Taly's frontend applications for consistent design implementation, with custom theme configuration aligned to our design system specifications.
+
+- **TanStack Query**: A data fetching and cache management library (formerly React Query) used in Taly's frontend to handle server state, with automatic background refetching, optimistic updates, and error handling policies.
+
+- **Twilio**: A communication API platform integrated with Taly's notification service for programmable SMS, voice, and WhatsApp messaging, with delivery confirmation and two-way communication capabilities.
 
 ### **U**
 
-- **UI (User Interface)**: The visual elements of an application that users interact with. Built with Next.js and React in Taly.
+- **UI (User Interface)**: The visual and interactive components of Taly that users engage with, built using React components with responsive design principles, accessibility compliance (WCAG 2.1 AA), and performance optimization for various devices.
+
+- **User Session**: A period of user interaction with Taly, tracked via JWT tokens with configurable expiration policies, refresh token rotation for extended sessions, and secure storage practices to prevent token theft.
+
+- **UUID (Universally Unique Identifier)**: A 128-bit identifier used in Taly's database schema for entity identification instead of sequential IDs, providing improved security and eliminating collision risks in distributed systems.
 
 ### **V**
 
-- **Virtual Machine (VM)**: A software-based simulation of a physical computer. Used in Taly’s staging and production environments for running services.
+- **Virtual Machine (VM)**: A software-based emulation of a physical computer. Taly uses AWS EC2 instances for specific workloads requiring persistent compute resources such as the RabbitMQ message broker and database instances.
+
+- **Versioning**: The practice of tracking changes to APIs, database schemas, and events over time. Taly implements semantic versioning (SemVer) for all services with backward compatibility guarantees and documented migration paths.
+
+- **Vault**: HashiCorp's secret management tool used in the Taly infrastructure to securely store and access sensitive information such as API keys, database credentials, and encryption keys with strict access controls and audit logging.
+
+- **Vercel**: A cloud platform used for deploying Taly's frontend applications with features like preview deployments for pull requests, edge caching, and seamless integration with our GitHub workflows.
 
 ---
 

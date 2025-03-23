@@ -1,52 +1,58 @@
-﻿import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { Prisma, PrismaClient } from '@prisma/client';
+﻿import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { GraphQLJSONObject } from "graphql-type-json";
 import { User } from "../../users/entities/user.entity";
-import { Theme } from "./theme.entity";
-import { Page } from "./page.entity";
 import { CustomDomain } from "./custom-domain.entity";
+import { Page } from "./page.entity";
+import { Theme } from "./theme.entity";
+
 @ObjectType()
 export class Website {
 	@Field(() => ID)
 	id: string;
+
 	@Field()
-	@Index()
 	name: string;
+
 	@Field({ nullable: true })
 	description?: string;
+
 	@Field()
 	themeId: string;
-	@Field() => Theme)
-	
-	theme: Theme; // Join handled by Prisma schema
-	@Field() => Page,
-		(page) => page.website,
-	)
+
+	@Field(() => Theme)
+	theme: Theme;
+
+	@Field(() => [Page])
 	pages: Page[];
+
 	@Field()
 	isPublished: boolean;
+
 	@Field()
 	userId: string;
-	@Field() => User)
-	
-	user: User; // Join handled by Prisma schema
+
+	@Field(() => User)
+	user: User;
+
 	@Field()
-	createdAt: Date; // Set in service
+	createdAt: Date;
+
 	@Field()
-	updatedAt: Date; // Set in service
+	updatedAt: Date;
+
 	@Field()
 	url: string;
-	@Field()
-	themeSettings: Record<string, any>;
-	@Field() => CustomDomain,
-		(customDomain) => customDomain.website,
-	)
+
+	@Field(() => GraphQLJSONObject)
+	themeSettings: Record<string, unknown>;
+
+	@Field(() => CustomDomain, { nullable: true })
 	customDomain?: CustomDomain;
+
 	@Field({ nullable: true })
 	publishedAt?: Date;
-	@Field()
+
+	@Field(() => GraphQLJSONObject, { nullable: true })
 	settings?: {
 		seo?: {
 			title?: string;
@@ -64,7 +70,8 @@ export class Website {
 			linkedin?: string;
 		};
 	};
-	@Field()
+
+	@Field(() => GraphQLJSONObject, { nullable: true })
 	analytics?: {
 		visits: number;
 		uniqueVisitors: number;
@@ -72,5 +79,3 @@ export class Website {
 		lastUpdated?: Date;
 	};
 }
-
-

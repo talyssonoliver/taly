@@ -1,0 +1,7 @@
+# Ignore controller files
+**/*.controller.ts
+
+# Ignore resolver files with decorator issues
+**/*.resolver.ts
+api/src/**/*.resolver.ts
+api/src/appointments/appointments.resolver.ts

@@ -1,6 +1,6 @@
 # User Guide for Taly Platform
 
-Welcome to Taly! This guide is designed to help users navigate the platform, understand its features, and make the most out of its capabilities. Whether you're a company owner or a customer, this document will walk you through the core functionalities.
+Welcome to Taly! This comprehensive guide will help you navigate our platform efficiently, understand its powerful features, and maximize its business value. Whether you're a business owner managing your company or a customer booking services, this document provides step-by-step instructions for all essential workflows.
 
 ---
 
@@ -25,20 +25,20 @@ Welcome to Taly! This guide is designed to help users navigate the platform, und
 ### **1. Create an Account**
 
 - Visit [https://taly.dev/signup](https://taly.dev/signup).
-- Choose your role: **Company Owner** or **Customer**.
-- Provide your email, create a password, and verify your email address.
+- Choose your role: **Company Owner** (for businesses) or **Customer** (for clients).
+- Complete the registration form with your email, secure password, and verify your email address.
 
 ### **2. Log In**
 
 - Go to [https://taly.dev/login](https://taly.dev/login).
-- Enter your credentials or use the social login options (Google/Facebook).
+- Enter your credentials or use social login options (Google/Facebook/Apple).
 
 ### **3. Dashboard Access**
 
-Once logged in:
+After successful authentication:
 
-- **Company Owners**: Access the admin dashboard to manage bookings, payments, and settings.
-- **Customers**: Use the booking interface to schedule appointments.
+- **Company Owners**: You'll be directed to your business dashboard with complete management controls.
+- **Customers**: You'll access the booking interface to schedule and manage your appointments.
 
 ---
 
@@ -46,34 +46,34 @@ Once logged in:
 
 ### **Dashboard Overview**
 
-- The dashboard provides a centralized view of your company’s activities:
-  - **Bookings Overview**: See upcoming and past appointments.
-  - **Financial Metrics**: Track revenue and transactions.
-  - **Customer Management**: View and manage customer profiles.
+- Your dashboard provides comprehensive visibility into your business operations:
+  - **Bookings Overview**: Interactive calendar showing upcoming, completed, and canceled appointments.
+  - **Financial Metrics**: Real-time revenue tracking with transaction reconciliation.
+  - **Customer Management**: Centralized CRM with customer history and engagement metrics.
 
 ### **Managing Bookings**
 
-1. Navigate to the `Bookings` section in the dashboard.
+1. Navigate to the `Bookings` section in the dashboard sidebar.
 2. Features available:
-   - **Add a New Booking**: Manually create an appointment for a customer.
-   - **Update Booking Status**: Change the status to "Confirmed," "Completed," or "Cancelled."
-   - **View Booking History**: Access past appointments.
+   - **Add a New Booking**: Create appointments for walk-in or phone customers.
+   - **Update Booking Status**: Track appointment lifecycle from "Scheduled" through "Confirmed," "Completed," or "Cancelled."
+   - **View Booking History**: Access historical data with filtering and search capabilities.
 
 ### **Payment Management**
 
-1. Go to the `Payments` section.
+1. Access the `Payments` section from the main navigation.
 2. Features available:
-   - **View Transactions**: Monitor payments made by customers.
-   - **Issue Refunds**: Process refunds for specific transactions.
-   - **Payment Integrations**: Connect your Stripe or PayPal account.
+   - **View Transactions**: Monitor all financial transactions with detailed status tracking.
+   - **Issue Refunds**: Process full or partial refunds with automatic customer notifications.
+   - **Payment Integrations**: Connect payment processors with guided setup wizards.
 
 ### **Customizing Your Website**
 
-1. Access the `Settings` section.
+1. Open the `Settings` section and select "Website."
 2. Features available:
-   - **Customize Branding**: Upload your logo and select a theme.
-   - **Set Up Booking Rules**: Define working hours and cancellation policies.
-   - **Domain Management**: Configure a custom domain (available for Pro and Premium plans).
+   - **Customize Branding**: Upload your logo, select color schemes, and configure typography.
+   - **Set Up Booking Rules**: Define availability, buffer times, and cancellation policies.
+   - **Domain Management**: Connect your custom domain with one-click SSL configuration (Pro/Premium plans).
 
 ---
 
@@ -81,19 +81,19 @@ Once logged in:
 
 ### **Booking an Appointment**
 
-1. Visit the company’s booking page (e.g., `https://companyname.taly.dev`).
-2. Select a service and a preferred date and time.
-3. Provide your contact details and confirm the booking.
-4. Receive a confirmation via email/SMS.
+1. Visit the company's dedicated booking page (e.g., `https://businessname.taly.dev`).
+2. Browse available services, select your preferred option and choose from available time slots.
+3. Enter your contact information (or log in if returning) and add any special notes.
+4. Confirm your booking to receive instant confirmation via your preferred notification method.
 
 ### **Managing Appointments**
 
-1. Log in to your account.
+1. Log in to your customer account dashboard.
 2. Go to the `My Appointments` section.
 3. Features available:
-   - **Reschedule**: Change the date and time of an upcoming appointment.
-   - **Cancel**: Cancel an appointment (adheres to the company’s cancellation policy).
-   - **View History**: Access details of past appointments.
+   - **Reschedule**: Modify appointment time/date within the company's scheduling policies.
+   - **Cancel**: Cancel appointments with automatic handling of refunds based on policies.
+   - **View History**: Access your complete service history with the option to rebook past services.
 
 ---
 

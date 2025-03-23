@@ -4,29 +4,73 @@ Welcome aboard! This document provides an overview of the Taly project, its goal
 
 ## Project Overview
 
-Taly is a SaaS platform designed for company owners, primarily in the service industry (like salons, spas, etc.), to manage their businesses more efficiently.  It provides features for:
+Taly is a comprehensive SaaS platform designed for service-based businesses to streamline operations and enhance customer experience. Unlike generic appointment systems, Taly specializes in high-touch service industries (salons, spas, wellness centers, professional consultants, etc.) with these core capabilities:
 
-*   **Appointment Scheduling:**  A user-friendly booking system with calendar integration.
-*   **Client Management:**  A CRM to store client information, track appointments, and manage notes.
-*   **Payment Processing:**  Secure and seamless payment integration (Stripe and PayPal).
-*   **Subscription Management:**  Different subscription tiers (Free, Pro, Premium) for company owners.
-*   **Custom Website Builder:**  (Future Enhancement)  Allows companies to create a basic online presence.
-*   **Reporting & Analytics:**  Provides insights into bookings, revenue, and client activity.
-*   **Notifications:**  Automated email and SMS notifications for appointments and payments.
+*   **Appointment Scheduling:** Advanced booking system with intelligent calendar management, conflict prevention, buffer times, and service-specific duration handling.
+*   **Client Management:** Full-featured CRM with customer profiles, visit history, personalized notes, communication logs, and preference tracking.
+*   **Payment Processing:** Enterprise-grade payment infrastructure with Stripe Connect and PayPal Business integration, supporting split payments, recurring billing, and installment plans.
+*   **Subscription Management:** Tiered subscription model with usage-based billing, feature gates, and automated plan management for optimal business scaling.
+*   **Custom Website Builder:** Drag-and-drop website creation with industry-specific templates, online booking widgets, and custom domain support with automatic SSL provisioning.
+*   **Reporting & Analytics:** Business intelligence dashboard with customizable KPIs, trend analysis, customer insights, and exportable reports for accounting integration.
+*   **Notifications:** Omnichannel communication system with templated messaging, scheduling automation, two-way SMS, and delivery confirmation.
 
 ## Architecture
 
-Taly is built with a microservices architecture, using the following technologies:
+Taly implements a modern microservices architecture with event-driven communication patterns:
 
-*   **Frontend:** Next.js (React) for the user interfaces (dashboard, booking app, payment portal, shared UI components).
-*   **Backend:** NestJS (Node.js) for the API services (authentication, booking, payment, notification, etc.).
-*   **Database:** PostgreSQL (for relational data) and Redis (for caching).
-*   **Serverless Functions:** AWS Lambda for specific tasks like sending emails and generating reports.
-*   **Message Broker:**  RabbitMQ for asynchronous communication between services (event-driven architecture).
-*   **Containerization:** Docker for packaging services and applications.
-*   **Orchestration:**  Kubernetes (EKS) is planned for future scaling (currently using AWS App Runner for simplicity).
-*   **Infrastructure as Code (IaC):** Terraform for managing cloud resources.
-*   **CI/CD:** GitHub Actions for automated builds, tests, and deployments.
+*   **Frontend:** 
+    - Next.js 14 React applications with TypeScript
+    - Component libraries: shadcn/ui with Tailwind CSS
+    - State management: TanStack Query for server state, Zustand for client state
+    - Authentication: Auth.js with JWT and refresh token rotation
+    - Analytics: Posthog for user behavior tracking
+
+*   **Backend:** 
+    - NestJS microservices with domain-driven design principles
+    - API protocols: REST for CRUD operations, GraphQL for complex data fetching
+    - Validation: Zod schema validation with custom business rules
+    - Rate limiting: Redis-based request throttling with tiered limits by subscription
+
+*   **Database:** 
+    - PostgreSQL 16 with multi-tenant isolation strategy
+    - Connection pooling via PgBouncer for efficient resource utilization
+    - Read replicas for analytics and reporting workloads
+    - Redis for distributed locking, caching, and session management
+
+*   **Serverless Functions:** 
+    - AWS Lambda for asynchronous processing:
+      - PDF generation (invoices, reports)
+      - Image processing and optimization
+      - Webhook handling for third-party integrations
+      - Scheduled tasks (reminders, analytics)
+
+*   **Message Broker:**  
+    - RabbitMQ for reliable message delivery between services
+    - Implements both publish-subscribe and request-reply patterns
+    - Dead-letter queues with automated retry policies
+    - Event schema versioning for backward compatibility
+
+*   **Containerization:** 
+    - Docker with multi-stage builds for optimized images
+    - Environment-specific configurations via Docker Compose
+    - Container health checks and graceful shutdown handling
+
+*   **Orchestration:**  
+    - AWS EKS (Elastic Kubernetes Service) for production
+    - Horizontal pod autoscaling based on CPU/memory metrics
+    - Service mesh with Istio for observability and traffic control
+    - AWS App Runner for development and staging environments
+
+*   **Infrastructure as Code:** 
+    - Terraform modules with environment separation
+    - CI/CD pipeline integration for infrastructure testing
+    - State management via S3 with DynamoDB locking
+
+*   **CI/CD:** 
+    - GitHub Actions with environment-specific workflows
+    - Automated testing: unit, integration, E2E (Playwright)
+    - Security scanning: Snyk for dependencies, SonarQube for code quality
+    - Deployment strategies: Blue/green for frontend, rolling updates for backend
 
 ## Getting Started
 

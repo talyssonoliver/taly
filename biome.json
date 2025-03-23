@@ -1,0 +1,82 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUndeclaredVariables": "error"
+			},
+			"style": {
+				"useImportType": "off"
+			},
+			"complexity": {
+				"noStaticOnlyClass": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": {
+					"level": "error"
+				}
+			}
+		},
+		"ignore": [
+			"**/node_modules/**",
+			"**/.next/**",
+			"**/dist/**",
+			"**/*.resolver.ts",
+			"api/src/**/*.resolver.ts"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 80,
+		"ignore": [
+			"**/node_modules/**",
+			"**/.next/**",
+			"**/dist/**",
+			"**/*.resolver.ts",
+			"api/src/**/*.resolver.ts"
+		]
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"semicolons": "always"
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+		"ignore": [
+			"node_modules",
+			"dist",
+			".next",
+			"build",
+			"coverage",
+			"**/*.d.ts",
+			"**/*.controller.ts",
+			"**/*.resolver.ts"
+		]
+	},
+	"overrides": [
+		{
+			"include": ["**/*.resolver.ts"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
+		}
+	]
+}

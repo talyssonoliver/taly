@@ -1,151 +1,157 @@
+// biome-ignore: This file contains NestJS decorators which Biome can't parse correctly
 import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-  Get,
-  Req,
-  HttpCode,
-  HttpStatus,
-  Patch,
-  Param,
-  Logger,
-} from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Request } from 'express';
-import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { OAuthGuard } from './guards/oauth.guard';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { ChangePasswordDto } from './dto/change-password.dto';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { CurrentUser } from '../common/decorators/current-user.decorator';
-import { Public } from '../common/decorators/public.decorator';
+	Body,
+	Controller,
+	HttpCode,
+	HttpStatus,
+	Logger,
+	Request as NestRequest,
+	Post,
+	UnauthorizedException,
+	UseFilters,
+	UseGuards,
+	UseInterceptors,
+} from "@nestjs/common";
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiOperation,
+	ApiResponse,
+	ApiTags,
+} from "@nestjs/swagger";
+import { Throttle } from "@nestjs/throttler";
+import { HttpExceptionFilter } from "../common/filters/http-exception.filter";
+import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
+import { TransformInterceptor } from "../common/interceptors/transform.interceptor";
+import { UserRequest } from "../common/interfaces/user-request.interface";
+import type { AuthService } from "./auth.service";
+import { LoginDto } from "./dto/login.dto";
+import { RefreshTokenDto } from "./dto/refresh-token.dto";
+import { RegisterDto } from "./dto/register.dto";
 
-@ApiTags('Authentication')
-@Controller('auth')
+@ApiTags("Authentication")
+@Controller("auth")
+@UseFilters(HttpExceptionFilter)
+@UseInterceptors(TransformInterceptor)
 export class AuthController {
-  private readonly logger = new Logger(AuthController.name);
+	private readonly logger = new Logger(AuthController.name);
 
-  constructor(private readonly authService: AuthService) {}
+	constructor(private readonly authService: AuthService) {}
 
-  @Public()
-  @Post('register')
-  @ApiOperation({ summary: 'Register a new user' })
+	@Post('register')
   @HttpCode(HttpStatus.CREATED)
+  @Throttle({ default: { limit: 5, ttl: 60000 } }) // 5 requests per minute
+  @ApiOperation({ summary: 'Register new user' })
+  @ApiBody({ type: RegisterDto })
+  @ApiResponse({ 
+    status: 201, 
+    description: 'User successfully registered',
+    schema: {
+      example: {
+        data: {
+          user: {
+            id: '123e4567-e89b-12d3-a456-426614174000',
+            email: 'user@example.com',
+            firstName: 'John',
+            lastName: 'Doe',
+            role: 'USER'
+          },
+          accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+          refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        },
+        success: true,
+        timestamp: '2023-01-01T00:00:00.000Z',
+      }
+    }
+  })
+  @ApiResponse({ status: 400, description: 'Bad Request - Invalid input data' })
+  @ApiResponse({ status: 409, description: 'Conflict - Email already in use' })
   async register(@Body() registerDto: RegisterDto) {
-    this.logger.log(Registration attempt for email: );
+    this.logger.log(`Registration attempt for email: ${registerDto.email}`);
     return this.authService.register(registerDto);
   }
 
-  @Public()
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  @ApiOperation({ summary: 'Login with email and password' })
+	@Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto, @Req() req: Request) {
-    this.logger.log(Login attempt for email: );
-    return this.authService.login(req.user);
+  @Throttle({ default: { limit: 10, ttl: 60000 } }) // 10 requests per minute
+  @ApiOperation({ summary: 'User login' })
+  @ApiBody({ type: LoginDto })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'User successfully logged in',
+    schema: {
+      example: {
+        data: {
+          user: {
+            id: '123e4567-e89b-12d3-a456-426614174000',
+            email: 'user@example.com',
+            firstName: 'John',
+            lastName: 'Doe',
+            role: 'USER'
+          },
+          accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+          refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        },
+        success: true,
+        timestamp: '2023-01-01T00:00:00.000Z',
+      }
+    }
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid credentials' })
+  async login(@Body() loginDto: LoginDto) {
+    this.logger.log(`Login attempt for email: ${loginDto.email}`);
+    return this.authService.login(loginDto);
   }
 
-  @ApiBearerAuth()
+	@Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { limit: 20, ttl: 60000 } }) // 20 requests per minute
+  @ApiOperation({ summary: 'Refresh authentication tokens' })
+  @ApiBody({ type: RefreshTokenDto })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Tokens successfully refreshed',
+    schema: {
+      example: {
+        data: {
+          accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+          refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        },
+        success: true,
+        timestamp: '2023-01-01T00:00:00.000Z',
+      }
+    }
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid refresh token' })
+  async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
+    this.logger.log('Token refresh attempt');
+    return this.authService.refreshTokens(refreshTokenDto);
+  }
+
+	@Post('logout')
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  @ApiOperation({ summary: 'Get current user profile' })
-  getProfile(@CurrentUser() user) {
-    return user;
-  }
-
-  @Public()
-  @Get('facebook')
-  @ApiOperation({ summary: 'Initiate Facebook authentication' })
-  @UseGuards(OAuthGuard)
-  facebookLogin() {
-    return { message: 'Facebook authentication initiated' };
-  }
-
-  @Public()
-  @Get('facebook/callback')
-  @ApiOperation({ summary: 'Facebook authentication callback' })
-  @UseGuards(OAuthGuard)
-  facebookLoginCallback(@Req() req: Request) {
-    return this.authService.oauthLogin(req.user);
-  }
-
-  @Public()
-  @Get('google')
-  @ApiOperation({ summary: 'Initiate Google authentication' })
-  @UseGuards(OAuthGuard)
-  googleLogin() {
-    return { message: 'Google authentication initiated' };
-  }
-
-  @Public()
-  @Get('google/callback')
-  @ApiOperation({ summary: 'Google authentication callback' })
-  @UseGuards(OAuthGuard)
-  googleLoginCallback(@Req() req: Request) {
-    return this.authService.oauthLogin(req.user);
-  }
-
-  @Public()
-  @Post('forgot-password')
-  @ApiOperation({ summary: 'Request password reset' })
   @HttpCode(HttpStatus.OK)
-  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    this.logger.log(Password reset request for email: );
-    return this.authService.forgotPassword(forgotPasswordDto.email);
-  }
-
-  @Public()
-  @Post('reset-password/:token')
-  @ApiOperation({ summary: 'Reset password with token' })
-  @HttpCode(HttpStatus.OK)
-  async resetPassword(
-    @Param('token') token: string,
-    @Body() resetPasswordDto: ResetPasswordDto,
-  ) {
-    this.logger.log('Password reset attempt with token');
-    return this.authService.resetPassword(token, resetPasswordDto.password);
-  }
-
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Patch('change-password')
-  @ApiOperation({ summary: 'Change current user password' })
-  @HttpCode(HttpStatus.OK)
-  async changePassword(
-    @CurrentUser() user,
-    @Body() changePasswordDto: ChangePasswordDto,
-  ) {
-    this.logger.log(Password change attempt for user ID: );
-    return this.authService.changePassword(
-      user.id,
-      changePasswordDto.currentPassword,
-      changePasswordDto.newPassword,
-    );
-  }
-
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Post('logout')
-  @ApiOperation({ summary: 'Logout current user' })
-  @HttpCode(HttpStatus.OK)
-  async logout(@CurrentUser() user) {
-    this.logger.log(Logout for user ID: );
-    return this.authService.logout(user.id);
-  }
-
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Post('refresh-token')
-  @ApiOperation({ summary: 'Refresh authentication token' })
-  @HttpCode(HttpStatus.OK)
-  async refreshToken(@CurrentUser() user) {
-    this.logger.log(Token refresh for user ID: );
-    return this.authService.refreshToken(user.id);
+  @ApiOperation({ summary: 'User logout' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'User successfully logged out',
+    schema: {
+      example: {
+        data: { success: true },
+        success: true,
+        timestamp: '2023-01-01T00:00:00.000Z',
+      }
+    }
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid or missing token' })
+  async logout(@NestRequest() req: UserRequest) {
+    if (!req.user || !req.user.sub) {
+      this.logger.error('Logout attempt failed: Invalid user in request');
+      throw new UnauthorizedException('Invalid authentication token');
+    }
+    
+    this.logger.log(`Logout attempt for user ID: ${req.user.sub}`);
+    return this.authService.logout(req.user.sub);
   }
 }

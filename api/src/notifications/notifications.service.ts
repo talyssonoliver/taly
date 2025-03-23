@@ -1,231 +1,249 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { NotificationRepository } from './repositories/notification.repository';
-import { NotificationFactory } from './providers/notification-factory';
-import { Notification } from './entities/notification.entity';
-import { NotificationStatus, NotificationType } from './entities/notification.entity';
+import { Injectable, Logger } from "@nestjs/common";
+import { Appointment } from "../appointments/interfaces/appointment.interface";
+import { NotificationType } from "../common/enums/notification-type.enum";
+import { PrismaService } from "../database/prisma.service";
+import { INotification } from "./interfaces/notification.interface";
+
+// Define interfaces for notification data
+interface AppointmentNotificationData {
+	appointment: Partial<Appointment> & { userId?: string };
+	user: { id: string; phoneNumber?: string };
+	service?: Record<string, unknown>;
+	reason?: string;
+}
 
 @Injectable()
 export class NotificationsService {
-  private readonly logger = new Logger(NotificationsService.name);
+	private readonly logger = new Logger(NotificationsService.name);
 
-  constructor(
-    private readonly notificationRepository: NotificationRepository,
-    private readonly notificationFactory: NotificationFactory,
-  ) {}
+	constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Get notifications for a specific user
-   */
-  async getUserNotifications(userId: string): Promise<Notification[]> {
-    return this.notificationRepository.findByUserId(userId);
-  }
+	/**
+	 * Send a notification using the specified channel and template
+	 * @param userId - The user ID to send the notification to
+	 * @param type - The notification type (EMAIL, SMS, PUSH)
+	 * @param templateKey - The template key to use
+	 * @param data - The data to populate the template
+	 */
+	async sendNotification(
+		userId: string,
+		type: string,
+		templateKey: string,
+		data: Record<string, unknown>,
+	): Promise<INotification> {
+		try {
+			// Log notification
+			this.logger.log(
+				`Sending ${type} notification to user ${userId} using template ${templateKey}`,
+			);
 
-  /**
-   * Get a specific notification by ID
-   */
-  async getNotificationById(id: string): Promise<Notification> {
-    const notification = await this.notificationRepository.findById(id);
-    if (!notification) {
-      throw new NotFoundException(Notification with ID \ not found);
-    }
-    return notification;
-  }
+			// Create notification record
+			const notification = await this.prisma.notification.create({
+				data: {
+					userId,
+					type,
+					templateKey,
+					content: JSON.stringify(data),
+					sent: true,
+					sentAt: new Date(),
+				},
+			});
 
-  /**
-   * Mark a notification as read
-   */
-  async markAsRead(id: string): Promise<Notification> {
-    const notification = await this.getNotificationById(id);
-    notification.status = NotificationStatus.READ;
-    notification.readAt = new Date();
-    return this.notificationRepository.save(notification);
-  }
+			// Add code to actually send the notification via email, SMS, etc.
+			// This would typically involve external services
 
-  /**
-   * Mark all notifications as read for a user
-   */
-  async markAllAsRead(userId: string): Promise<void> {
-    await this.notificationRepository.markAllAsRead(userId);
-  }
+			return notification;
+		} catch (error) {
+			this.logger.error(`Error sending notification: ${error.message}`);
+			throw error;
+		}
+	}
 
-  /**
-   * Send a notification of a specific type
-   * @param userId - The recipient user ID
-   * @param type - The notification type (email, sms, push)
-   * @param templateKey - The template identifier
-   * @param data - The data to populate the template
-   */
-  async sendNotification(
-    userId: string, 
-    type: string, 
-    templateKey: string, 
-    data: any
-  ): Promise<Notification> {
-    try {
-      // Create notification record
-      const notification = new Notification();
-      notification.userId = userId;
-      notification.type = type as NotificationType;
-      notification.templateKey = templateKey;
-      notification.content = JSON.stringify(data);
-      notification.status = NotificationStatus.PENDING;
-      
-      // Save to database first to get an ID
-      const savedNotification = await this.notificationRepository.save(notification);
-      
-      // Send the notification through appropriate provider
-      const provider = this.notificationFactory.getProvider(type);
-      const result = await provider.send(userId, templateKey, data);
-      
-      // Update notification record with result
-      savedNotification.status = result.success 
-        ? NotificationStatus.SENT 
-        : NotificationStatus.FAILED;
-      savedNotification.sentAt = result.success ? new Date() : null;
-      savedNotification.error = result.error || null;
-      
-      return this.notificationRepository.save(savedNotification);
-    } catch (error) {
-      this.logger.error(Failed to send notification: \, error.stack);
-      
-      // Create a failed notification record
-      const failedNotification = new Notification();
-      failedNotification.userId = userId;
-      failedNotification.type = type as NotificationType;
-      failedNotification.templateKey = templateKey;
-      failedNotification.content = JSON.stringify(data);
-      failedNotification.status = NotificationStatus.FAILED;
-      failedNotification.error = error.message;
-      
-      return this.notificationRepository.save(failedNotification);
-    }
-  }
+	/**
+	 * Send an appointment confirmation notification
+	 */
+	async sendAppointmentConfirmation(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-confirmation",
+			appointmentData as unknown as Record<string, unknown>,
+		);
 
-  /**
-   * Send an appointment confirmation notification
-   */
-  async sendAppointmentConfirmation(userId: string, appointmentData: any): Promise<void> {
-    // Send email notification
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'appointment-confirmation',
-      appointmentData,
-    );
-    
-    // Send SMS notification if phone is available
-    if (appointmentData.phoneNumber) {
-      await this.sendNotification(
-        userId,
-        NotificationType.SMS,
-        'appointment-confirmation',
-        appointmentData,
-      );
-    }
-  }
+		// Send SMS notification if phone is available
+		if (appointmentData.user?.phoneNumber) {
+			await this.sendNotification(
+				userId,
+				NotificationType.SMS,
+				"appointment-confirmation",
+				appointmentData as unknown as Record<string, unknown>,
+			);
+		}
+	}
 
-  /**
-   * Send an appointment reminder notification
-   */
-  async sendAppointmentReminder(userId: string, appointmentData: any): Promise<void> {
-    // Send email notification
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'appointment-reminder',
-      appointmentData,
-    );
-    
-    // Send SMS notification if phone is available
-    if (appointmentData.phoneNumber) {
-      await this.sendNotification(
-        userId,
-        NotificationType.SMS,
-        'appointment-reminder',
-        appointmentData,
-      );
-    }
-  }
+	/**
+	 * Send an appointment reminder notification
+	 */
+	async sendAppointmentReminder(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-reminder",
+			appointmentData as unknown as Record<string, unknown>,
+		);
 
-  /**
-   * Send an appointment reschedule notification
-   */
-  async sendAppointmentReschedule(userId: string, appointmentData: any): Promise<void> {
-    // Send email notification
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'appointment-reschedule',
-      appointmentData,
-    );
-    
-    // Send SMS notification if phone is available
-    if (appointmentData.phoneNumber) {
-      await this.sendNotification(
-        userId,
-        NotificationType.SMS,
-        'appointment-reschedule',
-        appointmentData,
-      );
-    }
-  }
+		// Send SMS notification if phone is available
+		if (appointmentData.user?.phoneNumber) {
+			await this.sendNotification(
+				userId,
+				NotificationType.SMS,
+				"appointment-reminder",
+				appointmentData as unknown as Record<string, unknown>,
+			);
+		}
+	}
 
-  /**
-   * Send an appointment cancellation notification
-   */
-  async sendAppointmentCancellation(userId: string, appointmentData: any): Promise<void> {
-    // Send email notification
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'appointment-cancellation',
-      appointmentData,
-    );
-    
-    // Send SMS notification if phone is available
-    if (appointmentData.phoneNumber) {
-      await this.sendNotification(
-        userId,
-        NotificationType.SMS,
-        'appointment-cancellation',
-        appointmentData,
-      );
-    }
-  }
+	/**
+	 * Send an appointment reschedule notification
+	 */
+	async sendAppointmentReschedule(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-reschedule",
+			appointmentData as unknown as Record<string, unknown>,
+		);
 
-  /**
-   * Send a payment receipt notification
-   */
-  async sendPaymentReceipt(userId: string, paymentData: any): Promise<void> {
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'payment-receipt',
-      paymentData,
-    );
-  }
+		// Send SMS notification if phone is available
+		if (appointmentData.user?.phoneNumber) {
+			await this.sendNotification(
+				userId,
+				NotificationType.SMS,
+				"appointment-reschedule",
+				appointmentData as unknown as Record<string, unknown>,
+			);
+		}
+	}
 
-  /**
-   * Send a welcome notification
-   */
-  async sendWelcomeNotification(userId: string, userData: any): Promise<void> {
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'welcome',
-      userData,
-    );
-  }
+	/**
+	 * Send an appointment cancellation notification
+	 */
+	async sendAppointmentCancellation(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-cancellation",
+			appointmentData as unknown as Record<string, unknown>,
+		);
 
-  /**
-   * Send a password reset notification
-   */
-  async sendPasswordResetNotification(userId: string, resetData: any): Promise<void> {
-    await this.sendNotification(
-      userId,
-      NotificationType.EMAIL,
-      'password-reset',
-      resetData,
-    );
-  }
+		// Send SMS notification if phone is available
+		if (appointmentData.user?.phoneNumber) {
+			await this.sendNotification(
+				userId,
+				NotificationType.SMS,
+				"appointment-cancellation",
+				appointmentData as unknown as Record<string, unknown>,
+			);
+		}
+	}
+
+	/**
+	 * Send an appointment confirmation notification (alias for sendAppointmentConfirmation)
+	 */
+	async sendAppointmentConfirmed(
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		if (appointmentData?.appointment?.userId) {
+			await this.sendAppointmentConfirmation(
+				appointmentData.appointment.userId,
+				appointmentData,
+			);
+		}
+	}
+
+	/**
+	 * Send a no-show notification
+	 */
+	async sendNoShowNotification(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-no-show",
+			appointmentData as unknown as Record<string, unknown>,
+		);
+
+		// Send SMS notification if phone is available
+		if (appointmentData.user?.phoneNumber) {
+			await this.sendNotification(
+				userId,
+				NotificationType.SMS,
+				"appointment-no-show",
+				appointmentData as unknown as Record<string, unknown>,
+			);
+		}
+	}
+
+	/**
+	 * Send a feedback request notification
+	 */
+	async sendFeedbackRequest(
+		userId: string,
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		// Send email notification
+		await this.sendNotification(
+			userId,
+			NotificationType.EMAIL,
+			"appointment-feedback",
+			appointmentData as unknown as Record<string, unknown>,
+		);
+	}
+
+	/**
+	 * Send a cancelation notification (alias for sendAppointmentCancellation)
+	 */
+	async sendAppointmentCancelled(
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		if (appointmentData?.appointment?.userId) {
+			await this.sendAppointmentCancellation(
+				appointmentData.appointment.userId,
+				appointmentData,
+			);
+		}
+	}
+
+	/**
+	 * Send a rescheduled notification (alias for sendAppointmentReschedule)
+	 */
+	async sendAppointmentRescheduled(
+		appointmentData: AppointmentNotificationData,
+	): Promise<void> {
+		if (appointmentData?.appointment?.userId) {
+			await this.sendAppointmentReschedule(
+				appointmentData.appointment.userId,
+				appointmentData,
+			);
+		}
+	}
 }

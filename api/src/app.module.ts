@@ -1,10 +1,10 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { ThrottlerModule } from "@nestjs/throttler";
-import { APP_GUARD } from "@nestjs/core";
-import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, type ApolloDriverConfig } from "@nestjs/apollo";
+import { Module, ValidationPipe } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
+import { GraphQLModule } from "@nestjs/graphql";
 import { ScheduleModule } from "@nestjs/schedule";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import type { Request } from "express";
 
 // Controllers and services
@@ -13,34 +13,37 @@ import { AppService } from "./app.service";
 
 // Configuration
 import { appConfig } from "./config/app.config";
+import { awsConfig } from "./config/aws.config";
 import { databaseConfig } from "./config/database.config";
 import { jwtConfig } from "./config/jwt.config";
 import { mailConfig } from "./config/mail.config";
-import { stripeConfig } from "./config/stripe.config";
-import { awsConfig } from "./config/aws.config";
 import { redisConfig } from "./config/redis.config";
 import { smsConfig } from "./config/sms.config";
+import { stripeConfig } from "./config/stripe.config";
 
 // Database
 import { PrismaModule } from "./database/prisma.module";
 
+import { AppointmentsModule } from "./appointments/appointments.module";
 // Feature modules
 import { AuthModule } from "./auth/auth.module";
-import { UsersModule } from "./users/users.module";
-import { SalonsModule } from "./salons/salons.module";
-import { AppointmentsModule } from "./appointments/appointments.module";
 import { ClientsModule } from "./clients/clients.module";
-import { PaymentsModule } from "./payments/payments.module";
-import { SubscriptionsModule } from "./subscriptions/subscriptions.module";
-import { NotificationsModule } from "./notifications/notifications.module";
-import { WebsitesModule } from "./websites/websites.module";
-import { ReportsModule } from "./reports/reports.module";
+import { SalonsModule } from "./companies/salons.module";
 import { MailModule } from "./mail/mail.module";
+import { NotificationsModule } from "./notifications/notifications.module";
+import { PaymentsModule } from "./payments/payments.module";
+import { ReportsModule } from "./reports/reports.module";
+import { SubscriptionsModule } from "./subscriptions/subscriptions.module";
+import { UsersModule } from "./users/users.module";
+import { WebsitesModule } from "./websites/websites.module";
 
 // Guards
 import { JwtAuthGuard } from "./common/guards/jwt-auth.guard";
 import { RolesGuard } from "./common/guards/roles.guard";
-import { CustomThrottlerGuard } from "./common/guards/throttler.guard";
+
+// Filters and Interceptors
+import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
+import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
 
 @Module({
 	imports: [
@@ -60,12 +63,16 @@ import { CustomThrottlerGuard } from "./common/guards/throttler.guard";
 		}),
 
 		// Rate limiting
-		ThrottlerModule.forRoot([
-			{
-				ttl: 60,
-				limit: 100,
-			},
-		]),
+		ThrottlerModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => [
+				{
+					ttl: configService.get<number>("THROTTLE_TTL", 60),
+					limit: configService.get<number>("THROTTLE_LIMIT", 100),
+				},
+			],
+		}),
 
 		// GraphQL
 		GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -98,6 +105,28 @@ import { CustomThrottlerGuard } from "./common/guards/throttler.guard";
 	controllers: [AppController],
 	providers: [
 		AppService,
+		// Global pipes
+		{
+			provide: APP_PIPE,
+			useValue: new ValidationPipe({
+				transform: true,
+				whitelist: true,
+				forbidNonWhitelisted: true,
+				transformOptions: {
+					enableImplicitConversion: false,
+				},
+			}),
+		},
+		// Global filters
+		{
+			provide: APP_FILTER,
+			useClass: HttpExceptionFilter,
+		},
+		// Global interceptors
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: TransformInterceptor,
+		},
 		// Global guards
 		{
 			provide: APP_GUARD,
@@ -109,7 +138,7 @@ import { CustomThrottlerGuard } from "./common/guards/throttler.guard";
 		},
 		{
 			provide: APP_GUARD,
-			useClass: CustomThrottlerGuard,
+			useClass: ThrottlerGuard,
 		},
 	],
 })

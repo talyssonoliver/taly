@@ -38,7 +38,7 @@ export const mockUser = {
 	email: mockJwtPayload.email,
 	firstName: "Test",
 	lastName: "User",
-	role: mockJwtPayload.roles,
+	role: mockJwtPayload.roles[0], 
 	isActive: true,
 	createdAt: new Date(),
 	updatedAt: new Date(),
@@ -50,7 +50,7 @@ export const mockAdminUser = {
 	email: "admin@example.com",
 	firstName: "Admin",
 	lastName: "User",
-	role: [Role.ADMIN],
+	role: Role.ADMIN, 
 	isActive: true,
 	createdAt: new Date(),
 	updatedAt: new Date(),
@@ -63,16 +63,23 @@ export const mockOAuthUser = {
 	firstName: "OAuth",
 	lastName: "User",
 	provider: "google",
+	providerId: "oauth-provider-id-123",
 };
 
 // Mock authentication helpers
 export const mockAuthHelpers = {
 	login: (
 		userId: string = mockUser.id,
-		roles: Role[] = [Role.USER],
+		role: Role = Role.USER,
 	): { accessToken: string; refreshToken: string } => {
-		const accessToken = generateMockToken({ sub: userId, roles }, "access");
-		const refreshToken = generateMockToken({ sub: userId, roles }, "refresh");
+		const accessToken = generateMockToken(
+			{ sub: userId, roles: [role] },
+			"access",
+		);
+		const refreshToken = generateMockToken(
+			{ sub: userId, roles: [role] },
+			"refresh",
+		);
 
 		return { accessToken, refreshToken };
 	},

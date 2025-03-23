@@ -1,30 +1,30 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Patch,
-  Delete,
+  BadRequestException,
   Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Logger,
+  NotFoundException,
   Param,
+  Patch,
+  Post,
   Query,
   UseGuards,
-  Logger,
-  HttpStatus,
-  HttpCode,
-  NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery, ApiParam } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/roles.enum';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { CurrentUser } from '../common/decorators/current-user.decorator';
-import { Role } from '../common/enums/roles.enum';
-import { UsersService } from './users.service';
+import { PaginationUtil } from '../common/utils/pagination.util';
+import { CreateStaffDto } from './dto/create-staff.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateStaffDto } from './dto/create-staff.dto';
-import { PaginationUtil } from '../common/utils/pagination.util';
+import { UsersService } from './users.service';
 
 @ApiTags('Users')
 @Controller('users')
@@ -46,7 +46,7 @@ export class UsersController {
     @Query('limit') limit = 10,
     @Query('search') search?: string,
   ) {
-    this.logger.log(Finding all users with page={page}, limit={limit}" + (search ? ", search={search}" : ""), { page, limit, search });
+    this.logger.log(`Finding all users with page=${page}, limit=${limit}${search ? `, search=${search}` : ''}`, { page, limit, search });
     const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.usersService.findAll(pageNum, limitNum, search);
   }
@@ -56,27 +56,15 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @Roles(Role.ADMIN, Role.STAFF)
   async findOne(@Param('id') id: string) {
-    this.logger.log(Finding user with ID: );
-    const user = await this.usersService.findById(id);
-    
-    if (!user) {
-      throw new NotFoundException(User with ID  not found);
-    }
-    
-    return user;
+    this.logger.log(`Finding user with ID: ${id}`);
+    return this.getUserOrFail(id);
   }
 
   @Get('me/profile')
   @ApiOperation({ summary: 'Get current user profile' })
-  async getProfile(@CurrentUser() user) {
-    this.logger.log(Getting profile for user ID: );
-    const userProfile = await this.usersService.findById(user.id);
-    
-    if (!userProfile) {
-      throw new NotFoundException('User profile not found');
-    }
-    
-    return userProfile;
+  async getProfile(@CurrentUser() user: { id: string }) {
+    this.logger.log(`Getting profile for user ID: ${user.id}`);
+    return this.getUserOrFail(user.id);
   }
 
   @Post()
@@ -84,7 +72,7 @@ export class UsersController {
   @HttpCode(HttpStatus.CREATED)
   @Roles(Role.ADMIN)
   async create(@Body() createUserDto: CreateUserDto) {
-    this.logger.log(Creating new user with email: );
+    this.logger.log(`Creating new user with email: ${createUserDto.email}`);
     return this.usersService.create(createUserDto);
   }
 
@@ -93,7 +81,7 @@ export class UsersController {
   @HttpCode(HttpStatus.CREATED)
   @Roles(Role.ADMIN)
   async createStaff(@Body() createStaffDto: CreateStaffDto) {
-    this.logger.log(Creating new staff with email: );
+    this.logger.log(`Creating new staff with email: ${createStaffDto.email}`);
     return this.usersService.createStaff(createStaffDto);
   }
 
@@ -105,23 +93,18 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    this.logger.log(Updating user with ID: );
-    const user = await this.usersService.findById(id);
-    
-    if (!user) {
-      throw new NotFoundException(User with ID  not found);
-    }
-    
+    this.logger.log(`Updating user with ID: ${id}`);
+    await this.getUserOrFail(id);
     return this.usersService.update(id, updateUserDto);
   }
 
   @Patch('me/profile')
   @ApiOperation({ summary: 'Update current user profile' })
   async updateProfile(
-    @CurrentUser() user,
+    @CurrentUser() user: { id: string },
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    this.logger.log(Updating profile for user ID: );
+    this.logger.log(`Updating profile for user ID: ${user.id}`);
     
     // Prevent role change from profile update
     if (updateUserDto.role) {
@@ -137,13 +120,8 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Roles(Role.ADMIN)
   async remove(@Param('id') id: string) {
-    this.logger.log(Deleting user with ID: );
-    const user = await this.usersService.findById(id);
-    
-    if (!user) {
-      throw new NotFoundException(User with ID  not found);
-    }
-    
+    this.logger.log(`Deleting user with ID: ${id}`);
+    await this.getUserOrFail(id);
     await this.usersService.remove(id);
   }
 
@@ -152,13 +130,8 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @Roles(Role.ADMIN)
   async activate(@Param('id') id: string) {
-    this.logger.log(Activating user with ID: );
-    const user = await this.usersService.findById(id);
-    
-    if (!user) {
-      throw new NotFoundException(User with ID  not found);
-    }
-    
+    this.logger.log(`Activating user with ID: ${id}`);
+    await this.getUserOrFail(id);
     return this.usersService.activate(id);
   }
 
@@ -167,13 +140,19 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @Roles(Role.ADMIN)
   async deactivate(@Param('id') id: string) {
-    this.logger.log(Deactivating user with ID: );
-    const user = await this.usersService.findById(id);
-    
-    if (!user) {
-      throw new NotFoundException(User with ID  not found);
-    }
-    
+    this.logger.log(`Deactivating user with ID: ${id}`);
+    await this.getUserOrFail(id);
     return this.usersService.deactivate(id);
+  }
+
+  /**
+   * Helper method to find a user by ID and throw NotFoundException if not found
+   */
+  private async getUserOrFail(id: string) {
+    const user = await this.usersService.findById(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
   }
 }

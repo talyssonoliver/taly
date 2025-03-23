@@ -1,5 +1,4 @@
 import { AppointmentStatus } from '../../common/enums/appointment-status.enum';
-import { TimeSlot } from './time-slot.interface';
 
 export interface Appointment {
   id: string;

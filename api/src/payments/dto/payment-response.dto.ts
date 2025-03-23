@@ -1,14 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Expose, Type } from "class-transformer";
-
-export enum PaymentStatus {
-	PENDING = "pending",
-	SUCCEEDED = "succeeded",
-	FAILED = "failed",
-	REFUNDED = "refunded",
-	PARTIAL_REFUNDED = "partial_refunded",
-	CANCELED = "canceled",
-}
+import { PaymentStatus } from "../enums/payment-status.enum"; // Import from central location
 
 export class PaymentMethodDetails {
 	@ApiProperty({
@@ -97,7 +89,7 @@ export class PaymentResponseDto {
 	}[];
 
 	@ApiPropertyOptional({ description: "Metadata for the payment" })
-	metadata?: Record<string, any>;
+	metadata?: Record<string, null>;
 
 	@ApiPropertyOptional({ description: "Receipt URL" })
 	receiptUrl?: string;

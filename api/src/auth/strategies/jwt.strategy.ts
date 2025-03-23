@@ -1,48 +1,57 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ConfigService } from '@nestjs/config';
-import { UsersService } from '../../users/users.service';
-import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
+import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { PassportStrategy } from "@nestjs/passport";
+import { ExtractJwt, Strategy } from "passport-jwt";
+import type { JwtPayload } from "../../common/interfaces/jwt-payload.interface";
+import { PrismaService } from "../../database/prisma.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  private readonly logger = new Logger(JwtStrategy.name);
+	private readonly logger = new Logger(JwtStrategy.name);
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly usersService: UsersService,
-  ) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET'),
-    });
-  }
+	constructor(
+		private readonly configService: ConfigService,
+		private readonly prismaService: PrismaService,
+	) {
+		const jwtSecret = configService.get<string>("JWT_SECRET");
 
-  async validate(payload: JwtPayload) {
-    try {
-      const { sub: userId } = payload;
-      const user = await this.usersService.findById(userId);
-      
-      if (!user) {
-        throw new UnauthorizedException('User no longer exists');
-      }
-      
-      if (!user.isActive) {
-        throw new UnauthorizedException('User is deactivated');
-      }
+		if (!jwtSecret) {
+			throw new Error("JWT_SECRET is not defined in environment variables");
+		}
 
-      return {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-      };
-    } catch (error) {
-      this.logger.error(JWT validation failed: );
-      throw error;
-    }
-  }
+		super({
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			ignoreExpiration: false,
+			secretOrKey: jwtSecret,
+		});
+
+		this.logger.log("JWT authentication strategy initialized");
+	}
+
+	async validate(payload: JwtPayload) {
+		try {
+			const user = await this.prismaService.user.findUnique({
+				where: { id: payload.sub },
+			});
+
+			if (!user || !user.isActive) {
+				this.logger.warn(
+					`Authentication failed: User ${payload.sub} not found or inactive`,
+				);
+				throw new UnauthorizedException("User not found or inactive");
+			}
+
+			this.logger.debug(`User ${user.email} authenticated successfully`);
+
+			// Return only necessary information
+			return {
+				sub: payload.sub,
+				email: payload.email,
+				role: payload.roles,
+			};
+		} catch (error) {
+			this.logger.error(`JWT validation error: ${error.message}`);
+			throw error;
+		}
+	}
 }

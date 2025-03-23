@@ -1,7 +1,6 @@
-﻿import { PrismaService } from '../../database/prisma.service';
-import { Injectable, Logger } from "@nestjs/common";
-import type { PrismaService } from "../../database/prisma.service";
-import type {
+﻿import { Injectable, Logger } from "@nestjs/common";
+import { PrismaService } from "../../database/prisma.service";
+import {
 	WebsiteTheme,
 	WebsiteThemeCategory,
 } from "../entities/website-theme.entity";
@@ -12,27 +11,29 @@ export class WebsiteThemeRepository {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-	async findAll(includeInactive = false): Promise<WebsiteTheme[]> {
+	async findAll(): Promise<WebsiteTheme[]> {
 		try {
-			const where = includeInactive ? {} : { isActive: true };
-
-			return this.prisma.websiteTheme.findMany({
-				where,
+			const themes = await this.prisma.theme.findMany({
 				orderBy: { name: "asc" },
 			});
+			return themes as unknown as WebsiteTheme[];
 		} catch (error) {
-			this.logger.error("Error finding website themes:", error);
+			this.logger.error(`Error finding themes: ${error.message}`, error.stack);
 			throw error;
 		}
 	}
 
 	async findOne(id: string): Promise<WebsiteTheme | null> {
 		try {
-			return this.prisma.websiteTheme.findUnique({
+			const theme = await this.prisma.theme.findUnique({
 				where: { id },
 			});
+			return theme as unknown as WebsiteTheme;
 		} catch (error) {
-			this.logger.error(`Error finding website theme with ID ${id}:`, error);
+			this.logger.error(
+				`Error finding theme ${id}: ${error.message}`,
+				error.stack,
+			);
 			throw error;
 		}
 	}
@@ -41,13 +42,13 @@ export class WebsiteThemeRepository {
 		category: WebsiteThemeCategory,
 	): Promise<WebsiteTheme[]> {
 		try {
-			return this.prisma.websiteTheme.findMany({
+			return this.prisma.theme.findMany({
 				where: {
 					category,
 					isActive: true,
 				},
 				orderBy: { name: "asc" },
-			});
+			}) as unknown as WebsiteTheme[];
 		} catch (error) {
 			this.logger.error(
 				`Error finding website themes by category ${category}:`,
@@ -59,9 +60,9 @@ export class WebsiteThemeRepository {
 
 	async createTheme(themeData: Partial<WebsiteTheme>): Promise<WebsiteTheme> {
 		try {
-			return this.prisma.websiteTheme.create({
-				data: themeData as any,
-			});
+			return this.prisma.theme.create({
+				data: themeData as Record<string, unknown>,
+			}) as unknown as WebsiteTheme;
 		} catch (error) {
 			this.logger.error("Error creating website theme:", error);
 			throw error;
@@ -73,10 +74,10 @@ export class WebsiteThemeRepository {
 		themeData: Partial<WebsiteTheme>,
 	): Promise<WebsiteTheme> {
 		try {
-			return this.prisma.websiteTheme.update({
+			return this.prisma.theme.update({
 				where: { id },
-				data: themeData as any,
-			});
+				data: themeData as Record<string, unknown>,
+			}) as unknown as WebsiteTheme;
 		} catch (error) {
 			this.logger.error(`Error updating website theme with ID ${id}:`, error);
 			throw error;
@@ -85,7 +86,7 @@ export class WebsiteThemeRepository {
 
 	async removeTheme(id: string): Promise<void> {
 		try {
-			await this.prisma.websiteTheme.delete({
+			await this.prisma.theme.delete({
 				where: { id },
 			});
 		} catch (error) {
@@ -96,11 +97,10 @@ export class WebsiteThemeRepository {
 
 	async countThemes(): Promise<number> {
 		try {
-			return this.prisma.websiteTheme.count();
+			return this.prisma.theme.count();
 		} catch (error) {
 			this.logger.error("Error counting website themes:", error);
 			throw error;
 		}
 	}
 }
-

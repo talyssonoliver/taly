@@ -1,6 +1,20 @@
-import { Injectable, Logger, Inject } from '@nestjs/common';
+import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import type { PaymentProvider } from '../interfaces/payment-provider.interface';
 import { PaymentProvider as PaymentProviderEnum } from '../entities/payment.entity';
+import type { PaymentResponse } from '../interfaces/payment-response.interface';
+import type { CardDetails } from '../interfaces/card-details.interface';
+
+// Constants for cash provider
+const CASH_STATUS = {
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+};
+
+const CASH_PREFIX = {
+  TRANSACTION: 'CASH-',
+  REFUND: 'CASH-REFUND-',
+  CUSTOMER: 'CASH-CUSTOMER-',
+};
 
 @Injectable()
 export class PaymentFactory {
@@ -10,10 +24,17 @@ export class PaymentFactory {
     @Inject('PAYMENT_PROVIDERS') private readonly providers: Record<string, PaymentProvider>,
   ) {}
 
+  /**
+   * Creates a payment provider based on the provider type
+   * @param providerType The type of provider to create
+   * @returns A payment provider implementation
+   */
   createProvider(providerType: string): PaymentProvider {
-    this.logger.log(Creating payment provider for type: );
+    this.logger.log(`Creating payment provider for type: ${providerType}`);
     
-    switch (providerType.toUpperCase()) {
+    const normalizedType = providerType?.toUpperCase();
+    
+    switch (normalizedType) {
       case PaymentProviderEnum.STRIPE:
         return this.providers.stripe;
       
@@ -21,42 +42,71 @@ export class PaymentFactory {
         return this.providers.paypal;
       
       case PaymentProviderEnum.CASH:
-        // Cash doesn't need a provider, but we need to return something
         return this.createCashProvider();
       
       default:
-        this.logger.warn(Unknown provider type: , defaulting to Stripe);
+        this.logger.warn(`Unknown provider type: ${providerType}, defaulting to Stripe`);
         return this.providers.stripe;
     }
   }
 
+  /**
+   * Creates a basic cash payment provider implementation
+   * @returns A cash payment provider
+   */
   private createCashProvider(): PaymentProvider {
     return {
-      processPaymentWithToken: async (paymentId, amount, token, description) => {
+      processPaymentWithToken: async (
+        paymentId: string, 
+        amount: number, 
+        token: string, 
+        description: string
+      ): Promise<PaymentResponse> => {
+        this.logger.log(`Processing cash payment for ID: ${paymentId}, amount: ${amount}`);
+        
         return {
-          transactionId: CASH-,
-          status: 'SUCCESS',
-          response: JSON.stringify({ message: 'Cash payment processed' }),
+          transactionId: `${CASH_PREFIX.TRANSACTION}${paymentId}`,
+          status: CASH_STATUS.SUCCESS,
+          response: JSON.stringify({ 
+            message: 'Cash payment processed',
+            amount,
+            description 
+          }),
         };
       },
       
-      processPaymentWithCard: async (paymentId, amount, cardDetails, description) => {
+      processPaymentWithCard: async (): Promise<PaymentResponse> => {
         throw new Error('Cash provider does not support card payments');
       },
       
-      processPaymentWithSavedMethod: async (paymentId, amount, paymentMethodId, description) => {
+      processPaymentWithSavedMethod: async (): Promise<PaymentResponse> => {
         throw new Error('Cash provider does not support saved payment methods');
       },
       
-      refundPayment: async (transactionId, amount, reason) => {
+      refundPayment: async (
+        transactionId: string, 
+        amount: number, 
+        reason: string
+      ): Promise<PaymentResponse> => {
+        this.logger.log(`Processing cash refund for transaction: ${transactionId}, amount: ${amount}`);
+        
         return {
-          transactionId: CASH-REFUND-,
-          status: 'SUCCESS',
-          response: JSON.stringify({ message: 'Cash payment refunded' }),
+          transactionId: `${CASH_PREFIX.REFUND}${transactionId}`,
+          status: CASH_STATUS.SUCCESS,
+          response: JSON.stringify({ 
+            message: 'Cash payment refunded',
+            amount,
+            reason 
+          }),
         };
       },
       
-      validateToken: async (token) => {
+      validateToken: async (token: string): Promise<{
+        lastFour: string;
+        expiryMonth: string;
+        expiryYear: string;
+        cardBrand: string;
+      }> => {
         return {
           lastFour: 'CASH',
           expiryMonth: 'N/A',
@@ -65,11 +115,11 @@ export class PaymentFactory {
         };
       },
       
-      createCustomer: async (email, name) => {
-        return 'CASH-CUSTOMER';
+      createCustomer: async (email: string, name: string): Promise<string> => {
+        return `${CASH_PREFIX.CUSTOMER}${name.replace(/\s+/g, '-')}`;
       },
       
-      createPaymentMethod: async (customerId, cardDetails) => {
+      createPaymentMethod: async (): Promise<string> => {
         throw new Error('Cash provider does not support creating payment methods');
       },
     };

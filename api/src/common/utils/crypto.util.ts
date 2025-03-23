@@ -1,86 +1,120 @@
-import * as crypto from 'crypto';
-import * as bcrypt from 'bcrypt';
+import * as crypto from "node:crypto";
+import * as bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+
+const DEFAULT_SALT_ROUNDS = 10;
+const DEFAULT_ITERATIONS = 10000;
+const DEFAULT_KEYLEN = 64;
+const DEFAULT_DIGEST = "sha512";
 
 /**
- * Cryptography utility functions
+ * Hashes a password using bcrypt
+ * @param password Plain text password
+ * @param saltRounds Number of salt rounds (default: 10)
+ * @returns Hashed password
  */
-export class CryptoUtil {
-  /**
-   * Hash a password using bcrypt
-   */
-  static async hashPassword(password: string, saltRounds = 10): Promise<string> {
-    return bcrypt.hash(password, saltRounds);
-  }
+export async function hashPassword(
+	password: string,
+	saltRounds: number = DEFAULT_SALT_ROUNDS,
+): Promise<string> {
+	return bcrypt.hash(password, saltRounds);
+}
 
-  /**
-   * Compare a password with a hash using bcrypt
-   */
-  static async comparePassword(
-    password: string,
-    hash: string,
-  ): Promise<boolean> {
-    return bcrypt.compare(password, hash);
-  }
+/**
+ * Compares a plain text password with a hashed password
+ * @param password Plain text password
+ * @param hash Hashed password
+ * @returns True if password matches hash, false otherwise
+ */
+export async function comparePassword(
+	password: string,
+	hash: string,
+): Promise<boolean> {
+	return bcrypt.compare(password, hash);
+}
 
-  /**
-   * Generate a random token
-   */
-  static generateToken(length = 32): string {
-    return crypto.randomBytes(length).toString('hex');
-  }
+/**
+ * Generates a random token
+ * @returns Random token (UUID)
+ */
+export function generateToken(): string {
+	return uuidv4();
+}
 
-  /**
-   * Create a SHA-256 hash of a string
-   */
-  static createHash(data: string): string {
-    return crypto.createHash('sha256').update(data).digest('hex');
-  }
+/**
+ * Generates a secure random string
+ * @param length Length of the string (default: 32)
+ * @returns Secure random string
+ */
+export function generateSecureRandomString(length = 32): string {
+	return crypto.randomBytes(length).toString("hex").substring(0, length);
+}
 
-  /**
-   * Encrypt data using AES-256-CBC
-   */
-  static encrypt(
-    text: string,
-    secretKey: string,
-  ): { iv: string; encryptedData: string } {
-    const iv = crypto.randomBytes(16);
-    const key = crypto.scryptSync(secretKey, 'salt', 32);
-    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-    
-    let encrypted = cipher.update(text, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    
-    return {
-      iv: iv.toString('hex'),
-      encryptedData: encrypted,
-    };
-  }
+/**
+ * Creates a hash of data using PBKDF2
+ * @param data Data to hash
+ * @param salt Salt to use (will be generated if not provided)
+ * @param iterations Number of iterations (default: 10000)
+ * @param keylen Key length (default: 64)
+ * @param digest Digest algorithm (default: sha512)
+ * @returns Object containing the hash and salt
+ */
+export async function createHash(
+	data: string,
+	salt?: string,
+	iterations: number = DEFAULT_ITERATIONS,
+	keylen: number = DEFAULT_KEYLEN,
+	digest: string = DEFAULT_DIGEST,
+): Promise<{ hash: string; salt: string }> {
+	// Generate salt if not provided
+	const usedSalt = salt || crypto.randomBytes(16).toString("hex");
 
-  /**
-   * Decrypt data using AES-256-CBC
-   */
-  static decrypt(
-    encryptedData: string,
-    iv: string,
-    secretKey: string,
-  ): string {
-    const key = crypto.scryptSync(secretKey, 'salt', 32);
-    const decipher = crypto.createDecipheriv(
-      'aes-256-cbc',
-      key,
-      Buffer.from(iv, 'hex'),
-    );
-    
-    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    
-    return decrypted;
-  }
+	return new Promise((resolve, reject) => {
+		crypto.pbkdf2(
+			data,
+			usedSalt,
+			iterations,
+			keylen,
+			digest,
+			(err, derivedKey) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve({
+						hash: derivedKey.toString("hex"),
+						salt: usedSalt,
+					});
+				}
+			},
+		);
+	});
+}
 
-  /**
-   * Generate a secure URL-friendly UUID
-   */
-  static generateUuid(): string {
-    return crypto.randomUUID();
-  }
+/**
+ * Verifies a hash against data
+ * @param data Data to verify
+ * @param hash Hash to verify against
+ * @param salt Salt used to create the hash
+ * @param iterations Number of iterations (default: 10000)
+ * @param keylen Key length (default: 64)
+ * @param digest Digest algorithm (default: sha512)
+ * @returns True if data matches hash, false otherwise
+ */
+export async function verifyHash(
+	data: string,
+	hash: string,
+	salt: string,
+	iterations: number = DEFAULT_ITERATIONS,
+	keylen: number = DEFAULT_KEYLEN,
+	digest: string = DEFAULT_DIGEST,
+): Promise<boolean> {
+	return new Promise((resolve, reject) => {
+		crypto.pbkdf2(data, salt, iterations, keylen, digest, (err, derivedKey) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(derivedKey.toString("hex") === hash);
+			}
+		});
+	});
 }

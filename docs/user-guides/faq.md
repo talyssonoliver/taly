@@ -1,6 +1,6 @@
 # Frequently Asked Questions (FAQ) - Taly Platform
 
-Welcome to the Taly FAQ! Below are answers to common questions to help you navigate and make the most of the platform.
+Welcome to the Taly FAQ! Below are answers to common questions to help you maximize your experience with our platform.
 
 ---
 
@@ -8,27 +8,33 @@ Welcome to the Taly FAQ! Below are answers to common questions to help you navig
 
 ### **1. What is Taly?**
 
-Taly is a SaaS platform designed to help company owners manage appointments, payments, and customer relationships efficiently. It also provides tools for analytics, custom websites, and automated notifications.
+Taly is a comprehensive business management SaaS platform specifically designed for service-based businesses. It streamlines appointment scheduling, payment processing, customer management, and business analytics in one integrated solution, helping businesses increase efficiency and improve customer satisfaction.
 
 ### **2. Who can use Taly?**
 
-Taly is tailored for:
+Taly serves two primary user types:
 
-- **Company Owners**: Manage business operations and track performance.
-- **Customers**: Schedule appointments and interact with companies.
+- **Business Owners/Staff**: Professionals who manage service-based businesses (salons, clinics, consultants, etc.) and need to organize appointments, process payments, and track business performance.
+- **Customers**: Clients who book and manage appointments with businesses that use the Taly platform.
 
 ### **3. How do I sign up?**
 
-To sign up, visit [https://taly.dev/signup](https://taly.dev/signup) and follow the instructions to create an account. You can choose to sign up as a company owner or a customer.
+To create your account:
+1. Visit [https://taly.dev/signup](https://taly.dev/signup)
+2. Select "Business" or "Customer" account type
+3. Enter your email address and create a password
+4. Follow the verification process via the email sent to your inbox
+5. Complete your profile with the required information
 
 ### **4. What browsers are supported?**
 
-Taly supports the latest versions of:
+Taly is optimized for modern browsers including:
 
-- Google Chrome
-- Mozilla Firefox
-- Microsoft Edge
-- Safari
+- Google Chrome 89+
+- Mozilla Firefox 86+
+- Microsoft Edge 88+ (Chromium-based)
+- Safari 14+
+- Mobile browsers on iOS 14+ and Android 10+
 
 ---
 
@@ -36,23 +42,32 @@ Taly supports the latest versions of:
 
 ### **5. How do I reset my password?**
 
-1. Go to the login page.
-2. Click on **Forgot Password**.
-3. Enter your email address and follow the instructions sent to your inbox.
+If you've forgotten your password:
+1. Click "Forgot Password" on the login screen
+2. Enter the email address associated with your account
+3. Check your inbox for a password reset link (valid for 30 minutes)
+4. Create and confirm your new secure password
+5. Log in with your new credentials
 
 ### **6. Can I change my email address?**
 
-Yes. Go to the **Settings** section in your account and update your email address. A verification email will be sent to confirm the change.
+Yes, you can update your email address:
+1. Log in to your Taly account
+2. Navigate to "Settings" > "Account Information"
+3. Click "Edit" next to your email address
+4. Enter your new email address and current password for verification
+5. Confirm the change via the verification email sent to your new address
 
 ### **7. How do I delete my account?**
 
-To delete your account:
+To permanently delete your account:
+1. Go to "Settings" > "Account Management"
+2. Scroll to the bottom and select "Delete Account"
+3. Review the implications of account deletion
+4. Confirm by entering your password
+5. Complete the verification process
 
-1. Go to **Settings**.
-2. Click on **Delete Account**.
-3. Confirm your decision.
-
-Note: Deleting your account is irreversible, and all data will be permanently removed.
+Note: For business accounts, deletion permanently removes all business data, appointment history, and customer records. This action cannot be undone.
 
 ---
 
@@ -60,20 +75,29 @@ Note: Deleting your account is irreversible, and all data will be permanently re
 
 ### **8. What are the available subscription plans?**
 
-Taly offers three plans:
+Taly offers three flexible plans for businesses:
 
-- **Free Plan**: Limited features and bookings.
-- **Pro Plan**: Advanced features with higher booking limits.
-- **Premium Plan**: Unlimited bookings, analytics, and custom domain support.
+- **Free Plan**: Includes basic appointment scheduling, up to 30 bookings monthly, email notifications, and standard reports.
+- **Pro Plan ($29/month)**: Unlocks up to 500 monthly bookings, SMS notifications, advanced analytics, custom branding, and premium support.
+- **Premium Plan ($79/month)**: Provides unlimited bookings, white-labeled experience, custom domain, priority support, API access, and advanced integrations.
 
 ### **9. How can I upgrade or downgrade my plan?**
 
-1. Go to **Settings > Subscription**.
-2. Select the desired plan and follow the payment instructions.
+To change your subscription:
+1. Go to "Settings" > "Billing & Subscription"
+2. Select "Change Plan"
+3. Choose your desired plan from the options
+4. Review the prorated cost calculation
+5. Confirm the change
+
+Plan changes take effect immediately, with billing adjusted accordingly.
 
 ### **10. What happens if I exceed my booking limit?**
 
-You’ll receive a notification prompting you to upgrade your plan. Bookings exceeding the limit may not be accepted until the plan is upgraded.
+If you approach your plan's booking limit:
+1. You'll receive a notification at 80% and 95% capacity
+2. When you reach the limit, new booking attempts will display an upgrade prompt
+3. You can either upgrade your plan immediately or wait until the next billing cycle when your limit resets
 
 ---
 
@@ -81,12 +105,41 @@ You’ll receive a notification prompting you to upgrade your plan. Bookings exc
 
 ### **11. How do I create a new booking?**
 
-1. Company Owners: Use the **Dashboard > Bookings** section.
-2. Customers: Visit the company’s booking page and select a time slot.
+**For Business Owners/Staff:**
+1. Log in to your dashboard
+2. Click "Create Booking" or navigate to "Calendar" > "New Appointment"
+3. Select service, date/time, and assign to staff if applicable
+4. Enter customer details or select from your customer database
+5. Add any notes or special requirements
+6. Confirm to create the appointment and send notifications
+
+**For Customers:**
+1. Visit the business's booking page
+2. Browse available services and select your preferred option
+3. Choose an available date and time slot
+4. Enter your contact information or log in to your account
+5. Add any special requests in the notes field
+6. Confirm your booking and payment method if required
 
 ### **12. Can I cancel or reschedule a booking?**
 
-Yes. Log in to your account and navigate to the **My Appointments** section to manage your bookings. Cancellation and rescheduling policies may vary by company.
+Yes, with these simple steps:
+
+**For Business Owners/Staff:**
+1. Locate the appointment in your calendar or appointments list
+2. Select "Modify Appointment"
+3. Choose "Reschedule" or "Cancel"
+4. For rescheduling, select a new date/time
+5. For cancellation, select a reason from the dropdown menu
+6. Decide whether to issue a refund (if applicable)
+7. Confirm the change to notify the customer automatically
+
+**For Customers:**
+1. Log in to your account
+2. Go to "My Appointments"
+3. Find the appointment and click "Manage"
+4. Select "Reschedule" or "Cancel"
+5. Follow the prompts to complete the process
 
 ---
 

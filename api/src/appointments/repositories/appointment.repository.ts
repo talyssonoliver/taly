@@ -1,315 +1,84 @@
-﻿import { Injectable, Logger } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
-import { AppointmentStatus } from '../../common/enums/appointment-status.enum';
+﻿import { Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
+import { PrismaService } from "../../database/prisma.service";
+import {
+	Appointment,
+	CreateAppointmentParams,
+} from "../interfaces/appointment.interface";
 
 @Injectable()
 export class AppointmentRepository {
-  private readonly logger = new Logger(AppointmentRepository.name);
+	constructor(private readonly prisma: PrismaService) {}
 
-  constructor(private readonly prisma: PrismaService) {}
+	async create(data: CreateAppointmentParams): Promise<Appointment> {
+		return this.prisma.appointment.create({
+			data,
+			include: {
+				user: true,
+				salon: true,
+				service: true,
+				staff: true,
+			},
+		});
+	}
 
-  async findMany(options: {
-    skip?: number;
-    take?: number;
-    where?: any;
-    orderBy?: any;
-    include?: any;
-  }) {
-    try {
-      const { skip, take, where, orderBy, include } = options;
-      
-      return this.prisma.appointment.findMany({
-        skip,
-        take,
-        where,
-        orderBy: orderBy || { startTime: 'desc' },
-        include: include || {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              phone: true,
-            },
-          },
-          salon: {
-            select: {
-              id: true,
-              name: true,
-              address: true,
-              phone: true,
-              email: true,
-            },
-          },
-          service: {
-            select: {
-              id: true,
-              name: true,
-              duration: true,
-              price: true,
-            },
-          },
-          staff: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              phone: true,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      this.logger.error(Error finding appointments: );
-      throw error;
-    }
-  }
+	async findMany(params: {
+		skip?: number;
+		take?: number;
+		where?: Prisma.AppointmentWhereInput;
+		orderBy?: Prisma.AppointmentOrderByWithRelationInput;
+	}): Promise<Appointment[]> {
+		const { skip, take, where, orderBy } = params;
+		return this.prisma.appointment.findMany({
+			skip,
+			take,
+			where,
+			orderBy,
+			include: {
+				user: true,
+				salon: true,
+				service: true,
+				staff: true,
+			},
+		});
+	}
 
-  async count(options: { where?: any }) {
-    try {
-      const { where } = options;
-      
-      return this.prisma.appointment.count({
-        where,
-      });
-    } catch (error) {
-      this.logger.error(Error counting appointments: );
-      throw error;
-    }
-  }
+	async findById(id: string): Promise<Appointment | null> {
+		return this.prisma.appointment.findUnique({
+			where: { id },
+			include: {
+				user: true,
+				salon: true,
+				service: true,
+				staff: true,
+				reminders: true,
+			},
+		});
+	}
 
-  async findById(id: string) {
-    try {
-      return this.prisma.appointment.findUnique({
-        where: { id },
-        include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              phone: true,
-            },
-          },
-          salon: {
-            select: {
-              id: true,
-              name: true,
-              address: true,
-              phone: true,
-              email: true,
-            },
-          },
-          service: {
-            select: {
-              id: true,
-              name: true,
-              duration: true,
-              price: true,
-            },
-          },
-          staff: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              phone: true,
-            },
-          },
-          reminders: {
-            where: {
-              sent: false,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      this.logger.error(Error finding appointment by ID: );
-      throw error;
-    }
-  }
+	async update(id: string, data: Partial<Appointment>): Promise<Appointment> {
+		return this.prisma.appointment.update({
+			where: { id },
+			data,
+			include: {
+				user: true,
+				salon: true,
+				service: true,
+				staff: true,
+			},
+		});
+	}
 
-  async create(data: {
-    userId: string;
-    salonId: string;
-    serviceId: string;
-    startTime: Date;
-    endTime: Date;
-    price: number;
-    staffId?: string;
-    notes?: string;
-    status?: AppointmentStatus;
-  }) {
-    try {
-      return this.prisma.appointment.create({
-        data,
-        include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              phone: true,
-            },
-          },
-          salon: {
-            select: {
-              id: true,
-              name: true,
-              address: true,
-              phone: true,
-              email: true,
-            },
-          },
-          service: {
-            select: {
-              id: true,
-              name: true,
-              duration: true,
-              price: true,
-            },
-          },
-          staff: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              phone: true,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      this.logger.error(Error creating appointment: );
-      throw error;
-    }
-  }
+	async delete(id: string): Promise<Appointment> {
+		return this.prisma.appointment.delete({
+			where: { id },
+		});
+	}
 
-  async update(id: string, data: any) {
-    try {
-      return this.prisma.appointment.update({
-        where: { id },
-        data,
-        include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              phone: true,
-            },
-          },
-          salon: {
-            select: {
-              id: true,
-              name: true,
-              address: true,
-              phone: true,
-              email: true,
-            },
-          },
-          service: {
-            select: {
-              id: true,
-              name: true,
-              duration: true,
-              price: true,
-            },
-          },
-          staff: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              phone: true,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      this.logger.error(Error updating appointment: );
-      throw error;
-    }
-  }
-
-  async delete(id: string) {
-    try {
-      return this.prisma.appointment.delete({
-        where: { id },
-      });
-    } catch (error) {
-      this.logger.error(Error deleting appointment: );
-      throw error;
-    }
-  }
-
-  async findUpcomingAppointmentsForReminders(minutesAhead: number) {
-    try {
-      const now = new Date();
-      const futureTime = new Date(now.getTime() + minutesAhead * 60000);
-      
-      return this.prisma.appointment.findMany({
-        where: {
-          startTime: {
-            gte: now,
-            lte: futureTime,
-          },
-          status: {
-            in: [AppointmentStatus.SCHEDULED, AppointmentStatus.CONFIRMED, AppointmentStatus.PENDING],
-          },
-        },
-        include: {
-          user: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              phone: true,
-            },
-          },
-          salon: {
-            select: {
-              id: true,
-              name: true,
-              address: true,
-              phone: true,
-              email: true,
-            },
-          },
-          service: {
-            select: {
-              id: true,
-              name: true,
-              duration: true,
-              price: true,
-            },
-          },
-          staff: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              phone: true,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      this.logger.error(Error finding upcoming appointments for reminders: );
-      throw error;
-    }
-  }
+	async count(params: {
+		where?: Prisma.AppointmentWhereInput;
+	}): Promise<number> {
+		const { where } = params;
+		return this.prisma.appointment.count({ where });
+	}
 }
-
-
-

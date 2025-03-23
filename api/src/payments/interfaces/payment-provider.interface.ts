@@ -16,12 +16,96 @@ export interface IPaymentProviderConfig {
 	apiVersion?: string;
 	liveMode: boolean;
 	region?: string;
-	[key: string]: any;
+	[key: string]: unknown;
 }
 
 export interface IPaymentProviderOptions {
 	idempotencyKey?: string;
-	[key: string]: any;
+	[key: string]: unknown;
+}
+
+export interface ICustomerData {
+	id?: string;
+	email?: string;
+	name?: string;
+	phone?: string;
+	metadata?: Record<string, string>;
+	[key: string]: unknown;
+}
+
+export interface IPaymentMethodUpdateData {
+	billingDetails?: {
+		name?: string;
+		email?: string;
+		phone?: string;
+		address?: {
+			line1?: string;
+			line2?: string;
+			city?: string;
+			state?: string;
+			postalCode?: string;
+			country?: string;
+		};
+	};
+	metadata?: Record<string, string>;
+	[key: string]: unknown;
+}
+
+export interface ICapturePaymentResponse {
+	id: string;
+	status: string;
+	amount: number;
+	currency: string;
+	capturedAt: Date;
+	metadata?: Record<string, string>;
+}
+
+export interface ICancelPaymentResponse {
+	id: string;
+	status: string;
+	canceledAt: Date;
+}
+
+export interface IRefundPaymentResponse {
+	id: string;
+	paymentId: string;
+	amount: number;
+	currency: string;
+	status: string;
+	reason?: string;
+	refundedAt: Date;
+}
+
+export interface IPaymentDetails {
+	id: string;
+	status: string;
+	amount: number;
+	currency: string;
+	customerId?: string;
+	paymentMethodId?: string;
+	description?: string;
+	metadata?: Record<string, string>;
+	createdAt: Date;
+	updatedAt: Date;
+	capturedAt?: Date;
+	canceledAt?: Date;
+}
+
+export interface ICustomerResponse {
+	id: string;
+	email?: string;
+	name?: string;
+	phone?: string;
+	createdAt: Date;
+	updatedAt: Date;
+	metadata?: Record<string, string>;
+}
+
+export interface IWebhookEvent {
+	id: string;
+	type: string;
+	data: unknown;
+	createdAt: Date;
 }
 
 export interface IPaymentProvider {
@@ -44,7 +128,7 @@ export interface IPaymentProvider {
 	capturePayment(
 		paymentId: string,
 		options?: ICapturePaymentOptions,
-	): Promise<any>;
+	): Promise<ICapturePaymentResponse>;
 
 	/**
 	 * Cancel a payment (void an authorization)
@@ -52,7 +136,7 @@ export interface IPaymentProvider {
 	cancelPayment(
 		paymentId: string,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<ICancelPaymentResponse>;
 
 	/**
 	 * Refund a payment
@@ -60,7 +144,7 @@ export interface IPaymentProvider {
 	refundPayment(
 		paymentId: string,
 		options?: IRefundPaymentOptions,
-	): Promise<any>;
+	): Promise<IRefundPaymentResponse>;
 
 	/**
 	 * Retrieve payment details
@@ -68,7 +152,7 @@ export interface IPaymentProvider {
 	retrievePayment(
 		paymentId: string,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<IPaymentDetails>;
 
 	/**
 	 * Create a payment method
@@ -83,7 +167,7 @@ export interface IPaymentProvider {
 	 */
 	updatePaymentMethod(
 		paymentMethodId: string,
-		data: any,
+		data: IPaymentMethodUpdateData,
 		options?: IPaymentProviderOptions,
 	): Promise<PaymentMethodResponseDto>;
 
@@ -99,18 +183,18 @@ export interface IPaymentProvider {
 	 * Create a customer in the payment provider
 	 */
 	createCustomer(
-		customerData: any,
+		customerData: ICustomerData,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<ICustomerResponse>;
 
 	/**
 	 * Update customer data in the payment provider
 	 */
 	updateCustomer(
 		customerId: string,
-		customerData: any,
+		customerData: ICustomerData,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<ICustomerResponse>;
 
 	/**
 	 * Generate a client token for client-side payment processing
@@ -123,34 +207,65 @@ export interface IPaymentProvider {
 	/**
 	 * Validate a webhook event
 	 */
-	validateWebhook(payload: any, signature: string): Promise<boolean>;
+	validateWebhook(payload: unknown, signature: string): Promise<boolean>;
 
 	/**
 	 * Parse a webhook event
 	 */
-	parseWebhookEvent(payload: any, signature: string): Promise<any>;
+	parseWebhookEvent(
+		payload: unknown,
+		signature: string,
+	): Promise<IWebhookEvent>;
+}
+
+/**
+ * Interface for card details used when processing payments
+ */
+export interface ICardDetails {
+	number: string;
+	expiryMonth: string;
+	expiryYear: string;
+	cvc: string;
+	name?: string;
+}
+
+export interface IStripeSetupIntentResponse {
+	id: string;
+	clientSecret: string;
+	status: string;
+	customerId: string;
+	createdAt: Date;
 }
 
 export interface IStripeProvider extends IPaymentProvider {
 	attachPaymentMethodToCustomer(
 		customerId: string,
 		paymentMethodId: string,
-	): Promise<any>;
+	): Promise<PaymentMethodResponseDto>;
 
 	createSetupIntent(
 		customerId: string,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<IStripeSetupIntentResponse>;
+}
+
+export interface IBillingAgreementResponse {
+	id: string;
+	token?: string;
+	status: string;
+	customerId: string;
+	redirectUrl?: string;
+	createdAt: Date;
 }
 
 export interface IPayPalProvider extends IPaymentProvider {
 	createBillingAgreement(
 		customerId: string,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<IBillingAgreementResponse>;
 
 	executeBillingAgreement(
 		token: string,
 		options?: IPaymentProviderOptions,
-	): Promise<any>;
+	): Promise<IBillingAgreementResponse>;
 }

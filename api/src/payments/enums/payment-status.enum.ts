@@ -1,0 +1,15 @@
+export enum PaymentStatus {
+	PENDING = "pending",
+	PROCESSING = "processing",
+	SUCCEEDED = "succeeded",
+	COMPLETED = "completed",
+	FAILED = "failed",
+	CANCELED = "canceled",
+	REFUNDED = "refunded",
+	PARTIALLY_REFUNDED = "partial_refunded",
+	DISPUTED = "disputed",
+	REQUIRES_ACTION = "requires_action",
+	REQUIRES_CAPTURE = "requires_capture",
+	REQUIRES_CONFIRMATION = "requires_confirmation",
+	REQUIRES_PAYMENT_METHOD = "requires_payment_method",
+}

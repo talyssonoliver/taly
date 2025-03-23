@@ -1,277 +1,365 @@
-import { Injectable, NotFoundException, ConflictException, Logger } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Website } from './entities/website.entity';
-import { WebsiteTheme } from './entities/website-theme.entity';
-import { WebsitePage } from './entities/website-page.entity';
-import { WebsiteRepository } from './repositories/website.repository';
-import { WebsiteThemeRepository } from './repositories/website-theme.repository';
-import { CreateWebsiteDto } from './dto/create-website.dto';
-import { UpdateWebsiteDto } from './dto/update-website.dto';
-import { CreatePageDto } from './dto/create-page.dto';
-import { UpdatePageDto } from './dto/update-page.dto';
+import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import { PrismaService } from "../database/prisma.service";
+import { CreatePageDto } from "./dto/create-page.dto";
+import { CreateWebsiteDto } from "./dto/create-website.dto";
+import { UpdatePageDto } from "./dto/update-page.dto";
+import { UpdateWebsiteDto } from "./dto/update-website.dto";
+import { WebsitePage } from "./entities/website-page.entity";
+import { WebsiteTheme } from "./entities/website-theme.entity";
+import { Website } from "./entities/website.entity";
+import { WebsiteThemeRepository } from "./repositories/website-theme.repository";
+import { WebsiteRepository } from "./repositories/website.repository";
 
 @Injectable()
 export class WebsitesService {
-  private readonly logger = new Logger(WebsitesService.name);
+	private readonly logger = new Logger(WebsitesService.name);
 
-  constructor(
-    private readonly websiteRepository: WebsiteRepository,
-    private readonly websiteThemeRepository: WebsiteThemeRepository,
-    @InjectRepository(WebsitePage)
-    private readonly websitePageRepository: Repository<WebsitePage>,
-  ) {}
+	constructor(
+		private readonly websiteRepository: WebsiteRepository,
+		private readonly websiteThemeRepository: WebsiteThemeRepository,
+		private readonly prisma: PrismaService,
+	) {}
 
-  /**
-   * Find all websites, optionally filtered by user ID
-   */
-  async findAll(userId?: string): Promise<Website[]> {
-    return this.websiteRepository.findAll(userId);
-  }
+	/**
+	 * Find all websites, optionally filtered by user ID
+	 */
+	async findAll(userId?: string): Promise<Website[]> {
+		// Adjust return type to match what the repository returns
+		const [websites] = await this.websiteRepository.findAll(userId);
+		return websites;
+	}
 
-  /**
-   * Find a single website by ID
-   */
-  async findOne(id: string): Promise<Website> {
-    return this.websiteRepository.findOne(id);
-  }
+	/**
+	 * Find a single website by ID
+	 */
+	async findOne(id: string): Promise<Website> {
+		// Using findById from the repository
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
+		return website;
+	}
 
-  /**
-   * Create a new website
-   */
-  async create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
-    // Check if domain is already in use
-    const existingWebsite = await this.websiteRepository.findByDomain(createWebsiteDto.domain);
-    if (existingWebsite) {
-      throw new ConflictException('Domain is already in use');
-    }
+	/**
+	 * Create a new website
+	 */
+	async create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
+		// Check if URL is already in use
+		const existingWebsite = await this.websiteRepository.findByUrl(
+			createWebsiteDto.url || this.generateUrl(createWebsiteDto.name),
+		);
+		if (existingWebsite) {
+			throw new ConflictException("URL is already in use");
+		}
 
-    // Validate theme
-    const theme = await this.websiteThemeRepository.findOne(createWebsiteDto.themeId);
-    if (!theme) {
-      throw new NotFoundException(Theme with ID \ not found);
-    }
+		// Validate theme
+		const theme = await this.websiteThemeRepository.findOne(
+			createWebsiteDto.themeId,
+		);
+		if (!theme) {
+			throw new NotFoundException(
+				`Theme with ID ${createWebsiteDto.themeId} not found`,
+			);
+		}
 
-    return this.websiteRepository.createWebsite(createWebsiteDto, theme);
-  }
+		return this.websiteRepository.create(createWebsiteDto, theme);
+	}
 
-  /**
-   * Update an existing website
-   */
-  async update(id: string, updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
-    const website = await this.websiteRepository.findOne(id);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Update an existing website
+	 */
+	async update(
+		id: string,
+		updateWebsiteDto: UpdateWebsiteDto,
+	): Promise<Website> {
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
 
-    // If domain is being changed, check if new domain is available
-    if (updateWebsiteDto.domain && updateWebsiteDto.domain !== website.domain) {
-      const existingWebsite = await this.websiteRepository.findByDomain(updateWebsiteDto.domain);
-      if (existingWebsite && existingWebsite.id !== id) {
-        throw new ConflictException('Domain is already in use');
-      }
-    }
+		// If URL is being changed, check if new URL is available
+		if (updateWebsiteDto.url && updateWebsiteDto.url !== website.url) {
+			const existingWebsite = await this.websiteRepository.findByUrl(
+				updateWebsiteDto.url,
+			);
+			if (existingWebsite && existingWebsite.id !== id) {
+				throw new ConflictException("URL is already in use");
+			}
+		}
 
-    // If theme is being changed, validate new theme
-    if (updateWebsiteDto.themeId) {
-      const theme = await this.websiteThemeRepository.findOne(updateWebsiteDto.themeId);
-      if (!theme) {
-        throw new NotFoundException(Theme with ID \ not found);
-      }
-    }
+		// If theme is being changed, validate new theme
+		if (updateWebsiteDto.themeId) {
+			const theme = await this.websiteThemeRepository.findOne(
+				updateWebsiteDto.themeId,
+			);
+			if (!theme) {
+				throw new NotFoundException(
+					`Theme with ID ${updateWebsiteDto.themeId} not found`,
+				);
+			}
+		}
 
-    return this.websiteRepository.updateWebsite(id, updateWebsiteDto);
-  }
+		return this.websiteRepository.update(id, updateWebsiteDto);
+	}
 
-  /**
-   * Delete a website
-   */
-  async remove(id: string): Promise<void> {
-    const website = await this.websiteRepository.findOne(id);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Delete a website
+	 */
+	async remove(id: string): Promise<void> {
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
 
-    await this.websiteRepository.removeWebsite(id);
-  }
+		await this.websiteRepository.remove(id);
+	}
 
-  /**
-   * Get all pages for a website
-   */
-  async findAllPages(websiteId: string): Promise<WebsitePage[]> {
-    const website = await this.websiteRepository.findOne(websiteId);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Get all pages for a website
+	 */
+	async findAllPages(websiteId: string): Promise<WebsitePage[]> {
+		const website = await this.websiteRepository.findById(websiteId);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${websiteId} not found`);
+		}
 
-    return this.websitePageRepository.find({
-      where: { website: { id: websiteId } },
-      order: { sortOrder: 'ASC' },
-    });
-  }
+		// Using correct Prisma model name based on schema
+		return this.prisma.websitePage.findMany({
+			where: { websiteId },
+			orderBy: { sortOrder: "asc" },
+		}) as unknown as WebsitePage[];
+	}
 
-  /**
-   * Find a specific page
-   */
-  async findOnePage(websiteId: string, pageId: string): Promise<WebsitePage> {
-    const website = await this.websiteRepository.findOne(websiteId);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Find a specific page
+	 */
+	async findOnePage(websiteId: string, pageId: string): Promise<WebsitePage> {
+		const website = await this.websiteRepository.findById(websiteId);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${websiteId} not found`);
+		}
 
-    const page = await this.websitePageRepository.findOne({
-      where: { id: pageId, website: { id: websiteId } },
-    });
+		// Using correct Prisma model name
+		const page = await this.prisma.websitePage.findFirst({
+			where: { id: pageId, websiteId },
+		});
 
-    if (!page) {
-      throw new NotFoundException(Page with ID \ not found);
-    }
+		if (!page) {
+			throw new NotFoundException(`Page with ID ${pageId} not found`);
+		}
 
-    return page;
-  }
+		return page as unknown as WebsitePage;
+	}
 
-  /**
-   * Create a new page for a website
-   */
-  async createPage(websiteId: string, createPageDto: CreatePageDto): Promise<WebsitePage> {
-    const website = await this.websiteRepository.findOne(websiteId);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Create a new page for a website
+	 */
+	async createPage(
+		websiteId: string,
+		createPageDto: CreatePageDto,
+	): Promise<WebsitePage> {
+		const website = await this.websiteRepository.findById(websiteId);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${websiteId} not found`);
+		}
 
-    // Check if path is already in use for this website
-    const existingPage = await this.websitePageRepository.findOne({
-      where: { path: createPageDto.path, website: { id: websiteId } },
-    });
+		// Using correct Prisma model name
+		const existingPage = await this.prisma.websitePage.findFirst({
+			where: { path: createPageDto.path, websiteId },
+		});
 
-    if (existingPage) {
-      throw new ConflictException(A page with path '\' already exists);
-    }
+		if (existingPage) {
+			throw new ConflictException(
+				`A page with path '${createPageDto.path}' already exists`,
+			);
+		}
 
-    // Find highest sort order for proper placement
-    const maxSortOrder = await this.websitePageRepository
-      .createQueryBuilder('page')
-      .where('page.websiteId = :websiteId', { websiteId })
-      .select('MAX(page.sortOrder)', 'maxSortOrder')
-      .getRawOne();
+		// Find highest sort order for proper placement
+		const maxSortOrder = await this.prisma.websitePage.aggregate({
+			where: { websiteId },
+			_max: {
+				sortOrder: true,
+			},
+		});
 
-    const page = new WebsitePage();
-    page.title = createPageDto.title;
-    page.path = createPageDto.path;
-    page.content = createPageDto.content;
-    page.isPublished = createPageDto.isPublished ?? true;
-    page.metaTitle = createPageDto.metaTitle || createPageDto.title;
-    page.metaDescription = createPageDto.metaDescription || '';
-    page.sortOrder = createPageDto.sortOrder ?? (maxSortOrder?.maxSortOrder || 0) + 1;
-    page.website = website;
+		const newSortOrder = (maxSortOrder._max.sortOrder || 0) + 1;
 
-    return this.websitePageRepository.save(page);
-  }
+		// Using correct Prisma model name
+		return this.prisma.websitePage.create({
+			data: {
+				title: createPageDto.title,
+				path: createPageDto.path,
+				content: createPageDto.content as unknown as Record<string, unknown>,
+				isPublished: createPageDto.isPublished ?? true,
+				metaTitle: createPageDto.metaTitle || createPageDto.title,
+				metaDescription: createPageDto.metaDescription || "",
+				sortOrder: createPageDto.sortOrder ?? newSortOrder,
+				websiteId,
+			},
+		}) as unknown as WebsitePage;
+	}
 
-  /**
-   * Update an existing page
-   */
-  async updatePage(
-    websiteId: string,
-    pageId: string,
-    updatePageDto: UpdatePageDto,
-  ): Promise<WebsitePage> {
-    const page = await this.findOnePage(websiteId, pageId);
+	/**
+	 * Update an existing page
+	 */
+	async updatePage(
+		websiteId: string,
+		pageId: string,
+		updatePageDto: UpdatePageDto,
+	): Promise<WebsitePage> {
+		const page = await this.findOnePage(websiteId, pageId);
 
-    // Check if path is being changed and if it's unique
-    if (updatePageDto.path && updatePageDto.path !== page.path) {
-      const existingPage = await this.websitePageRepository.findOne({
-        where: { path: updatePageDto.path, website: { id: websiteId } },
-      });
+		// Check if path is being changed and if it's unique
+		if (updatePageDto.path && updatePageDto.path !== page.path) {
+			// Using correct Prisma model name
+			const existingPage = await this.prisma.websitePage.findFirst({
+				where: {
+					path: updatePageDto.path,
+					websiteId,
+					id: { not: pageId },
+				},
+			});
 
-      if (existingPage && existingPage.id !== pageId) {
-        throw new ConflictException(A page with path '\' already exists);
-      }
-    }
+			if (existingPage) {
+				throw new ConflictException(
+					`A page with path '${updatePageDto.path}' already exists`,
+				);
+			}
+		}
 
-    // Update page properties
-    if (updatePageDto.title !== undefined) page.title = updatePageDto.title;
-    if (updatePageDto.path !== undefined) page.path = updatePageDto.path;
-    if (updatePageDto.content !== undefined) page.content = updatePageDto.content;
-    if (updatePageDto.isPublished !== undefined) page.isPublished = updatePageDto.isPublished;
-    if (updatePageDto.metaTitle !== undefined) page.metaTitle = updatePageDto.metaTitle;
-    if (updatePageDto.metaDescription !== undefined) page.metaDescription = updatePageDto.metaDescription;
-    if (updatePageDto.sortOrder !== undefined) page.sortOrder = updatePageDto.sortOrder;
+		// Update page properties
+		const data: Partial<UpdatePageDto> = {};
+		if (updatePageDto.title !== undefined) data.title = updatePageDto.title;
+		if (updatePageDto.path !== undefined) data.path = updatePageDto.path;
+		if (updatePageDto.content !== undefined)
+			data.content = updatePageDto.content;
+		if (updatePageDto.isPublished !== undefined)
+			data.isPublished = updatePageDto.isPublished;
+		if (updatePageDto.metaTitle !== undefined)
+			data.metaTitle = updatePageDto.metaTitle;
+		if (updatePageDto.metaDescription !== undefined)
+			data.metaDescription = updatePageDto.metaDescription;
+		if (updatePageDto.sortOrder !== undefined)
+			data.sortOrder = updatePageDto.sortOrder;
 
-    return this.websitePageRepository.save(page);
-  }
+		// Using correct Prisma model name
+		return this.prisma.websitePage.update({
+			where: { id: pageId },
+			data,
+		}) as unknown as WebsitePage;
+	}
 
-  /**
-   * Delete a page
-   */
-  async removePage(websiteId: string, pageId: string): Promise<void> {
-    const page = await this.findOnePage(websiteId, pageId);
+	/**
+	 * Delete a page
+	 */
+	async removePage(websiteId: string, pageId: string): Promise<void> {
+		const page = await this.findOnePage(websiteId, pageId);
 
-    // Don't allow deleting the home page
-    if (page.path === '/' || page.path === 'home') {
-      throw new ConflictException('Cannot delete the home page');
-    }
+		// Don't allow deleting the home page
+		if (page.path === "/" || page.path === "home") {
+			throw new ConflictException("Cannot delete the home page");
+		}
 
-    await this.websitePageRepository.remove(page);
-  }
+		// Using correct Prisma model name
+		await this.prisma.websitePage.delete({
+			where: { id: pageId },
+		});
+	}
 
-  /**
-   * Get all available themes
-   */
-  async findAllThemes(): Promise<WebsiteTheme[]> {
-    return this.websiteThemeRepository.findAll();
-  }
+	/**
+	 * Get all available themes
+	 */
+	async findAllThemes(): Promise<WebsiteTheme[]> {
+		return this.websiteThemeRepository.findAll();
+	}
 
-  /**
-   * Get a specific theme
-   */
-  async findOneTheme(id: string): Promise<WebsiteTheme> {
-    const theme = await this.websiteThemeRepository.findOne(id);
-    if (!theme) {
-      throw new NotFoundException(Theme with ID \ not found);
-    }
-    return theme;
-  }
+	/**
+	 * Get a specific theme
+	 */
+	async findOneTheme(id: string): Promise<WebsiteTheme> {
+		const theme = await this.websiteThemeRepository.findOne(id);
+		if (!theme) {
+			throw new NotFoundException(`Theme with ID ${id} not found`);
+		}
+		return theme;
+	}
 
-  /**
-   * Publish a website
-   */
-  async publishWebsite(id: string): Promise<Website> {
-    const website = await this.websiteRepository.findOne(id);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+	/**
+	 * Publish a website
+	 */
+	async publishWebsite(id: string): Promise<Website> {
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
 
-    // Check if there's at least one page
-    const pages = await this.websitePageRepository.find({
-      where: { website: { id } },
-    });
+		// Check if there's at least one page
+		// Using correct Prisma model name
+		const pages = await this.prisma.websitePage.findMany({
+			where: { websiteId: id },
+		});
 
-    if (pages.length === 0) {
-      throw new ConflictException('Cannot publish a website without any pages');
-    }
+		if (pages.length === 0) {
+			throw new ConflictException("Cannot publish a website without any pages");
+		}
 
-    // Ensure there's a home page
-    const homePage = pages.find(page => page.path === '/' || page.path === 'home');
-    if (!homePage) {
-      throw new ConflictException('Cannot publish a website without a home page');
-    }
+		// Ensure there's a home page
+		const homePage = pages.find(
+			(page: { path: string }) => page.path === "/" || page.path === "home",
+		);
 
-    website.isPublished = true;
-    website.publishedAt = new Date();
-    return this.websiteRepository.save(website);
-  }
+		if (!homePage) {
+			throw new ConflictException(
+				"Cannot publish a website without a home page",
+			);
+		}
 
-  /**
-   * Unpublish a website
-   */
-  async unpublishWebsite(id: string): Promise<Website> {
-    const website = await this.websiteRepository.findOne(id);
-    if (!website) {
-      throw new NotFoundException(Website with ID \ not found);
-    }
+		// Update in repository with publishedAt included in the DTO
+		const updateData: Partial<UpdateWebsiteDto> & { publishedAt: Date } = {
+			isPublished: true,
+			publishedAt: new Date(),
+		};
 
-    website.isPublished = false;
-    return this.websiteRepository.save(website);
-  }
+		return this.websiteRepository.update(id, updateData);
+	}
+
+	/**
+	 * Unpublish a website
+	 */
+	async unpublishWebsite(id: string): Promise<Website> {
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
+
+		// Update in repository
+		return this.websiteRepository.update(id, {
+			isPublished: false,
+		});
+	}
+
+	async getWebsite(id: string): Promise<Website> {
+		const website = await this.websiteRepository.findById(id);
+		if (!website) {
+			throw new NotFoundException(`Website with ID ${id} not found`);
+		}
+		return website;
+	}
+
+	/**
+	 * Generate URL slug from name
+	 * @private
+	 */
+	private generateUrl(name: string): string {
+		return name
+			.toLowerCase()
+			.replace(/\s+/g, "-")
+			.replace(/[^a-z0-9-]/g, "");
+	}
 }
