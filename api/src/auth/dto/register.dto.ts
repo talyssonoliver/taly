@@ -1,10 +1,10 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
 	IsEmail,
 	IsNotEmpty,
+	IsOptional,
 	IsString,
 	Matches,
-	MaxLength,
 	MinLength,
 } from "class-validator";
 
@@ -18,15 +18,16 @@ export class RegisterDto {
 	email: string;
 
 	@ApiProperty({
-		description:
-			"User password - must be at least 8 characters with at least one number and one special character",
+		description: "User password",
 		example: "Password123!",
+		minLength: 8,
 	})
-	@IsString({ message: "Password must be a string" })
+	@IsString()
+	@IsNotEmpty({ message: "Password is required" })
 	@MinLength(8, { message: "Password must be at least 8 characters long" })
-	@Matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])/, {
+	@Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
 		message:
-			"Password must contain at least one number and one special character",
+			"Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number or special character",
 	})
 	password: string;
 
@@ -34,17 +35,15 @@ export class RegisterDto {
 		description: "User first name",
 		example: "John",
 	})
-	@IsString({ message: "First name must be a string" })
+	@IsString()
 	@IsNotEmpty({ message: "First name is required" })
-	@MaxLength(50, { message: "First name cannot exceed 50 characters" })
 	firstName: string;
 
-	@ApiProperty({
+	@ApiPropertyOptional({
 		description: "User last name",
 		example: "Doe",
 	})
-	@IsString({ message: "Last name must be a string" })
-	@IsNotEmpty({ message: "Last name is required" })
-	@MaxLength(50, { message: "Last name cannot exceed 50 characters" })
-	lastName: string;
+	@IsString()
+	@IsOptional()
+	lastName?: string;
 }

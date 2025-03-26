@@ -35,11 +35,8 @@ export class RolesGuard implements CanActivate {
 
     if (!hasRole) {
       this.logger.warn(
-        User  does not have required roles: ,
-      );
-      throw new ForbiddenException(
-        User does not have sufficient privileges,
-      );
+        'User  does not have required roles: ');
+      throw new ForbiddenException("User does not have sufficient privileges");
     }
 
     return true;

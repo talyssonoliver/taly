@@ -43,6 +43,7 @@ import { RolesGuard } from "./common/guards/roles.guard";
 
 // Filters and Interceptors
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
+import { LoggingInterceptor } from "./common/interceptors/logging.interceptor";
 import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
 
 @Module({
@@ -126,6 +127,10 @@ import { TransformInterceptor } from "./common/interceptors/transform.intercepto
 		{
 			provide: APP_INTERCEPTOR,
 			useClass: TransformInterceptor,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: LoggingInterceptor,
 		},
 		// Global guards
 		{

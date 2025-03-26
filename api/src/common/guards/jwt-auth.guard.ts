@@ -6,27 +6,19 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { AuthGuard } from "@nestjs/passport";
-import { Request } from "express";
-import { Observable } from "rxjs";
+import { User } from "../../users/interfaces/user.interface";
 import { IS_PUBLIC_KEY } from "../decorators/public.decorator";
-
-interface JwtUser {
-	id: string;
-	email: string;
-	role: string;
-}
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {
 	private readonly logger = new Logger(JwtAuthGuard.name);
 
-	constructor(private readonly reflector: Reflector) {
+	constructor(private reflector: Reflector) {
 		super();
 	}
 
-	canActivate(
-		context: ExecutionContext,
-	): boolean | Promise<boolean> | Observable<boolean> {
+	canActivate(context: ExecutionContext) {
+		// Check if route is public
 		const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
 			context.getHandler(),
 			context.getClass(),
@@ -36,29 +28,30 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
 			return true;
 		}
 
+		// Check JWT
 		return super.canActivate(context);
 	}
 
-	handleRequest<TUser extends JwtUser>(
-		err: unknown,
-		user: TUser | undefined,
-		info: Error | undefined,
-		context: ExecutionContext,
+	handleRequest<TUser = User>(
+		err: Error | null,
+		user: TUser | false,
+		info: { message: string } | undefined,
 	): TUser {
-		const request: Request = context.switchToHttp().getRequest();
-
-		if (err || !user) {
-			const errorMessage = info?.message || "Unauthorized access";
-			this.logger.warn(
-				`Failed authentication attempt: ${errorMessage} - IP: ${request.ip}, Path: ${request.path}`,
-			);
-			throw err || new UnauthorizedException(errorMessage);
+		if (err) {
+			this.logger.error(`JWT authentication error: ${err.message}`, err.stack);
+			throw err;
 		}
 
-		this.logger.log(
-			`User ${user.email || user.id} authenticated successfully - IP: ${request.ip}, Path: ${request.path}`,
-		);
+		if (!user) {
+			this.logger.warn(
+				`JWT authentication failed: ${info?.message || "Invalid token"}`,
+			);
+			throw new UnauthorizedException(info?.message || "Invalid token");
+		}
 
-		return user;
+		this.logger.debug(
+			`JWT authenticated successfully for user ID: ${(user).id}`,
+		);
+		return user as TUser;
 	}
 }

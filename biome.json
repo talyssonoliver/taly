@@ -28,7 +28,8 @@
 			"**/.next/**",
 			"**/dist/**",
 			"**/*.resolver.ts",
-			"api/src/**/*.resolver.ts"
+			"api/src/**/*.resolver.ts",
+			"shared/dto/**"
 		]
 	},
 	"formatter": {

@@ -12,7 +12,51 @@ https://api.taly.dev/notification
 
 ---
 
+## Architecture Overview
+
+| Channel | Provider       | Purpose                          |
+|---------|----------------|----------------------------------|
+| Email   | Amazon SES     | Booking confirmations, reminders |
+| SMS     | Twilio         | Short booking reminders          |
+| Push    | Planned (FCM)  | Realtime status updates          |
+
+All notifications are processed via:
+- Backend jobs (NestJS `@Schedule`)
+- Serverless handlers (`serverless/send-email`, etc.)
+- Manual API calls (admin messages)
+
+---
+
 ## **1. Notification Management**
+
+### Notification Events
+
+| Event                      | Channel(s)       | Trigger Source             |
+|----------------------------|------------------|----------------------------|
+| Appointment booked         | Email, SMS       | AppointmentService         |
+| Appointment reminder (24h) | Email, SMS       | Cron (Scheduled job)       |
+| Appointment cancelled      | Email            | AppointmentService         |
+| Payment receipt            | Email            | PaymentService             |
+| User registration          | Email            | AuthService                |
+| Subscription upgraded      | Email            | Stripe webhook             |
+
+> Event types are defined in:  
+`@api/src/notifications/constants/notification-events.enum.ts`
+
+---
+
+### Notification Flow
+
+```mermaid
+graph TD;
+  A[Event Trigger] --> B[NotificationService]
+  B --> C[TemplateResolver]
+  C --> D[SES/Twilio Gateway]
+  D --> E[Send Result]
+  E --> F[Logging + Retry Queue]
+```
+
+---
 
 ### **1.1 Send a Notification**
 
@@ -162,7 +206,148 @@ https://api.taly.dev/notification
 
 ---
 
-## **2. Security & Authentication**
+## **2. Implementation Details**
+
+### Email API (Backend)
+
+**Triggering an Email:**
+
+```typescript
+await this.notificationService.sendEmail({
+  to: user.email,
+  subject: 'Booking Confirmation',
+  template: 'booking-confirmation',
+  context: {
+    fullName: user.fullName,
+    startTime: appointment.startTime,
+    service: appointment.service.name,
+  },
+});
+```
+
+**Available Templates:**
+
+- `booking-confirmation`
+- `booking-cancelled`
+- `appointment-reminder`
+- `payment-receipt`
+- `welcome-user`
+- `plan-upgrade`
+
+Templates are located in:
+
+```
+api/src/mail/templates/*.hbs
+```
+
+> Uses `handlebars` for dynamic content rendering.
+
+---
+
+### SMS API (Backend)
+
+```typescript
+await this.notificationService.sendSMS({
+  to: '+447911123456',
+  message: `Your booking is confirmed for 10:30 AM tomorrow.`,
+});
+```
+
+**Twilio Setup:**
+
+- Configured in `.env`:
+  ```
+  TWILIO_ACCOUNT_SID=
+  TWILIO_AUTH_TOKEN=
+  TWILIO_FROM_NUMBER=
+  ```
+
+- Messages are sent using `twilio` SDK wrapper in:
+  `@api/src/notifications/providers/twilio.provider.ts`
+
+---
+
+### Reminder Jobs
+
+Handled via NestJS scheduler:
+
+```typescript
+@Cron('0 9 * * *') // every day at 9 AM
+handleDailyReminders() {
+  this.notificationService.sendUpcomingReminders();
+}
+```
+
+Logic:
+- Queries appointments within 24h
+- Filters users with reminder preferences enabled
+- Sends email and/or SMS
+
+---
+
+### Retry Logic & Failures
+
+Failures are logged to:
+
+```
+logs/notifications/failed-<timestamp>.log
+```
+
+Planned retry queue (v2):
+- Failed emails/SMS are retried 3 times
+- After 3 failures, fallback email is sent to admin
+- Retry mechanism will be migrated to serverless queue
+
+---
+
+### Notification Preferences
+
+Coming soon:
+- User-configurable preferences via `/settings`
+- Stored in user table (`emailNotifications`, `smsNotifications`)
+- Will integrate with frontend toggle UI components
+
+---
+
+### API Error Handling
+
+| Status Code | Meaning                        |
+|-------------|--------------------------------|
+| 400         | Invalid template or payload    |
+| 403         | Forbidden (role)               |
+| 429         | Rate-limited (per user/email)  |
+| 500         | Delivery failed                |
+
+---
+
+### Serverless Support
+
+Notifications may also be sent from:
+
+```
+serverless/send-email
+```
+
+Used for:
+- Async reporting notifications
+- Daily analytics summary
+- Webhook-confirmed status emails
+
+---
+
+### Related Files
+
+| File | Purpose |
+|------|---------|
+| `notification.service.ts` | Centralised email/SMS gateway logic |
+| `mail/templates/*.hbs`    | Handlebars email templates          |
+| `twilio.provider.ts`     | SMS provider wrapper                |
+| `mail.module.ts`         | SES config and mailer transport     |
+| `reminder.scheduler.ts`  | Cron-based reminders                |
+
+---
+
+## **3. Security & Authentication**
 
 - **All requests require JSON Web Token (JWT)**, except for system-triggered notifications.
 - **Use the `Authorization` header for authentication**:
@@ -173,9 +358,28 @@ https://api.taly.dev/notification
 
 ---
 
+## **4. Environment Variables**
+
+```env
+# Email (SES)
+AWS_SES_REGION=
+AWS_SES_ACCESS_KEY=
+AWS_SES_SECRET_KEY=
+
+# SMS (Twilio)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_NUMBER=
+```
+
+---
+
 ## **Contact & Support**
 
-For any issues, please contact the API support team at **support@taly.dev** or check the documentation at [Taly API Docs](https://api.taly.dev/docs).
+For any issues, please contact:
+- Slack: `#taly-notifications`
+- Email: `ops@taly.dev` or `support@taly.dev`
+- Documentation: [Taly API Docs](https://api.taly.dev/docs)
 
 ---
 

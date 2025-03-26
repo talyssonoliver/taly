@@ -54,7 +54,7 @@ export interface INotification {
   /**
    * Additional metadata
    */
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 
   /**
    * When the notification was created

@@ -1,23 +1,21 @@
 import {
-	Injectable,
-	NotFoundException,
 	ConflictException,
-	BadRequestException,
-	Logger,
+	Injectable,
 	InternalServerErrorException,
+	Logger,
+	NotFoundException,
 } from "@nestjs/common";
+import type { Prisma } from "@prisma/client";
 import * as bcrypt from "bcrypt";
-import type { PrismaService } from "../database/prisma.service";
-import type { UserRepository } from "./repositories/user.repository";
-import type { StaffRepository } from "./repositories/staff.repository";
-import type { RoleRepository } from "./repositories/role.repository";
-import type { CreateUserDto } from "./dto/create-user.dto";
-import type { UpdateUserDto } from "./dto/update-user.dto";
-import type { CreateStaffDto } from "./dto/create-staff.dto";
 import { Role } from "../common/enums/roles.enum";
 import { PaginationUtil } from "../common/utils/pagination.util";
+import type { PrismaService } from "../database/prisma.service";
+import type { CreateStaffDto } from "./dto/create-staff.dto";
+import type { CreateUserDto } from "./dto/create-user.dto";
+import type { UpdateUserDto } from "./dto/update-user.dto";
 import type { User, UserWithoutPassword } from "./interfaces/user.interface";
-import type { Prisma } from "@prisma/client";
+import type { RoleRepository } from "./repositories/role.repository";
+import type { UserRepository } from "./repositories/user.repository";
 
 @Injectable()
 export class UsersService {
@@ -26,7 +24,6 @@ export class UsersService {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly userRepository: UserRepository,
-		private readonly staffRepository: StaffRepository,
 		private readonly roleRepository: RoleRepository,
 	) {}
 
@@ -42,7 +39,7 @@ export class UsersService {
 		try {
 			const { skip, take } = PaginationUtil.getPaginationValues(page, limit);
 
-			let where: Prisma.UserWhereInput = {};
+			const where: Prisma.UserWhereInput = {};
 
 			// Add search condition if provided
 			if (search) {
@@ -56,11 +53,6 @@ export class UsersService {
 			// Add role filter if provided
 			if (role) {
 				where.role = role;
-			}
-
-			// If where is empty, set it to undefined
-			if (Object.keys(where).length === 0) {
-				where = undefined;
 			}
 
 			// Get users and total count in parallel
@@ -81,11 +73,11 @@ export class UsersService {
 				page,
 				limit,
 			);
-		} catch (error) {
-			this.logger.error(
-				`Error finding all users: ${error.message}`,
-				error.stack,
-			);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error finding all users: ${errorMessage}`, errorStack);
 			throw new InternalServerErrorException("Failed to retrieve users");
 		}
 	}
@@ -113,10 +105,13 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
 			this.logger.error(
-				`Error finding user by ID: ${error.message}`,
-				error.stack,
+				`Error finding user by ID: ${errorMessage}`,
+				errorStack,
 			);
 			throw new InternalServerErrorException("Failed to retrieve user");
 		}
@@ -130,10 +125,13 @@ export class UsersService {
 	async findByEmail(email: string): Promise<User | null> {
 		try {
 			return this.userRepository.findByEmail(email);
-		} catch (error) {
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
 			this.logger.error(
-				`Error finding user by email: ${error.message}`,
-				error.stack,
+				`Error finding user by email: ${errorMessage}`,
+				errorStack,
 			);
 			throw new InternalServerErrorException(
 				"Failed to retrieve user by email",
@@ -183,8 +181,10 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(`Error creating user: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error creating user: ${errorMessage}`, errorStack);
 
 			if (error instanceof ConflictException) {
 				throw error;
@@ -227,15 +227,8 @@ export class UsersService {
 					},
 				});
 
-				// Create staff profile
-				const staff = await prisma.staff.create({
-					data: {
-						userId: user.id,
-						permissions,
-					},
-				});
 
-				return { ...user, staff };
+				return { ...user, };
 			});
 
 			// Remove password from response
@@ -248,8 +241,11 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(`Error creating staff: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error creating staff: ${errorMessage}`, errorStack);
 
 			if (error instanceof ConflictException) {
 				throw error;
@@ -312,8 +308,10 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(`Error updating user: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error updating user: ${errorMessage}`, errorStack);
 
 			if (
 				error instanceof NotFoundException ||
@@ -343,10 +341,12 @@ export class UsersService {
 
 			// Remove password from response
 			const { password, ...result } = deletedUser;
-
+			
 			return result;
-		} catch (error) {
-			this.logger.error(`Error removing user: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error removing user: ${errorMessage}`, errorStack);
 
 			if (error instanceof NotFoundException) {
 				throw error;
@@ -370,7 +370,8 @@ export class UsersService {
 			}
 
 			if (user.isActive) {
-				return { ...user, password: undefined };
+				const { password, ...userWithoutPassword } = user;
+				return userWithoutPassword;
 			}
 
 			const updatedUser = await this.userRepository.update(id, {
@@ -387,8 +388,11 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(`Error activating user: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error activating user: ${errorMessage}`, errorStack);
 
 			if (error instanceof NotFoundException) {
 				throw error;
@@ -412,7 +416,8 @@ export class UsersService {
 			}
 
 			if (!user.isActive) {
-				return { ...user, password: undefined };
+				const { password, ...userWithoutPassword } = user;
+				return userWithoutPassword;
 			}
 
 			const updatedUser = await this.userRepository.update(id, {
@@ -429,11 +434,11 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(
-				`Error deactivating user: ${error.message}`,
-				error.stack,
-			);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error deactivating user: ${errorMessage}`, errorStack);
 
 			if (error instanceof NotFoundException) {
 				throw error;
@@ -481,8 +486,11 @@ export class UsersService {
 				...result,
 				fullName,
 			};
-		} catch (error) {
-			this.logger.error(`Error assigning role: ${error.message}`, error.stack);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			const errorStack = error instanceof Error ? error.stack : undefined;
+			this.logger.error(`Error assigning role: ${errorMessage}`, errorStack);
 
 			if (error instanceof NotFoundException) {
 				throw error;
@@ -503,7 +511,7 @@ export class UsersService {
 		try {
 			const { skip, take } = PaginationUtil.getPaginationValues(page, limit);
 
-			const where: any = { role: Role.STAFF };
+			const where: Prisma.UserWhereInput = { role: Role.STAFF };
 
 			// Add search condition if provided
 			if (search) {
@@ -538,12 +546,29 @@ export class UsersService {
 				page,
 				limit,
 			);
-		} catch (error) {
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			const errorStack = error instanceof Error ? error.stack : undefined;
 			this.logger.error(
-				`Error finding staff users: ${error.message}`,
-				error.stack,
+				`Error finding staff users: ${errorMessage}`,
+				errorStack,
 			);
 			throw new InternalServerErrorException("Failed to retrieve staff users");
+		}
+	}
+
+	async updatePassword(userId: string, newPassword: string) {
+		const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+		try {
+			await this.prisma.user.update({
+				where: { id: userId },
+				data: { password: hashedPassword },
+			});
+			return true;
+		} catch (error) {
+			throw new NotFoundException("User not found");
 		}
 	}
 }

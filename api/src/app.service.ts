@@ -85,11 +85,11 @@ export class AppService {
 			health.status = "error";
 			health.database = {
 				status: "error",
-				message: `Database connection failed: ${error.message}`,
+				message: `Database connection failed: ${(error as Error).message}`,
 			};
 			this.logger.error(
 				"Health check - Database connection failed",
-				error.stack,
+				(error as Error).stack,
 			);
 		}
 

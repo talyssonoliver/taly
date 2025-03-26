@@ -1,14 +1,32 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { Appointment } from "../appointments/interfaces/appointment.interface";
-import { NotificationType } from "../common/enums/notification-type.enum";
 import { PrismaService } from "../database/prisma.service";
-import { INotification } from "./interfaces/notification.interface";
+import { NotificationType } from "../common/enums/notification-type.enum";
+import { Appointment } from "../appointments/interfaces/appointment.interface";
+import type { Notification } from "./entities/notification.entity";
+
 
 // Define interfaces for notification data
 interface AppointmentNotificationData {
-	appointment: Partial<Appointment> & { userId?: string };
-	user: { id: string; phoneNumber?: string };
-	service?: Record<string, unknown>;
+	appointment: Partial<Appointment>;
+	user?: {
+		id: string;
+		email?: string;
+		phoneNumber?: string;
+		firstName?: string;
+		lastName?: string;
+	};
+	service?: {
+		id?: string;
+		name?: string;
+		duration?: number;
+		price?: number;
+	};
+	salon?: {
+		id?: string;
+		name?: string;
+		address?: string;
+		phoneNumber?: string;
+	};
 	reason?: string;
 }
 
@@ -29,32 +47,44 @@ export class NotificationsService {
 		userId: string,
 		type: string,
 		templateKey: string,
-		data: Record<string, unknown>,
-	): Promise<INotification> {
+		data: { appointment?: { id?: string } } & Record<string, unknown>,
+	): Promise<Notification> {
 		try {
 			// Log notification
 			this.logger.log(
 				`Sending ${type} notification to user ${userId} using template ${templateKey}`,
 			);
 
-			// Create notification record
-			const notification = await this.prisma.notification.create({
-				data: {
-					userId,
-					type,
-					templateKey,
-					content: JSON.stringify(data),
-					sent: true,
-					sentAt: new Date(),
-				},
-			});
+			// Create notification record with properly typed data
+			const notificationData = {
+				type,
+				status: "sent",
+				sentAt: new Date(),
+				...(data.appointment?.id 
+					? { appointment: { connect: { id: data.appointment.id } } } 
+					: {})
+			};
 
+			const notification = await this.prisma.appointmentReminder.create({
+				data: notificationData,
+			});
 			// Add code to actually send the notification via email, SMS, etc.
 			// This would typically involve external services
 
-			return notification;
+			return {
+				id: notification.id,
+				userId,
+				type,
+				templateKey,
+				content: JSON.stringify(data),
+				sent: true,
+				sentAt: notification.sentAt,
+				createdAt: notification.createdAt,
+			};
 		} catch (error) {
-			this.logger.error(`Error sending notification: ${error.message}`);
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`Error sending notification: ${errorMessage}`);
 			throw error;
 		}
 	}
@@ -63,9 +93,17 @@ export class NotificationsService {
 	 * Send an appointment confirmation notification
 	 */
 	async sendAppointmentConfirmation(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn(
+				"Missing appointment or user data for confirmation notification",
+			);
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -89,9 +127,17 @@ export class NotificationsService {
 	 * Send an appointment reminder notification
 	 */
 	async sendAppointmentReminder(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn(
+				"Missing appointment or user data for reminder notification",
+			);
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -115,9 +161,17 @@ export class NotificationsService {
 	 * Send an appointment reschedule notification
 	 */
 	async sendAppointmentReschedule(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn(
+				"Missing appointment or user data for reschedule notification",
+			);
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -141,9 +195,17 @@ export class NotificationsService {
 	 * Send an appointment cancellation notification
 	 */
 	async sendAppointmentCancellation(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn(
+				"Missing appointment or user data for cancellation notification",
+			);
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -164,26 +226,29 @@ export class NotificationsService {
 	}
 
 	/**
-	 * Send an appointment confirmation notification (alias for sendAppointmentConfirmation)
+	 * Send an appointment confirmation notification (alias method)
 	 */
 	async sendAppointmentConfirmed(
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
-		if (appointmentData?.appointment?.userId) {
-			await this.sendAppointmentConfirmation(
-				appointmentData.appointment.userId,
-				appointmentData,
-			);
-		}
+		await this.sendAppointmentConfirmation(appointmentData);
 	}
 
 	/**
 	 * Send a no-show notification
 	 */
 	async sendNoShowNotification(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn(
+				"Missing appointment or user data for no-show notification",
+			);
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -207,9 +272,15 @@ export class NotificationsService {
 	 * Send a feedback request notification
 	 */
 	async sendFeedbackRequest(
-		userId: string,
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
+		if (!appointmentData.appointment || !appointmentData.user?.id) {
+			this.logger.warn("Missing appointment or user data for feedback request");
+			return;
+		}
+
+		const userId = appointmentData.user.id;
+
 		// Send email notification
 		await this.sendNotification(
 			userId,
@@ -220,17 +291,12 @@ export class NotificationsService {
 	}
 
 	/**
-	 * Send a cancelation notification (alias for sendAppointmentCancellation)
+	 * Send a cancellation notification (alias for sendAppointmentCancellation)
 	 */
 	async sendAppointmentCancelled(
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
-		if (appointmentData?.appointment?.userId) {
-			await this.sendAppointmentCancellation(
-				appointmentData.appointment.userId,
-				appointmentData,
-			);
-		}
+		await this.sendAppointmentCancellation(appointmentData);
 	}
 
 	/**
@@ -239,11 +305,6 @@ export class NotificationsService {
 	async sendAppointmentRescheduled(
 		appointmentData: AppointmentNotificationData,
 	): Promise<void> {
-		if (appointmentData?.appointment?.userId) {
-			await this.sendAppointmentReschedule(
-				appointmentData.appointment.userId,
-				appointmentData,
-			);
-		}
+		await this.sendAppointmentReschedule(appointmentData);
 	}
 }

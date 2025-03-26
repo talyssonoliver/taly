@@ -1,10 +1,7 @@
-import type { Role } from "../enums/roles.enum";
-
 export interface JwtPayload {
-	sub: string; // Subject (userId)
+	sub: string;
 	email: string;
-	roles: Role[];
-	iat?: number; // Issued at
-	exp?: number; // Expiration time
-	tokenType: string;
+	role?: string;
+	iat?: number;
+	exp?: number;
 }

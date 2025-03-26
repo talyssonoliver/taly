@@ -2,16 +2,24 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { PrismaModule } from "../database/prisma.module";
+import { UsersModule } from "../users/users.module";
 import { AuthController } from "./auth.controller";
+import { AuthResolver } from "./auth.resolver";
 import { AuthService } from "./auth.service";
+import { LocalAuthGuard } from "./guards/local-auth.guard";
+import { FacebookStrategy } from "./strategies/facebook.strategy";
+import { GoogleStrategy } from "./strategies/google.strategy";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { LocalStrategy } from "./strategies/local.strategy";
 import { TokenService } from "./token.service";
 
 @Module({
 	imports: [
 		PrismaModule,
-		PassportModule,
+		UsersModule,
+		PassportModule.register({ defaultStrategy: "jwt" }),
 		JwtModule.registerAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
@@ -24,7 +32,17 @@ import { TokenService } from "./token.service";
 		}),
 	],
 	controllers: [AuthController],
-	providers: [AuthService, TokenService, JwtStrategy],
-	exports: [AuthService, TokenService],
+	providers: [
+		AuthService,
+		TokenService,
+		AuthResolver,
+		LocalStrategy,
+		JwtStrategy,
+		GoogleStrategy,
+		FacebookStrategy,
+		LocalAuthGuard,
+		JwtAuthGuard,
+	],
+	exports: [AuthService, TokenService, JwtAuthGuard],
 })
 export class AuthModule {}

@@ -1,50 +1,52 @@
 import {
-	Controller,
-	Get,
-	Post,
-	Patch,
-	Delete,
 	Body,
-	Param,
-	Query,
-	UseGuards,
-	Logger,
-	HttpStatus,
-	HttpCode,
-	NotFoundException,
-	BadRequestException,
+	Controller,
+	Delete,
 	ForbiddenException,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Logger,
+	NotFoundException,
+	Param,
+	Patch,
+	Post,
+	Query,
 	Req,
+	UseGuards,
 } from "@nestjs/common";
 import {
-	ApiTags,
-	ApiOperation,
 	ApiBearerAuth,
-	ApiQuery,
+	ApiOperation,
 	ApiParam,
+	ApiQuery,
+	ApiTags,
 } from "@nestjs/swagger";
+import { AppointmentStatus } from "@prisma/client";
+import { Request } from "express";
+import { Roles } from "../common/decorators/roles.decorator";
+import { Role } from "../common/enums/roles.enum";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
-import { Roles } from "../common/decorators/roles.decorator";
-import { CurrentUser } from "../common/decorators/current-user.decorator";
-import { Role } from "../common/enums/roles.enum";
-import type { AppointmentsService } from "./appointments.service";
-import type { CreateAppointmentDto } from "./dto/create-appointment.dto";
-import type { UpdateAppointmentDto } from "./dto/update-appointment.dto";
-import type { RescheduleAppointmentDto } from "./dto/reschedule-appointment.dto";
-import type { CancelAppointmentDto } from "./dto/cancel-appointment.dto";
 import { PaginationUtil } from "../common/utils/pagination.util";
-import { AppointmentStatus } from "../common/enums/appointment-status.enum";
-import type { UserWithoutPassword } from "../users/interfaces/user.interface";
-import type { Request } from "express";
+import { UserWithoutPassword } from "../users/interfaces/user.interface";
+import { AppointmentsService } from "./appointments.service";
+import { CancelAppointmentDto } from "./dto/cancel-appointment.dto";
+import { CreateAppointmentDto } from "./dto/create-appointment.dto";
+import { RescheduleAppointmentDto } from "./dto/reschedule-appointment.dto";
+import { UpdateAppointmentDto } from "./dto/update-appointment.dto";
 
-// Define interfaces for query parameters
-interface PaginationQuery {
-	page?: string;
-	limit?: string;
+// Define pagination DTO to separate from filters
+class PaginationDto {
+	@ApiQuery({ name: "page", required: false, type: Number })
+	page?: string = "1";
+
+	@ApiQuery({ name: "limit", required: false, type: Number })
+	limit?: string = "10";
 }
 
-interface AppointmentQuery extends PaginationQuery {
+// Define interface for query parameters
+interface AppointmentQuery extends PaginationDto {
 	status?: AppointmentStatus;
 	startDate?: string;
 	endDate?: string;
@@ -58,15 +60,6 @@ interface AvailableSlotsQuery {
 	staffId?: string;
 }
 
-// Interface for route parameters
-interface IdParam {
-	id: string;
-}
-
-interface SalonIdParam {
-	salonId: string;
-}
-
 @ApiTags("Appointments")
 @Controller("appointments")
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -76,11 +69,6 @@ export class AppointmentsController {
 
 	constructor(private readonly appointmentsService: AppointmentsService) {}
 
-	// Helper method to extract user from request
-	private extractUserFromRequest(req: Request): UserWithoutPassword {
-		return req.user as UserWithoutPassword;
-	}
-
 	@Get()
 	@ApiOperation({ summary: "Get all appointments" })
 	@ApiQuery({ name: "page", required: false, type: Number })
@@ -89,25 +77,18 @@ export class AppointmentsController {
 	@ApiQuery({ name: "startDate", required: false, type: String })
 	@ApiQuery({ name: "endDate", required: false, type: String })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async findAll(query: AppointmentQuery, req: Request) {
+	async findAll(@Query() query: AppointmentQuery) {
 		const {
 			page = "1",
 			limit = "10",
-			status,
-			startDate,
-			endDate,
-			salonId,
+			...filters
 		} = query;
 
 		this.logger.log("Finding all appointments");
 		const { page: pageNum, limit: limitNum } =
 			PaginationUtil.normalizePaginationParams(page, limit);
-		return this.appointmentsService.findAll(pageNum, limitNum, {
-			status,
-			startDate,
-			endDate,
-			salonId,
-		});
+			
+		return this.appointmentsService.findAllWithPagination(pageNum, limitNum, filters);
 	}
 
 	@Get("me")
@@ -115,25 +96,21 @@ export class AppointmentsController {
 	@ApiQuery({ name: "page", required: false, type: Number })
 	@ApiQuery({ name: "limit", required: false, type: Number })
 	@ApiQuery({ name: "status", required: false, enum: AppointmentStatus })
-	async findMyAppointments(query: AppointmentQuery, req: Request) {
-		const { page = "1", limit = "10", status, upcoming } = query;
-		const user = this.extractUserFromRequest(req);
+	async findMyAppointments(@Query() query: AppointmentQuery, @Req() req: Request) {
+		const { page = "1", limit = "10", ...filters } = query;
+		const user = req.user as UserWithoutPassword;
 
 		this.logger.log(`Finding appointments for user ID: ${user.id}`);
 		const { page: pageNum, limit: limitNum } =
 			PaginationUtil.normalizePaginationParams(page, limit);
-		return this.appointmentsService.findByUserId(user.id, pageNum, limitNum, {
-			status,
-			upcoming,
-		});
+		return this.appointmentsService.findByUserId(user.id, pageNum, limitNum, filters);
 	}
 
 	@Get(":id")
 	@ApiOperation({ summary: "Get appointment by ID" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
-	async findOne(params: IdParam, req: Request) {
-		const { id } = params;
-		const user = this.extractUserFromRequest(req);
+	async findOne(@Param("id") id: string, @Req() req: Request) {
+		const user = req.user as UserWithoutPassword;
 
 		this.logger.log(`Finding appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
@@ -166,7 +143,7 @@ export class AppointmentsController {
 	@ApiQuery({ name: "startDate", required: false, type: String })
 	@ApiQuery({ name: "endDate", required: false, type: String })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async findBySalon(params: SalonIdParam, query: AppointmentQuery) {
+	async findBySalon(@Param() params: SalonIdParam, @Query() query: AppointmentQuery) {
 		const { salonId } = params;
 		const { page = "1", limit = "10", status, startDate, endDate } = query;
 
@@ -191,7 +168,7 @@ export class AppointmentsController {
 	})
 	@ApiQuery({ name: "serviceId", required: true, type: String })
 	@ApiQuery({ name: "staffId", required: false, type: String })
-	async getAvailableSlots(params: SalonIdParam, query: AvailableSlotsQuery) {
+	async getAvailableSlots(@Param() params: SalonIdParam, @Query() query: AvailableSlotsQuery) {
 		const { salonId } = params;
 		const { date, serviceId, staffId } = query;
 
@@ -209,8 +186,8 @@ export class AppointmentsController {
 	@Post()
 	@ApiOperation({ summary: "Create a new appointment" })
 	@HttpCode(HttpStatus.CREATED)
-	async create(createAppointmentDto: CreateAppointmentDto, req: Request) {
-		const user = this.extractUserFromRequest(req);
+	async create(@Body() createAppointmentDto: CreateAppointmentDto, @Req() req: Request) {
+		const user = req.user as UserWithoutPassword;
 		this.logger.log(`Creating new appointment for user ID: ${user.id}`);
 		return this.appointmentsService.create(createAppointmentDto, user.id);
 	}
@@ -219,12 +196,11 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Update an appointment" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	async update(
-		params: IdParam,
-		updateAppointmentDto: UpdateAppointmentDto,
-		req: Request,
+		@Param("id") id: string,
+		@Body() updateAppointmentDto: UpdateAppointmentDto,
+		@Req() req: Request,
 	) {
-		const { id } = params;
-		const user = this.extractUserFromRequest(req);
+		const user = req.user as UserWithoutPassword;
 
 		this.logger.log(`Updating appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
@@ -252,12 +228,11 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Reschedule an appointment" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	async reschedule(
-		params: IdParam,
-		rescheduleAppointmentDto: RescheduleAppointmentDto,
-		req: Request,
+		@Param("id") id: string,
+		@Body() rescheduleAppointmentDto: RescheduleAppointmentDto,
+		@Req() req: Request,
 	) {
-		const { id } = params;
-		const user = this.extractUserFromRequest(req);
+		const user = req.user as UserWithoutPassword;
 
 		this.logger.log(`Rescheduling appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
@@ -285,12 +260,11 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Cancel an appointment" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	async cancel(
-		params: IdParam,
-		cancelAppointmentDto: CancelAppointmentDto,
-		req: Request,
+		@Param("id") id: string,
+		@Body() cancelAppointmentDto: CancelAppointmentDto,
+		@Req() req: Request,
 	) {
-		const { id } = params;
-		const user = this.extractUserFromRequest(req);
+		const user = req.user as UserWithoutPassword;
 
 		this.logger.log(`Cancelling appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
@@ -318,9 +292,7 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Confirm an appointment" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async confirm(params: IdParam) {
-		const { id } = params;
-
+	async confirm(@Param("id") id: string) {
 		this.logger.log(`Confirming appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
 
@@ -335,9 +307,7 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Mark an appointment as completed" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async complete(params: IdParam) {
-		const { id } = params;
-
+	async complete(@Param("id") id: string) {
 		this.logger.log(`Completing appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
 
@@ -352,9 +322,7 @@ export class AppointmentsController {
 	@ApiOperation({ summary: "Mark an appointment as no-show" })
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async noShow(params: IdParam) {
-		const { id } = params;
-
+	async noShow(@Param("id") id: string) {
 		this.logger.log(`Marking appointment with ID: ${id} as no-show`);
 		const appointment = await this.appointmentsService.findById(id);
 
@@ -370,9 +338,7 @@ export class AppointmentsController {
 	@ApiParam({ name: "id", description: "Appointment ID" })
 	@HttpCode(HttpStatus.NO_CONTENT)
 	@Roles(Role.ADMIN)
-	async remove(params: IdParam) {
-		const { id } = params;
-
+	async remove(@Param("id") id: string) {
 		this.logger.log(`Deleting appointment with ID: ${id}`);
 		const appointment = await this.appointmentsService.findById(id);
 

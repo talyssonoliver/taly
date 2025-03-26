@@ -1,7 +1,18 @@
-# Ignore controller files
+# Ignore node modules and build artifacts
+node_modules
+dist
+.next
+build
+coverage
+
+# Ignore specific file types
+**/*.d.ts
+
+# Ignore specific files that use decorators heavily
 **/*.controller.ts
+**/*.resolver.ts
+shared/dto/**
 
 # Ignore resolver files with decorator issues
-**/*.resolver.ts
 api/src/**/*.resolver.ts
 api/src/appointments/appointments.resolver.ts

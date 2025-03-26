@@ -2,7 +2,7 @@ import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import type { JwtPayload } from "../../common/interfaces/jwt-payload.interface";
+import { JwtPayload } from "../../common/interfaces/jwt-payload.interface";
 import { PrismaService } from "../../database/prisma.service";
 
 @Injectable()
@@ -10,7 +10,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	private readonly logger = new Logger(JwtStrategy.name);
 
 	constructor(
-		private readonly configService: ConfigService,
+		configService: ConfigService,
 		private readonly prismaService: PrismaService,
 	) {
 		const jwtSecret = configService.get<string>("JWT_SECRET");
@@ -43,15 +43,29 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
 			this.logger.debug(`User ${user.email} authenticated successfully`);
 
-			// Return only necessary information
+			// Return user information
 			return {
-				sub: payload.sub,
+				id: payload.sub,
 				email: payload.email,
-				role: payload.roles,
+				role: payload.role,
+				firstName: user.firstName,
+				lastName: user.lastName,
 			};
-		} catch (error) {
-			this.logger.error(`JWT validation error: ${error.message}`);
-			throw error;
+		} catch (error: unknown) {
+			if (error instanceof UnauthorizedException) {
+				throw error;
+			}
+
+			if (error instanceof Error) {
+				this.logger.error(
+					`JWT validation error: ${error.message}`,
+					error.stack,
+				);
+			} else {
+				this.logger.error(`JWT validation error: ${String(error)}`);
+			}
+
+			throw new UnauthorizedException("Invalid token");
 		}
 	}
 }

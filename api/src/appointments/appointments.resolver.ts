@@ -1,14 +1,16 @@
 import { UseGuards } from "@nestjs/common";
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AppointmentStatus } from "@prisma/client";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
 import { Roles } from "../common/decorators/roles.decorator";
-import { AppointmentStatus } from "../common/enums/appointment-status.enum";
 import { Role } from "../common/enums/roles.enum";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
 import { PaginatedResult } from "../common/interfaces/paginated-result.interface";
 import { UserWithoutPassword } from "../users/interfaces/user.interface";
 import { AppointmentsService } from "./appointments.service";
+import { AppointmentResponseDto } from './dto/appointment-response.dto';
+import { AppointmentWhereInput } from './dto/appointment-where.input';
 import { CancelAppointmentDto } from "./dto/cancel-appointment.dto";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
 import { RescheduleAppointmentDto } from "./dto/reschedule-appointment.dto";
@@ -16,34 +18,27 @@ import { UpdateAppointmentDto } from "./dto/update-appointment.dto";
 import { Appointment } from "./interfaces/appointment.interface";
 import { TimeSlot } from "./interfaces/time-slot.interface";
 
-@Resolver("Appointment")
+@Resolver(() => AppointmentResponseDto)
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class AppointmentsResolver {
 	constructor(private readonly appointmentsService: AppointmentsService) {}
 
-	@Query("appointments")
+	@Query(() => [AppointmentResponseDto], { name: 'appointments' })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async getAppointments(
-		@Args('page', { nullable: true, defaultValue: 1 }) page: number,
-		@Args('limit', { nullable: true, defaultValue: 10 }) limit: number,
-		@Args('status', { nullable: true }) status?: AppointmentStatus,
-		@Args('startDate', { nullable: true }) startDate?: string,
-		@Args('endDate', { nullable: true }) endDate?: string,
-		@Args('salonId', { nullable: true }) salonId?: string,
-	): Promise<PaginatedResult<Appointment>> {
-		return this.appointmentsService.findAll(page, limit, {
-			status,
-			startDate,
-			endDate,
-			salonId,
-		});
+	async findAll(
+		@Args('where', { nullable: true }) where?: AppointmentWhereInput
+	): Promise<AppointmentResponseDto[]> {
+		const appointments = await this.appointmentsService.findAll(where || {});
+		return appointments.map(appointment => 
+			AppointmentResponseDto.fromEntity(appointment)
+		);
 	}
 
-	@Query("appointment")
-	async getAppointment(
+	@Query(() => AppointmentResponseDto, { name: 'appointment' })
+	async findOne(
 		@Args('id') id: string,
 		@CurrentUser() user: UserWithoutPassword,
-	): Promise<Appointment> {
+	): Promise<AppointmentResponseDto> {
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
@@ -60,7 +55,7 @@ export class AppointmentsResolver {
 			throw new Error("You are not authorized to access this appointment");
 		}
 
-		return appointment;
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
 	@Query("myAppointments")
@@ -109,20 +104,21 @@ export class AppointmentsResolver {
 		);
 	}
 
-	@Mutation("createAppointment")
+	@Mutation(() => AppointmentResponseDto)
 	async createAppointment(
-		@Args('input') createAppointmentDto: CreateAppointmentDto,
+		@Args('createAppointmentInput') createAppointmentDto: CreateAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
-	): Promise<Appointment> {
-		return this.appointmentsService.create(createAppointmentDto, user.id);
+	): Promise<AppointmentResponseDto> {
+		const appointment = await this.appointmentsService.create(createAppointmentDto, user.id);
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Mutation("updateAppointment")
+	@Mutation(() => AppointmentResponseDto)
 	async updateAppointment(
 		@Args('id') id: string,
-		@Args('input') updateAppointmentDto: UpdateAppointmentDto,
+		@Args('updateAppointmentInput') updateAppointmentDto: UpdateAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
-	): Promise<Appointment> {
+	): Promise<AppointmentResponseDto> {
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
@@ -139,7 +135,8 @@ export class AppointmentsResolver {
 			throw new Error("You are not authorized to update this appointment");
 		}
 
-		return this.appointmentsService.update(id, updateAppointmentDto);
+		const updatedAppointment = await this.appointmentsService.update(id, updateAppointmentDto);
+		return AppointmentResponseDto.fromEntity(updatedAppointment);
 	}
 
 	@Mutation("rescheduleAppointment")
@@ -210,10 +207,10 @@ export class AppointmentsResolver {
 		return this.appointmentsService.noShow(id);
 	}
 
-	@Mutation('deleteAppointment')
+	@Mutation(() => AppointmentResponseDto)
 	@Roles(Role.ADMIN)
-	async deleteAppointment(@Args('id') id: string): Promise<boolean> {
-		await this.appointmentsService.remove(id);
-		return true;
+	async removeAppointment(@Args('id') id: string): Promise<AppointmentResponseDto> {
+		const appointment = await this.appointmentsService.remove(id);
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 }

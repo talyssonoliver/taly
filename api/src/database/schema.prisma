@@ -1,5 +1,3 @@
-// more about in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,50 +7,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Enums
+enum AppointmentStatus {
+  PENDING
+  SCHEDULED
+  CONFIRMED
+  RESCHEDULED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
 // User model
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  password      String
-  firstName     String?
-  lastName      String?
-  role          String         @default("user")
-  isActive      Boolean        @default(true) @map("is_active")
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt   @map("updated_at")
-  resetPasswordToken String?   @map("reset_password_token")
-  profileImage  String?   @map("profile_image")
-  phoneNumber   String?   @map("phone_number")
+  id                String         @id @default(uuid())
+  email             String         @unique
+  password          String
+  firstName         String?
+  lastName          String?
+  role              String         @default("user")
+  isActive          Boolean        @default(true) @map("is_active")
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt     @map("updated_at")
+  resetPasswordToken String?       @map("reset_password_token")
+  profileImage      String?        @map("profile_image")
+  phoneNumber       String?        @map("phone_number")
   
   // Relations
-    salons         Salon[]
-    staffProfile  Staff?
-    subscriptions  Subscription[]
-    refreshTokens  RefreshToken[]
+  salons            Salon[]
+  staffProfile      Staff?
+  subscriptions     Subscription[]
+  refreshTokens     RefreshToken[]
 
   @@map("users")
 }
 
 // Salon management
 model Salon {
-  id          String        @id @default(uuid())
-  ownerId       String    @unique @map("owner_id")
-  name        String
+  id            String        @id @default(uuid())
+  ownerId       String        @unique @map("owner_id")
+  name          String
   description   String?
-  logoUrl       String?   @map("logo_url")
-  address     String?
-  postCode       String?   @map("post_code")
-  phoneNumber   String?   @map("phone_number")
-  email       String
-  websiteSlug   String?   @unique @map("website_slug")
-  isActive    Boolean       @default(true)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  logoUrl       String?       @map("logo_url")
+  address       String?
+  postCode      String?       @map("post_code")
+  phoneNumber   String?       @map("phone_number")
+  email         String
+  websiteSlug   String?       @unique @map("website_slug")
+  isActive      Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   
   // Relations
-  owner       User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  services    Service[]
-  appointments Appointment[]
+  owner         User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  services      Service[]
+  appointments  Appointment[]
   staff         Staff[]
   clients       Client[]
   workingHours  WorkingHours[]
@@ -64,30 +73,30 @@ model Salon {
 
 // Service model
 model Service {
-  id          String        @id @default(uuid())
-  salonId     String        @map("salon_id")
-  staffId     String?       @map("staff_id")
-  name        String
-  description String?
-  duration    Int           // in minutes
-  price       Decimal       @db.Decimal(10, 2)
-  discount    Decimal?      @db.Decimal(10, 2)
-  isActive    Boolean       @default(true) @map("is_active")
-  createdAt   DateTime      @default(now()) @map("created_at")
-  updatedAt   DateTime      @updatedAt    @map("updated_at")
-  available   Boolean       @default(true)
-  imageServiceUrl       String?   @map("image_service_url")
+  id              String        @id @default(uuid())
+  salonId         String        @map("salon_id")
+  staffId         String?       @map("staff_id")
+  name            String
+  description     String?
+  duration        Int           // in minutes
+  price           Decimal       @db.Decimal(10, 2)
+  discount        Decimal?      @db.Decimal(10, 2)
+  isActive        Boolean       @default(true) @map("is_active")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt    @map("updated_at")
+  available       Boolean       @default(true)
+  imageServiceUrl String?       @map("image_service_url")
   
   // Relations
-  salon       Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  appointments Appointment[]
-  staff       Staff?        @relation("ServiceToStaff", fields: [staffId], references: [id])
+  salon           Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  appointments    Appointment[]
+  staff           Staff?        @relation("ServiceToStaff", fields: [staffId], references: [id])
   
   @@map("services")
 }
 
 // Staff model
- model Staff {
+model Staff {
   id          String    @id @default(uuid())
   userId      String    @unique @map("user_id")
   salonId     String    @map("salon_id")
@@ -107,12 +116,12 @@ model Service {
   @@map("staff")
 }
 
- model WorkingHours {
+model WorkingHours {
   id        String    @id @default(uuid())
   salonId   String    @map("salon_id")
-  dayOfWeek Int       @map("day_of_week")
-  openTime  String    @map("open_time")
-  closeTime String    @map("close_time")
+  dayOfWeek Int       @map("day_of_week") // 0 = Sunday, 1 = Monday, etc.
+  openTime  String    @map("open_time")   // Format: "HH:MM"
+  closeTime String    @map("close_time")  // Format: "HH:MM"
   isClosed  Boolean   @default(false) @map("is_closed")
 
   // Relations
@@ -124,9 +133,9 @@ model Service {
 model StaffSchedule {
   id        String    @id @default(uuid())
   staffId   String    @map("staff_id")
-  dayOfWeek Int       @map("day_of_week")
-  startTime String    @map("start_time")
-  endTime   String    @map("end_time")
+  dayOfWeek Int       @map("day_of_week") // 0 = Sunday, 1 = Monday, etc.
+  startTime String    @map("start_time")  // Format: "HH:MM"
+  endTime   String    @map("end_time")    // Format: "HH:MM"
   isActive  Boolean   @default(true) @map("is_active")
 
   // Relations
@@ -137,21 +146,23 @@ model StaffSchedule {
 
 // Client Management
 model Client {
-  id          String    @id @default(uuid())
-  salonId     String    @map("salon_id")
-  firstName   String    @map("first_name")
-  lastName    String    @map("last_name")
-  email       String?
-  phoneNumber String?   @map("phone_number")
-  notes       String?
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  imageClientUrl String?   @map("image_client_url")
+  id            String        @id @default(uuid())
+  salonId       String        @map("salon_id")
+  firstName     String        @map("first_name")
+  lastName      String        @map("last_name")
+  email         String?
+  phoneNumber   String?       @map("phone_number")
+  notes         String?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  imageClientUrl String?      @map("image_client_url")
+  fullName      String?       
+  profileImage  String?       
 
   // Relations
-  salon       Salon     @relation(fields: [salonId], references: [id])
-  appointments Appointment[]
-  clientNote       ClientNote[]
+  salon         Salon         @relation(fields: [salonId], references: [id])
+  appointments  Appointment[]
+  clientNote    ClientNote[]
   
   @@map("clients")
 }
@@ -171,25 +182,30 @@ model ClientNote {
 
 // Appointment model
 model Appointment {
-  id          String        @id @default(uuid())
-  salonId     String    @map("salon_id")
-  clientId    String    @map("client_id")
-  staffId      String?  @map("staff_id")
-  serviceId   String    @map("service_id")
-  startTime   DateTime  @map("start_time")
-  endTime     DateTime  @map("end_time")
-  status      String        @default("scheduled")
-  notes       String?
-  createdAt   DateTime      @default(now()) @map("created_at")
-  updatedAt   DateTime      @updatedAt @map("updated_at")
+  id                String            @id @default(uuid())
+  userId            String            // The user who created the appointment
+  salonId           String            @map("salon_id")
+  clientId          String            @map("client_id")
+  staffId           String?           @map("staff_id")
+  serviceId         String            @map("service_id")
+  startTime         DateTime          @map("start_time")
+  endTime           DateTime          @map("end_time")
+  status            AppointmentStatus
+  notes             String?
+  price             Decimal           @db.Decimal(10, 2)
+  cancellationReason String?
+  cancellationFee   Decimal?          @db.Decimal(10, 2)
+  noShowFee         Decimal?          @db.Decimal(10, 2)
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
   
   // Relations
-  salon       Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  client     Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  service     Service       @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  staff      Staff?    @relation(fields: [staffId], references: [id], onDelete: SetNull)
-  payment     Payment?
-  reminders  AppointmentReminder[]
+  salon             Salon             @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  client            Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  service           Service           @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  staff             Staff?            @relation(fields: [staffId], references: [id], onDelete: SetNull)
+  payment           Payment?
+  reminders         AppointmentReminder[]
 
   @@map("appointments")
 }
@@ -217,7 +233,7 @@ model Payment {
   paymentMethod String?
   transactionId String?
   provider      String
-  providerId    String?   @map("provider_id")
+  providerId    String?     @map("provider_id")
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
   
@@ -280,7 +296,7 @@ model PasswordReset {
 
 model RefreshToken {
   id        String   @id @default(uuid())
-  userId    String   @unique @map("user_id")
+  userId    String   @map("user_id")
   token     String
   expiresAt DateTime @map("expires_at")
   createdAt DateTime @default(now()) @map("created_at")
