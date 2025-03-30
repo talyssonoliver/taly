@@ -1,32 +1,43 @@
-import type React from "react";
-import type { Booking } from "../../../../shared/types/booking.interface";
+import React from 'react';
+import styles from './BookingCard.module.css';
 
 export interface BookingCardProps {
-  booking: Booking;
+  booking: {
+    id: string;
+    serviceName: string;
+    date: string;
+    time: string;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    status: string;
+    notes: string;
+    service: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  title?: string;
+  bookingInfo?: string;
 }
 
-const STATUS_CLASSES: Record<string, string> = {
-  confirmed: "bg-green-500 text-white",
-  pending: "bg-yellow-500 text-white",
-  canceled: "bg-red-500 text-white",
-};
-
-const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
-  const { customerName, service, date, status } = booking;
-
+const BookingCard: React.FC<BookingCardProps> = ({ booking, title, bookingInfo }) => {
   return (
-    <article className="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between">
-      <div>
-        <h3 className="text-lg font-semibold">{customerName}</h3>
-        <p className="text-gray-600">{service}</p>
-        <p className="text-gray-500">{new Date(date).toLocaleString()}</p>
+    <div className={styles.card}>
+      {title && <h3>{title}</h3>}
+      <div className={styles.cardHeader}>
+        <h3>{booking.serviceName}</h3>
+        <span className={styles.status}>{booking.status}</span>
       </div>
-      <span
-        className={`px-3 py-1 text-sm font-medium rounded ${STATUS_CLASSES[status]}`}
-      >
-        {status.toUpperCase()}
-      </span>
-    </article>
+      <div className={styles.cardBody}>
+        <p><strong>Date:</strong> {booking.date}</p>
+        <p><strong>Time:</strong> {booking.time}</p>
+        <p><strong>Customer:</strong> {booking.customerName}</p>
+        <p><strong>Email:</strong> {booking.customerEmail}</p>
+        <p><strong>Phone:</strong> {booking.customerPhone}</p>
+        {booking.notes && <p><strong>Notes:</strong> {booking.notes}</p>}
+        {bookingInfo && <p>{bookingInfo}</p>}
+      </div>
+    </div>
   );
 };
 

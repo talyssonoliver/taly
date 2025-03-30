@@ -1,12 +1,11 @@
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
 	IsEmail,
-	IsNotEmpty,
 	IsOptional,
 	IsString,
-	MinLength,
 	Matches,
+	MinLength,
 } from "class-validator";
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class RegisterDto {
 	@ApiProperty({
@@ -14,7 +13,6 @@ export class RegisterDto {
 		example: "user@example.com",
 	})
 	@IsEmail({}, { message: "Please provide a valid email address" })
-	@IsNotEmpty({ message: "Email is required" })
 	email: string;
 
 	@ApiProperty({
@@ -22,7 +20,6 @@ export class RegisterDto {
 		example: "Password123!",
 		minLength: 8,
 	})
-	@IsNotEmpty({ message: "Password is required" })
 	@MinLength(8, { message: "Password must be at least 8 characters long" })
 	@Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
 		message:
@@ -35,7 +32,6 @@ export class RegisterDto {
 		example: "John",
 	})
 	@IsString({ message: "First name must be a string" })
-	@IsNotEmpty({ message: "First name is required" })
 	firstName: string;
 
 	@ApiPropertyOptional({
@@ -45,4 +41,19 @@ export class RegisterDto {
 	@IsString({ message: "Last name must be a string" })
 	@IsOptional()
 	lastName?: string;
+
+	@ApiProperty({
+		description: "Full name",
+		example: "John Doe",
+	})
+	@IsString()
+	name: string;
+
+	@ApiPropertyOptional({
+		description: "Business name",
+		example: "Acme Inc.",
+	})
+	@IsOptional()
+	@IsString()
+	businessName?: string;
 }

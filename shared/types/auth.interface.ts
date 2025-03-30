@@ -9,6 +9,19 @@ export interface JwtPayload {
 	tokenType?: string;
 }
 
+export interface TokenResponse {
+  accessToken: string;
+  refreshToken?: string;
+  expiresIn: string;
+  user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName?: string;
+    role: string;
+  };
+}
+
 export interface RefreshToken {
 	id: string;
 	userId: string;
@@ -16,7 +29,6 @@ export interface RefreshToken {
 	expiresAt: Date;
 	createdAt: Date;
 
-	// Relations - optional, used for includes
 	user?: User;
 }
 

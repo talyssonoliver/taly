@@ -1,23 +1,51 @@
-﻿{
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "../../dist/apps/payments",
-		"rootDir": "src",
-		"incremental": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"moduleResolution": "NodeNext",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"jsx": "react-jsx",
-		"module": "NodeNext"
-	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": [
-		"node_modules",
-		"../../dist",
-		"**/*.test.ts",
-		"**/*.test.tsx",
-		"**/*.spec.ts"
-	]
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/apps/payments",
+    "rootDir": ".",
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "module": "NodeNext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "noEmit": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@taly/serverless-shared/*": ["../../packages/serverless-shared/*"],
+      "@components": ["./src/components"],
+      "@pages": ["./src/pages"],
+      "@styles": ["./src/styles"],
+      "@utils": ["./src/utils"],
+      "@hooks": ["./src/hooks"],
+      "@services": ["./src/services"],
+      "@": ["./src"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "../../dist",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts"
+  ]
 }

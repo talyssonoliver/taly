@@ -2,27 +2,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import BookingCard from "./BookingCard";
 
-export interface BookingCardProps {
-  booking: {
-    id: string;
-    serviceName: string;
-    date: string;
-    time: string;
-    title?: string;
-    bookingInfo?: string;
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
-    status: "confirmed";
-    notes: string;
-    service: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  title?: string;
-  bookingInfo?: string;
-}
-
 const mockBooking = {
   id: "1",
   serviceName: "Service Name",
@@ -31,7 +10,7 @@ const mockBooking = {
   customerName: "John Doe",
   customerEmail: "john.doe@example.com",
   customerPhone: "123-456-7890",
-  status: "confirmed" as "confirmed",
+  status: "confirmed" as "pending" | "confirmed" | "cancelled",
   notes: "Some notes",
   service: "Service Description",
   createdAt: "2023-09-01T10:00:00Z",

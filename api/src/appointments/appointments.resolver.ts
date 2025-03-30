@@ -1,4 +1,4 @@
-import { UseGuards } from "@nestjs/common";
+import { ForbiddenException, NotFoundException, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AppointmentStatus } from "@prisma/client";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
@@ -29,7 +29,7 @@ export class AppointmentsResolver {
 		@Args('where', { nullable: true }) where?: AppointmentWhereInput
 	): Promise<AppointmentResponseDto[]> {
 		const appointments = await this.appointmentsService.findAll(where || {});
-		return appointments.map(appointment => 
+		return appointments.map((appointment: Appointment) => 
 			AppointmentResponseDto.fromEntity(appointment)
 		);
 	}
@@ -39,10 +39,14 @@ export class AppointmentsResolver {
 		@Args('id') id: string,
 		@CurrentUser() user: UserWithoutPassword,
 	): Promise<AppointmentResponseDto> {
+		if (!user) {
+			throw new ForbiddenException("Authentication required");
+		}
+
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
-			throw new Error(`Appointment with ID ${id} not found`);
+			throw new NotFoundException(`Appointment with ID ${id} not found`);
 		}
 
 		// Check if user is authorized to access this appointment
@@ -52,13 +56,13 @@ export class AppointmentsResolver {
 			user.role === Role.STAFF;
 
 		if (!isAuthorized) {
-			throw new Error("You are not authorized to access this appointment");
+			throw new ForbiddenException("You are not authorized to access this appointment");
 		}
 
 		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Query("myAppointments")
+	@Query(() => PaginatedResult, { name: 'myAppointments' })
 	async getMyAppointments(
 		@CurrentUser() user: UserWithoutPassword,
 		@Args('page', { nullable: true, defaultValue: 1 }) page: number,
@@ -66,13 +70,17 @@ export class AppointmentsResolver {
 		@Args('status', { nullable: true }) status?: AppointmentStatus,
 		@Args('upcoming', { nullable: true }) upcoming?: boolean,
 	): Promise<PaginatedResult<Appointment>> {
+		if (!user?.id) {
+			throw new Error("User not authenticated");
+		}
+		
 		return this.appointmentsService.findByUserId(user.id, page, limit, {
 			status,
 			upcoming,
 		});
 	}
 
-	@Query("salonAppointments")
+	@Query(() => PaginatedResult, { name: 'salonAppointments' })
 	@Roles(Role.ADMIN, Role.STAFF)
 	async getSalonAppointments(
 		@Args('salonId') salonId: string,
@@ -104,21 +112,33 @@ export class AppointmentsResolver {
 		);
 	}
 
-	@Mutation(() => AppointmentResponseDto)
+	@Mutation(() => AppointmentResponseDto, { name: 'createAppointment' })
 	async createAppointment(
-		@Args('createAppointmentInput') createAppointmentDto: CreateAppointmentDto,
+		@Args('input') createAppointmentDto: CreateAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
 	): Promise<AppointmentResponseDto> {
-		const appointment = await this.appointmentsService.create(createAppointmentDto, user.id);
+		if (!user?.id) {
+			throw new Error("User not authenticated");
+		}
+		
+		const appointment = await this.appointmentsService.create(
+			createAppointmentDto, 
+			user.id
+		);
+		
 		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Mutation(() => AppointmentResponseDto)
+	@Mutation(() => AppointmentResponseDto, { name: 'updateAppointment' })
 	async updateAppointment(
 		@Args('id') id: string,
-		@Args('updateAppointmentInput') updateAppointmentDto: UpdateAppointmentDto,
+		@Args('input') updateAppointmentDto: UpdateAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
 	): Promise<AppointmentResponseDto> {
+		if (!user?.id) {
+			throw new Error("User not authenticated");
+		}
+		
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
@@ -135,16 +155,24 @@ export class AppointmentsResolver {
 			throw new Error("You are not authorized to update this appointment");
 		}
 
-		const updatedAppointment = await this.appointmentsService.update(id, updateAppointmentDto);
+		const updatedAppointment = await this.appointmentsService.update(
+			id, 
+			updateAppointmentDto
+		);
+		
 		return AppointmentResponseDto.fromEntity(updatedAppointment);
 	}
 
-	@Mutation("rescheduleAppointment")
+	@Mutation(() => AppointmentResponseDto, { name: 'rescheduleAppointment' })
 	async rescheduleAppointment(
 		@Args('id') id: string,
 		@Args('input') rescheduleAppointmentDto: RescheduleAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
-	): Promise<Appointment> {
+	): Promise<AppointmentResponseDto> {
+		if (!user?.id) {
+			throw new Error("User not authenticated");
+		}
+		
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
@@ -161,15 +189,24 @@ export class AppointmentsResolver {
 			throw new Error("You are not authorized to reschedule this appointment");
 		}
 
-		return this.appointmentsService.reschedule(id, rescheduleAppointmentDto);
+		const rescheduledAppointment = await this.appointmentsService.reschedule(
+			id, 
+			rescheduleAppointmentDto
+		);
+		
+		return AppointmentResponseDto.fromEntity(rescheduledAppointment);
 	}
 
-	@Mutation("cancelAppointment")
+	@Mutation(() => AppointmentResponseDto, { name: 'cancelAppointment' })
 	async cancelAppointment(
 		@Args('id') id: string,
 		@Args('input') cancelAppointmentDto: CancelAppointmentDto,
 		@CurrentUser() user: UserWithoutPassword,
-	): Promise<Appointment> {
+	): Promise<AppointmentResponseDto> {
+		if (!user?.id) {
+			throw new Error("User not authenticated");
+		}
+		
 		const appointment = await this.appointmentsService.findById(id);
 
 		if (!appointment) {
@@ -186,31 +223,45 @@ export class AppointmentsResolver {
 			throw new Error("You are not authorized to cancel this appointment");
 		}
 
-		return this.appointmentsService.cancel(id, cancelAppointmentDto);
+		const cancelledAppointment = await this.appointmentsService.cancel(
+			id, 
+			cancelAppointmentDto
+		);
+		
+		return AppointmentResponseDto.fromEntity(cancelledAppointment);
 	}
 
-	@Mutation('confirmAppointment')
+	@Mutation(() => AppointmentResponseDto, { name: 'confirmAppointment' })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async confirmAppointment(@Args('id') id: string): Promise<Appointment> {
-		return this.appointmentsService.confirm(id);
+	async confirmAppointment(@Args('id') id: string): Promise<AppointmentResponseDto> {
+		const appointment = await this.appointmentsService.confirm(id);
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Mutation('completeAppointment')
+	@Mutation(() => AppointmentResponseDto, { name: 'completeAppointment' })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async completeAppointment(@Args('id') id: string): Promise<Appointment> {
-		return this.appointmentsService.complete(id);
+	async completeAppointment(@Args('id') id: string): Promise<AppointmentResponseDto> {
+		const appointment = await this.appointmentsService.complete(id);
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Mutation('markNoShow')
+	@Mutation(() => AppointmentResponseDto, { name: 'markNoShow' })
 	@Roles(Role.ADMIN, Role.STAFF)
-	async markNoShow(@Args('id') id: string): Promise<Appointment> {
-		return this.appointmentsService.noShow(id);
+	async markNoShow(@Args('id') id: string): Promise<AppointmentResponseDto> {
+		const appointment = await this.appointmentsService.noShow(id);
+		return AppointmentResponseDto.fromEntity(appointment);
 	}
 
-	@Mutation(() => AppointmentResponseDto)
+	@Mutation(() => AppointmentResponseDto, { name: 'removeAppointment' })
 	@Roles(Role.ADMIN)
 	async removeAppointment(@Args('id') id: string): Promise<AppointmentResponseDto> {
-		const appointment = await this.appointmentsService.remove(id);
+		const appointment = await this.appointmentsService.findById(id);
+		
+		if (!appointment) {
+			throw new NotFoundException(`Appointment with ID ${id} not found`);
+		}
+		
+		await this.appointmentsService.remove(id);
 		return AppointmentResponseDto.fromEntity(appointment);
 	}
 }

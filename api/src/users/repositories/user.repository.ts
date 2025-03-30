@@ -3,13 +3,13 @@ import type { PrismaService } from "../../database/prisma.service";
 import type { CreateUserDto } from "../dto/create-user.dto";
 import type { UpdateUserDto } from "../dto/update-user.dto";
 import type { User } from "../interfaces/user.interface";
-import { Prisma } from "@prisma/client";
 
 interface FindOptions {
 	skip?: number;
 	take?: number;
 	where?: Record<string, unknown>;
 	orderBy?: Record<string, unknown>;
+	include?: Record<string, boolean>;
 }
 
 @Injectable()
@@ -20,136 +20,129 @@ export class UserRepository {
 
 	/**
 	 * Find multiple users with pagination and filtering
+	 * @param options - Query options including pagination, filters, and sorting
+	 * @returns Array of users matching the criteria
 	 */
 	async findMany(options: FindOptions): Promise<User[]> {
-		try {
-			const { skip, take, where, orderBy } = options;
-			return await this.prisma.user.findMany({
-				skip,
-				take,
-				where,
-				orderBy: orderBy || { createdAt: "desc" },
-			});
-		} catch (error) {
-			this.logger.error(`Error finding users: ${error.message}`, error.stack);
-			throw error;
-		}
+		return this.executeWithErrorHandling("finding users", () =>
+			this.prisma.user.findMany({
+				...options,
+				orderBy: options.orderBy || { createdAt: "desc" },
+			}),
+		);
 	}
 
 	/**
 	 * Count users with optional filtering
+	 * @param where - Filter criteria
+	 * @returns Total count of users matching the criteria
 	 */
-	async count(options: { where?: Record<string, unknown> }): Promise<number> {
-		try {
-			const { where } = options;
-			return this.prisma.user.count({ where });
-		} catch (error) {
-			this.logger.error(`Error counting users: ${error.message}`, error.stack);
-			throw error;
-		}
+	async count(where?: Record<string, unknown>): Promise<number> {
+		return this.executeWithErrorHandling("counting users", () =>
+			this.prisma.user.count({ where }),
+		);
 	}
 
 	/**
 	 * Find a user by ID with staff relation
+	 * @param id - User ID
+	 * @returns User with staff information or null if not found
 	 */
 	async findById(id: string): Promise<User | null> {
-		try {
-			return this.prisma.user.findUnique({
+		return this.executeWithErrorHandling("finding user by ID", () =>
+			this.prisma.user.findUnique({
 				where: { id },
 				include: { staff: true },
-			});
-		} catch (error) {
-			this.logger.error(
-				`Error finding user by ID: ${error.message}`,
-				error.stack,
-			);
-			throw error;
-		}
+			}),
+		);
 	}
 
 	/**
 	 * Find a user by email with staff relation
+	 * @param email - User email
+	 * @returns User with staff information or null if not found
 	 */
 	async findByEmail(email: string): Promise<User | null> {
-		try {
-			return this.prisma.user.findUnique({
+		return this.executeWithErrorHandling("finding user by email", () =>
+			this.prisma.user.findUnique({
 				where: { email },
 				include: { staff: true },
-			});
-		} catch (error) {
-			this.logger.error(
-				`Error finding user by email: ${error.message}`,
-				error.stack,
-			);
-			throw error;
-		}
+			}),
+		);
 	}
 
 	/**
 	 * Create a new user
+	 * @param data - User creation data
+	 * @returns Created user
 	 */
 	async create(data: CreateUserDto): Promise<User> {
-		try {
-			return this.prisma.user.create({ data });
-		} catch (error) {
-			this.logger.error(`Error creating user: ${error.message}`, error.stack);
-			throw error;
-		}
+		return this.executeWithErrorHandling("creating user", () =>
+			this.prisma.user.create({ data }),
+		);
 	}
 
 	/**
 	 * Update an existing user
+	 * @param id - User ID
+	 * @param data - Updated user data
+	 * @returns Updated user
 	 */
 	async update(id: string, data: Partial<UpdateUserDto>): Promise<User> {
-		try {
-			return this.prisma.user.update({
+		return this.executeWithErrorHandling("updating user", () =>
+			this.prisma.user.update({
 				where: { id },
 				data,
-			});
-		} catch (error) {
-			this.logger.error(`Error updating user: ${error.message}`, error.stack);
-			throw error;
-		}
+			}),
+		);
 	}
 
 	/**
 	 * Delete a user
+	 * @param id - User ID
+	 * @returns Deleted user
 	 */
 	async delete(id: string): Promise<User> {
-		try {
-			return this.prisma.user.delete({
+		return this.executeWithErrorHandling("deleting user", () =>
+			this.prisma.user.delete({
 				where: { id },
-			});
-		} catch (error) {
-			this.logger.error(`Error deleting user: ${error.message}`, error.stack);
-			throw error;
-		}
+			}),
+		);
 	}
 
 	/**
 	 * Find users with staff role and include staff relation
+	 * @param options - Query options
+	 * @returns Array of staff users with their staff information
 	 */
 	async findWithStaff(options: FindOptions): Promise<User[]> {
-		try {
-			const { skip, take, where, orderBy } = options;
-
-			return this.prisma.user.findMany({
-				skip,
-				take,
+		return this.executeWithErrorHandling("finding users with staff", () =>
+			this.prisma.user.findMany({
+				...options,
 				where: {
-					...where,
+					...options.where,
 					role: "staff",
 				},
-				orderBy: orderBy || { createdAt: "desc" },
-				include: {
-					staff: true,
-				},
-			});
+				orderBy: options.orderBy || { createdAt: "desc" },
+				include: { staff: true },
+			}),
+		);
+	}
+
+	/**
+	 * Execute a database operation with consistent error handling
+	 * @param operation - Description of the operation for error logging
+	 * @param callback - Database operation to execute
+	 * @returns Result of the operation
+	 */
+	private async executeWithErrorHandling<T>(
+		operation: string,
+		callback: () => Promise<T>,
+	): Promise<T> {
+		try {
+			return await callback();
 		} catch (error) {
-			this.logger.error(
-				`Error finding users with staff: ${error.message}`,
-				error.stack,
-			);
+			this.logger.error(`Error ${operation}: ${error.message}`, error.stack);
 			throw error;
 		}
 	}

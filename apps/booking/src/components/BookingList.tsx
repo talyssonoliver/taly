@@ -1,5 +1,6 @@
-import BookingCard from "./BookingCard";
-import useBookings from "../hooks/useBooking";
+import BookingCard from './BookingCard.jsx';
+import useBookings from '../hooks/useBooking.js';
+import { Booking } from '../../../../shared/types/booking.interface';
 
 const SkeletonCard = () => (
   <div className="bg-gray-200 animate-pulse rounded-lg p-4 h-24" />
@@ -20,7 +21,7 @@ const BookingList = () => {
 
   return (
     <div className="space-y-4">
-      {bookings.map((booking) => (
+      {bookings.map((booking: Booking) => (
         <BookingCard key={booking.id} booking={booking} />
       ))}
     </div>

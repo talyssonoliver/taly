@@ -1,8 +1,5 @@
-﻿import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { Prisma, PrismaClient } from '@prisma/client';
+﻿import { Field, ID, ObjectType } from "@nestjs/graphql";
+
 export enum WebsiteThemeCategory {
 	BUSINESS = "business",
 	PORTFOLIO = "portfolio",
@@ -11,20 +8,27 @@ export enum WebsiteThemeCategory {
 	LANDING = "landing",
 	PERSONAL = "personal",
 }
+
 @ObjectType()
 export class WebsiteTheme {
 	@Field(() => ID)
 	id: string;
+
 	@Field()
 	name: string;
+
 	@Field()
 	description: string;
+
 	@Field({ nullable: true })
 	thumbnail: string;
+
 	@Field()
 	category: WebsiteThemeCategory;
+
 	@Field()
 	isActive: boolean;
+
 	@Field()
 	settings: {
 		defaultColors?: {
@@ -42,6 +46,7 @@ export class WebsiteTheme {
 		availableComponents?: string[];
 		[key: string]: any;
 	};
+
 	@Field()
 	templates: {
 		home?: string;
@@ -51,18 +56,16 @@ export class WebsiteTheme {
 		blogPost?: string;
 		[key: string]: string;
 	};
+
 	@Field()
 	defaultCss: string;
+
 	@Field()
 	defaultJs: string;
+
 	@Field()
 	version: number;
+
 	@Field()
 	authorName: string;
-	@Field()
-	createdAt: Date;
-	@Field()
-	updatedAt: Date;
 }
-
-

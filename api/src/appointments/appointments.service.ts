@@ -31,6 +31,11 @@ export class AppointmentsService {
 		private readonly notificationsService: NotificationsService,
 	) {}
 
+	// =============== FIND METHODS ===============
+
+	/**
+	 * Find all appointments with pagination and filtering
+	 */
 	async findAllWithPagination(
 		page: number,
 		limit: number,
@@ -83,24 +88,51 @@ export class AppointmentsService {
 				limit,
 			);
 		} catch (error) {
-			this.logger.error(
-				`Error finding all appointments: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError("finding all appointments", error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Find appointment by ID
+	 */
 	async findById(id: string): Promise<Appointment | null> {
 		try {
 			return this.appointmentRepository.findById(id);
 		} catch (error) {
-			this.logger.error(
-				`Error finding appointment by ID: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`finding appointment by ID: ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * GraphQL-compatible method to find one appointment with relationships
+	 */
+	async findOne(id: string): Promise<Appointment> {
+		try {
+			const appointment = await this.prisma.appointment.findUnique({
+				where: { id },
+				include: {
+					service: true,
+					client: true,
+					salon: true,
+				},
+			});
+
+			if (!appointment) {
+				throw new NotFoundException(`Appointment with ID ${id} not found`);
+			}
+
+			return appointment;
+		} catch (error) {
+			this.handleError(`finding appointment by ID: ${id}`, error);
+			throw error;
+		}
+	}
+
+	/**
+	 * Find appointments by user ID with pagination and filtering
+	 */
 	async findByUserId(
 		userId: string,
 		page: number,
@@ -143,13 +175,14 @@ export class AppointmentsService {
 				limit,
 			);
 		} catch (error) {
-			this.logger.error(
-				`Error finding appointments for user: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`finding appointments for user: ${userId}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Find appointments by salon ID with pagination and filtering
+	 */
 	async findBySalonId(
 		salonId: string,
 		page: number,
@@ -198,13 +231,37 @@ export class AppointmentsService {
 				limit,
 			);
 		} catch (error) {
-			this.logger.error(
-				`Error finding appointments for salon: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`finding appointments for salon: ${salonId}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * GraphQL-compatible method to find all appointments with complex filtering
+	 */
+	async findAll(params: AppointmentWhereInput): Promise<Appointment[]> {
+		try {
+			const where = this.buildWhereClause(params);
+
+			return this.prisma.appointment.findMany({
+				where,
+				include: {
+					service: true,
+					client: true,
+					salon: true,
+				},
+			});
+		} catch (error: unknown) {
+			this.handleError("finding appointments with filters", error);
+			throw error;
+		}
+	}
+
+	// =============== AVAILABILITY METHODS ===============
+
+	/**
+	 * Get available time slots for a service on a specific date
+	 */
 	async getAvailableTimeSlots(
 		salonId: string,
 		date: string,
@@ -258,14 +315,48 @@ export class AppointmentsService {
 			);
 
 			return availableTimeSlots;
-		} catch (error) {
-			this.logger.error(
-				`Error getting available time slots: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+		} catch (error: unknown) {
+			this.handleError("getting available time slots", error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Find available slots for a service on a specific date
+	 */
+	async findAvailableSlots(serviceId: string, date: Date): Promise<TimeSlot[]> {
+		try {
+			const service = await this.prisma.service.findUnique({
+				where: { id: serviceId },
+				include: { salon: true },
+			});
+
+			if (!service) {
+				return [];
+			}
+
+			const duration = service.duration;
+			const salonId = service.salonId;
+
+			// Format date to YYYY-MM-DD string
+			const dateStr = date.toISOString().split("T")[0];
+
+			// Use existing method to get available time slots
+			return await this.getAvailableTimeSlots(salonId, dateStr, serviceId);
+		} catch (error: unknown) {
+			this.handleError(
+				`finding available slots for service: ${serviceId}`,
+				error,
+			);
+			return [];
+		}
+	}
+
+	// =============== CRUD OPERATIONS ===============
+
+	/**
+	 * Create a new appointment
+	 */
 	async create(
 		createAppointmentDto: CreateAppointmentDto,
 		userId: string,
@@ -306,11 +397,11 @@ export class AppointmentsService {
 				userId,
 				salonId,
 				serviceId,
-				staffId,
+				staffId: staffId || null, // Ensuring null for undefined staffId
 				startTime: startDateTime,
 				endTime: endDateTime,
-				status: AppointmentStatus.SCHEDULED,
-				price: Number(service.price),
+				status: AppointmentStatus.SCHEDULED, // Using proper enum
+				price: new Prisma.Decimal(service.price.toString()), // Convert to Decimal
 				notes,
 			});
 
@@ -326,32 +417,33 @@ export class AppointmentsService {
 
 			return appointment;
 		} catch (error) {
-			this.logger.error(
-				`Error creating appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError("creating appointment", error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Update an appointment with validated data
+	 */
 	async update(
 		id: string,
 		updateAppointmentDto: UpdateAppointmentDto,
 	): Promise<Appointment> {
 		try {
-			const appointment = await this.findById(id);
-
+			const appointment = await this.appointmentRepository.findById(id);
 			if (!appointment) {
 				throw new NotFoundException(`Appointment with ID ${id} not found`);
 			}
 
-			// Validate if appointment can be updated
-			if (
-				appointment.status === AppointmentStatus.COMPLETED ||
-				appointment.status === AppointmentStatus.CANCELLED ||
-				appointment.status === AppointmentStatus.NO_SHOW
-			) {
+			// Check if the appointment is in a status that can be updated
+			const allowedStatuses = [
+				AppointmentStatus.PENDING,
+				AppointmentStatus.CONFIRMED,
+			];
+
+			if (!allowedStatuses.includes(appointment.status)) {
 				throw new BadRequestException(
-					`Cannot update a ${appointment.status} appointment`,
+					`Cannot update appointment with status ${appointment.status}`,
 				);
 			}
 
@@ -390,35 +482,59 @@ export class AppointmentsService {
 						appointment.salonId,
 						appointment.startTime,
 						endTime,
-						appointment.staffId,
-						appointment.id, // Exclude current appointment
+						appointment.id, // Exclude this appointment from availability check
 					);
 
 					if (!isAvailable) {
-						throw new ConflictException(
-							"The new service duration conflicts with existing appointments.",
-						);
+						throw new ConflictException("The new time slot is not available");
 					}
 				}
 
-				// Update with new service and end time
+				// Update the appointment with the new service and end time
 				return this.appointmentRepository.update(id, {
 					...updateAppointmentDto,
 					endTime,
-					price: Number(service.price),
+					price: service.price
+						? new Prisma.Decimal(service.price.toString()).toNumber()
+						: null,
 				});
 			}
 
-			// Update appointment without changing times
+			// For other updates, just apply the changes directly
 			return this.appointmentRepository.update(id, updateAppointmentDto);
-		} catch (error) {
-			this.logger.error(
-				`Error updating appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+		} catch (error: unknown) {
+			this.handleError(`updating appointment with ID ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Delete an appointment
+	 */
+	async remove(id: string): Promise<void> {
+		try {
+			const appointment = await this.findById(id);
+
+			if (!appointment) {
+				throw new NotFoundException(`Appointment with ID ${id} not found`);
+			}
+
+			// Delete reminders using utility method
+			await this.removeRemindersForAppointment(id);
+
+			// Delete appointment
+			await this.appointmentRepository.delete(id);
+		} catch (error) {
+			this.handleError(`removing appointment: ${id}`, error);
+			throw error;
+		}
+	}
+
+	// =============== STATUS CHANGE METHODS ===============
+
+	/**
+	 * Reschedule an appointment
+	 */
 	async reschedule(
 		id: string,
 		rescheduleDto: RescheduleAppointmentDto,
@@ -432,11 +548,7 @@ export class AppointmentsService {
 			}
 
 			// Validate if appointment can be rescheduled
-			if (
-				appointment.status === AppointmentStatus.COMPLETED ||
-				appointment.status === AppointmentStatus.CANCELLED ||
-				appointment.status === AppointmentStatus.NO_SHOW
-			) {
+			if (this.isAppointmentFinalized(appointment.status)) {
 				throw new BadRequestException(
 					`Cannot reschedule a ${appointment.status} appointment`,
 				);
@@ -476,7 +588,7 @@ export class AppointmentsService {
 				status: AppointmentStatus.RESCHEDULED,
 			});
 
-			// Instead of using Prisma model directly, use a utility method
+			// Update reminders
 			await this.removeRemindersForAppointment(id);
 			await this.createReminders(id, newStartTime);
 
@@ -489,13 +601,14 @@ export class AppointmentsService {
 
 			return updatedAppointment;
 		} catch (error) {
-			this.logger.error(
-				`Error rescheduling appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`rescheduling appointment: ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Cancel an appointment
+	 */
 	async cancel(
 		id: string,
 		cancelDto: CancelAppointmentDto,
@@ -508,11 +621,7 @@ export class AppointmentsService {
 			}
 
 			// Check if appointment is already cancelled or completed
-			if (
-				appointment.status === AppointmentStatus.CANCELLED ||
-				appointment.status === AppointmentStatus.COMPLETED ||
-				appointment.status === AppointmentStatus.NO_SHOW
-			) {
+			if (this.isAppointmentFinalized(appointment.status)) {
 				throw new BadRequestException(
 					`Cannot cancel a ${appointment.status} appointment`,
 				);
@@ -524,13 +633,21 @@ export class AppointmentsService {
 			const hoursDifference =
 				(appointmentTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
 
-			let cancellationFee = 0;
+			let cancellationFee = new Prisma.Decimal(0);
 			const cancellationFeePercentage =
 				APPOINTMENT_CONSTANTS.DEFAULT_CANCELLATION_FEE_PERCENTAGE;
 
+			// Convert price to Decimal before calculating fee
+			const price =
+				typeof appointment.price === "number"
+					? new Prisma.Decimal(appointment.price)
+					: appointment.price;
+
 			if (hoursDifference < APPOINTMENT_CONSTANTS.LATE_CANCELLATION_HOURS) {
-				// Apply cancellation fee
-				cancellationFee = (appointment.price * cancellationFeePercentage) / 100;
+				// Apply cancellation fee with proper Decimal handling
+				cancellationFee = price
+					.mul(new Prisma.Decimal(cancellationFeePercentage))
+					.div(new Prisma.Decimal(100));
 			}
 
 			// Update appointment as cancelled
@@ -552,13 +669,14 @@ export class AppointmentsService {
 
 			return updatedAppointment;
 		} catch (error) {
-			this.logger.error(
-				`Error cancelling appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`cancelling appointment: ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Confirm an appointment
+	 */
 	async confirm(id: string): Promise<Appointment> {
 		try {
 			const appointment = await this.findById(id);
@@ -590,13 +708,14 @@ export class AppointmentsService {
 
 			return updatedAppointment;
 		} catch (error) {
-			this.logger.error(
-				`Error confirming appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`confirming appointment: ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Complete an appointment
+	 */
 	async complete(id: string): Promise<Appointment> {
 		try {
 			const appointment = await this.findById(id);
@@ -606,11 +725,7 @@ export class AppointmentsService {
 			}
 
 			// Check if appointment can be completed
-			if (
-				appointment.status === AppointmentStatus.COMPLETED ||
-				appointment.status === AppointmentStatus.CANCELLED ||
-				appointment.status === AppointmentStatus.NO_SHOW
-			) {
+			if (this.isAppointmentFinalized(appointment.status)) {
 				throw new BadRequestException(
 					`Cannot complete a ${appointment.status} appointment`,
 				);
@@ -632,13 +747,14 @@ export class AppointmentsService {
 
 			return updatedAppointment;
 		} catch (error) {
-			this.logger.error(
-				`Error completing appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`completing appointment: ${id}`, error);
 			throw error;
 		}
 	}
 
+	/**
+	 * Mark appointment as no-show
+	 */
 	async noShow(id: string): Promise<Appointment> {
 		try {
 			const appointment = await this.findById(id);
@@ -648,21 +764,25 @@ export class AppointmentsService {
 			}
 
 			// Check if appointment can be marked as no-show
-			if (
-				appointment.status === AppointmentStatus.COMPLETED ||
-				appointment.status === AppointmentStatus.CANCELLED ||
-				appointment.status === AppointmentStatus.NO_SHOW
-			) {
+			if (this.isAppointmentFinalized(appointment.status)) {
 				throw new BadRequestException(
 					`Cannot mark a ${appointment.status} appointment as no-show`,
 				);
 			}
 
-			// Calculate no-show fee based on policy
+			// Calculate no-show fee based on policy with proper Decimal handling
 			const noShowFeePercentage =
 				APPOINTMENT_CONSTANTS.DEFAULT_NO_SHOW_FEE_PERCENTAGE;
 
-			const noShowFee = (appointment.price * noShowFeePercentage) / 100;
+			// Convert price to Decimal before calculating fee
+			const price =
+				typeof appointment.price === "number"
+					? new Prisma.Decimal(appointment.price)
+					: appointment.price;
+
+			const noShowFee = price
+				.mul(new Prisma.Decimal(noShowFeePercentage))
+				.div(new Prisma.Decimal(100));
 
 			// Update appointment as no-show
 			const updatedAppointment = await this.appointmentRepository.update(id, {
@@ -684,35 +804,37 @@ export class AppointmentsService {
 
 			return updatedAppointment;
 		} catch (error) {
-			this.logger.error(
-				`Error marking appointment as no-show: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			this.handleError(`marking appointment as no-show: ${id}`, error);
 			throw error;
 		}
 	}
 
-	async remove(id: string): Promise<void> {
-		try {
-			const appointment = await this.findById(id);
+	// =============== HELPER METHODS ===============
 
-			if (!appointment) {
-				throw new NotFoundException(`Appointment with ID ${id} not found`);
-			}
-
-			// Delete reminders using utility method
-			await this.removeRemindersForAppointment(id);
-
-			// Delete appointment
-			await this.appointmentRepository.delete(id);
-		} catch (error) {
-			this.logger.error(
-				`Error removing appointment: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
-			throw error;
-		}
+	/**
+	 * Check if appointment status is finalized (completed, cancelled, or no-show)
+	 */
+	private isAppointmentFinalized(status: AppointmentStatus): boolean {
+		return [
+			AppointmentStatus.COMPLETED,
+			AppointmentStatus.CANCELLED,
+			AppointmentStatus.NO_SHOW,
+		].includes(status);
 	}
 
-	// Helper methods
+	/**
+	 * Clean update data by removing fields that don't exist in schema
+	 */
+	private cleanUpdateData(data: any): void {
+		// Remove fields that don't exist in schema
+		delete data.reminder;
+		delete data.cancellationFeePercentage;
+		delete data.noShowFeePercentage;
+	}
+
+	/**
+	 * Generate time slots for a given day and opening hours
+	 */
 	private generateTimeSlots(
 		date: Date,
 		openTime: string,
@@ -749,6 +871,9 @@ export class AppointmentsService {
 		return timeSlots;
 	}
 
+	/**
+	 * Filter time slots to only those that are available
+	 */
 	private async filterAvailableTimeSlots(
 		timeSlots: Array<{ startTime: Date; endTime: Date }>,
 		salonId: string,
@@ -774,6 +899,9 @@ export class AppointmentsService {
 		return availableTimeSlots.filter((slot) => slot.isAvailable);
 	}
 
+	/**
+	 * Check if a time slot is available
+	 */
 	private async isTimeSlotAvailable(
 		salonId: string,
 		startTime: Date,
@@ -837,13 +965,8 @@ export class AppointmentsService {
 		// Check staff availability if staffId is provided
 		if (staffId) {
 			const dayOfWeek = startTime.getDay();
-			const startHour = startTime.getHours();
-			const startMinute = startTime.getMinutes();
-			const formattedStartTime = `${startHour.toString().padStart(2, "0")}:${startMinute.toString().padStart(2, "0")}`;
-
-			const endHour = endTime.getHours();
-			const endMinute = endTime.getMinutes();
-			const formattedEndTime = `${endHour.toString().padStart(2, "0")}:${endMinute.toString().padStart(2, "0")}`;
+			const formattedStartTime = this.formatTimeForQuery(startTime);
+			const formattedEndTime = this.formatTimeForQuery(endTime);
 
 			// Check if staff is scheduled to work during the requested time slot
 			const staffSchedule = await this.prisma.staffSchedule.findFirst({
@@ -881,17 +1004,39 @@ export class AppointmentsService {
 		return conflictingAppointmentsCount === 0;
 	}
 
-	// Add a helper method for reminder operations since PrismaService doesn't have reminders
+	/**
+	 * Format time for database queries
+	 */
+	private formatTimeForQuery(date: Date): string {
+		const hours = date.getHours().toString().padStart(2, "0");
+		const minutes = date.getMinutes().toString().padStart(2, "0");
+		return `${hours}:${minutes}`;
+	}
+
+	/**
+	 * Remove reminders for an appointment
+	 */
 	private async removeRemindersForAppointment(
 		appointmentId: string,
 	): Promise<void> {
-		// Since reminders is not available in the Prisma model,
-		// we'll log this for now and implement a proper solution later
-		this.logger.warn(
-			`Reminder functionality not implemented for appointment: ${appointmentId}`,
-		);
+		try {
+			await this.prisma.notification.deleteMany({
+				where: {
+					appointmentId,
+					sent: false,
+				},
+			});
+		} catch (error) {
+			this.logger.warn(
+				`Could not remove reminders for appointment: ${appointmentId}`,
+				error instanceof Error ? error.stack : undefined,
+			);
+		}
 	}
 
+	/**
+	 * Create reminders for an appointment
+	 */
 	private async createReminders(
 		appointmentId: string,
 		appointmentTime: Date,
@@ -902,70 +1047,58 @@ export class AppointmentsService {
 			{ hours: 2, type: "SMS" }, // 2 hours before appointment
 		];
 
-		this.logger.warn(
-			`Creating reminders for appointment: ${appointmentId} is not fully implemented`,
-		);
+		try {
+			const appointment = await this.prisma.appointment.findUnique({
+				where: { id: appointmentId },
+				include: {
+					client: true,
+					service: true,
+					salon: true,
+				},
+			});
 
-		for (const reminder of reminderTimes) {
-			const reminderTime = new Date(appointmentTime);
-			reminderTime.setHours(reminderTime.getHours() - reminder.hours);
+			if (!appointment) {
+				this.logger.warn(
+					`Cannot create reminders for non-existent appointment ${appointmentId}`,
+				);
+				return;
+			}
 
-			if (reminderTime > new Date()) {
-				// Instead of calling scheduleReminder, use a method that exists
-				try {
-					// Assuming sendNotification is available, otherwise replace with a suitable method
-					await this.notificationsService.sendNotification(
-						"", // userId will be fetched later
-						{
-							type: reminder.type,
+			for (const reminder of reminderTimes) {
+				const reminderTime = new Date(appointmentTime);
+				reminderTime.setHours(reminderTime.getHours() - reminder.hours);
+
+				// Only schedule reminders in the future
+				if (reminderTime > new Date()) {
+					await this.prisma.notification.create({
+						data: {
+							userId: appointment.userId,
 							appointmentId,
 							scheduledFor: reminderTime,
-							title: "Appointment Reminder",
-							message: `You have an upcoming appointment scheduled at ${appointmentTime.toLocaleString()}`,
+							type: reminder.type,
+							title: `Appointment Reminder: ${appointment.service?.name || "Service"}`,
+							content: `Your appointment at ${appointment.salon?.name || "the salon"} is scheduled for ${appointmentTime.toLocaleString()}`,
+							sent: false,
 						},
-					);
-				} catch (error) {
-					this.logger.error(
-						`Failed to schedule reminder: ${error instanceof Error ? error.message : "Unknown error"}`,
-					);
+					});
 				}
 			}
+		} catch (error) {
+			this.logger.error(
+				`Failed to create reminders for appointment ${appointmentId}`,
+				error instanceof Error ? error.stack : undefined,
+			);
 		}
 	}
 
-	// Helper method to validate date format
-	private isValidDateFormat(date: string): boolean {
-		// Simple regex for YYYY-MM-DD format
-		const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-		if (!dateRegex.test(date)) return false;
-
-		// Validate the date is actually valid
-		const parsedDate = new Date(date);
-		return !Number.isNaN(parsedDate.getTime());
-	}
-
-	// Remove duplicate findAll method and keep the GraphQL-specific one with proper typing
-	async findAll(params: AppointmentWhereInput): Promise<Appointment[]> {
-		// Fix relationship filters
-		const where = this.buildWhereClause(params);
-
-		return this.prisma.appointment.findMany({
-			where,
-			include: {
-				service: true,
-				client: true,
-				salon: true,
-			},
-		});
-	}
-
-	// Improve helper method to build the where clause
+	/**
+	 * Helper method to build WHERE clause for GraphQL queries
+	 */
 	private buildWhereClause(
 		params: AppointmentWhereInput,
 	): Prisma.AppointmentWhereInput {
 		const where: Prisma.AppointmentWhereInput = {};
 
-		// Handle relationship filters correctly
 		if (params.userId) {
 			where.userId = params.userId;
 		}
@@ -1017,65 +1150,27 @@ export class AppointmentsService {
 		return where;
 	}
 
-	async findOne(id: string): Promise<Appointment> {
-		const appointment = await this.prisma.appointment.findUnique({
-			where: { id },
-			include: {
-				service: true,
-				client: true,
-				salon: true,
-			},
-		});
+	/**
+	 * Helper method to validate date format
+	 */
+	private isValidDateFormat(date: string): boolean {
+		// Simple regex for YYYY-MM-DD format
+		const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+		if (!dateRegex.test(date)) return false;
 
-		if (!appointment) {
-			throw new NotFoundException(`Appointment with ID ${id} not found`);
-		}
-
-		return appointment;
+		// Validate the date is actually valid
+		const parsedDate = new Date(date);
+		return !Number.isNaN(parsedDate.getTime());
 	}
 
-	async update(
-		id: string,
-		updateAppointmentDto: UpdateAppointmentDto,
-	): Promise<any> {
-		const data: any = { ...updateAppointmentDto };
+	/**
+	 * Standardized error handling
+	 */
+	private handleError(operation: string, error: unknown): void {
+		const errorMessage =
+			error instanceof Error ? error.message : "Unknown error";
+		const errorStack = error instanceof Error ? error.stack : undefined;
 
-		// Remove fields that don't exist in schema
-		delete data.reminder;
-		delete data.cancellationFeePercentage;
-		delete data.noShowFeePercentage;
-
-		return this.prisma.appointment.update({
-			where: { id },
-			data,
-		});
-	}
-
-	async remove(id: string): Promise<any> {
-		return this.prisma.appointment.delete({
-			where: { id },
-		});
-	}
-
-	async findAvailableSlots(serviceId: string, date: Date): Promise<any[]> {
-		const service = await this.prisma.service.findUnique({
-			where: { id: serviceId },
-		});
-
-		if (!service) {
-			return [];
-		}
-
-		// Safely convert Decimal to number
-		const durationMinutes = service.durationMinutes?.toNumber() || 60;
-
-		// ...existing code...
-
-		// Use correct addMinutes import
-		const endTime = addMinutes(startTime, durationMinutes);
-
-		// ...existing code...
-
-		return slots;
+		this.logger.error(`Error ${operation}: ${errorMessage}`, errorStack);
 	}
 }

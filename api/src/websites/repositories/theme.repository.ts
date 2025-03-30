@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { PrismaService } from '../../prisma/prisma.service';
 import { Theme } from '../entities/theme.entity';
 
 @Injectable()
 export class ThemeRepository {
   constructor(
-    @InjectRepository(Theme)
-    private themeRepository: Repository<Theme>,
+    private readonly prisma: PrismaService,
   ) {}
 
   async findAll(options?: { 
@@ -17,7 +15,11 @@ export class ThemeRepository {
     skip?: number;
     take?: number;
   }): Promise<[Theme[], number]> {
-    const where: any = {};
+    const where: {
+      category?: string;
+      isPremium?: boolean;
+      isActive?: boolean;
+    } = {};
     
     if (options?.category) {
       where.category = options.category;

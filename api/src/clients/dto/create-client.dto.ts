@@ -11,7 +11,6 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../entities/client.entity';
-import { Type } from 'class-transformer';
 
 export class CreateClientDto {
   @ApiProperty({
@@ -149,7 +148,7 @@ export class CreateClientDto {
   })
   @IsOptional()
   @IsObject()
-  preferences?: Record<string, any>;
+  preferences?: Record<string, unknown>;
 
   @ApiPropertyOptional({
     description: 'Medical information',
@@ -160,5 +159,5 @@ export class CreateClientDto {
   })
   @IsOptional()
   @IsObject()
-  medicalInfo?: Record<string, any>;
+  medicalInfo?: Record<string, unknown>;
 }

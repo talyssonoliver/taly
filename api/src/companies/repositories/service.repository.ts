@@ -1,55 +1,63 @@
 ﻿import { Injectable, Logger } from "@nestjs/common";
-import type { PrismaService } from "../../database/prisma.service";
-import type { CreateServiceDto } from "../dto/create-service.dto";
-import type { UpdateServiceDto } from "../dto/update-service.dto";
-import type { Service } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { PrismaService } from "../../database/prisma.service";
+import { CreateServiceDto } from "../dto/create-service.dto";
+import { UpdateServiceDto } from "../dto/update-service.dto";
 
-// Define interface for salon information included with service
-interface SalonInfo {
-	id: string;
-	name: string;
-	ownerId?: string;
+// Define interfaces for the Service repository
+export interface ServiceInclude {
+	staff?: boolean;
+	salon?: boolean;
 }
 
-// Define the complete service entity with included relations
-interface ServiceWithRelations extends Service {
-	salon: SalonInfo;
+export interface CountOptions {
+	where?: Prisma.ServiceWhereInput;
 }
 
-interface ServiceWhereInput {
-	id?: string | { equals?: string; in?: string[] };
-	salonId?: string | { equals?: string };
-	name?: string | { contains?: string; mode?: "insensitive" | "default" };
-	price?: number | { gte?: number; lte?: number };
-	[key: string]: unknown; // For other dynamic filters
-}
-
-interface ServiceOrderByInput {
-	id?: "asc" | "desc";
-	name?: "asc" | "desc";
-	price?: "asc" | "desc";
-	createdAt?: "asc" | "desc";
-	updatedAt?: "asc" | "desc";
-	[key: string]: "asc" | "desc" | undefined;
-}
-
-interface ServiceInclude {
-	salon?:
-		| boolean
-		| { select?: { id?: boolean; name?: boolean; ownerId?: boolean } };
-}
-
-// Define repository method parameter interfaces
-interface FindManyOptions {
+export interface FindManyOptions {
 	skip?: number;
 	take?: number;
-	where?: ServiceWhereInput;
-	orderBy?: ServiceOrderByInput | ServiceOrderByInput[];
+	where?: Prisma.ServiceWhereInput;
+	orderBy?: Prisma.ServiceOrderByWithRelationInput;
 	include?: ServiceInclude;
 }
 
-interface CountOptions {
-	where?: ServiceWhereInput;
+export interface ServiceWithRelations {
+	id: string;
+	name: string;
+	description?: string;
+	duration: number;
+	price: number | string | { toNumber(): number }; // Support for Prisma Decimal
+	salonId: string;
+	isActive: boolean;
+	createdAt: Date;
+	updatedAt: Date;
+	staff?: {
+		id: string;
+		bio?: string;
+		position?: string;
+		user: {
+			firstName: string;
+			lastName: string;
+			profileImage?: string;
+		};
+	}[];
+}
+
+/**
+ * Helper function to convert Prisma result to ServiceWithRelations
+ */
+function convertToServiceWithRelations(service: any): ServiceWithRelations {
+	// Convert Decimal to number
+	const price =
+		typeof service.price === "object" && "toNumber" in service.price
+			? service.price.toNumber()
+			: Number(service.price);
+
+	return {
+		...service,
+		price,
+	};
 }
 
 @Injectable()
@@ -62,7 +70,7 @@ export class ServiceRepository {
 		try {
 			const { skip, take, where, orderBy, include } = options;
 
-			return this.prisma.service.findMany({
+			const services = await this.prisma.service.findMany({
 				skip,
 				take,
 				where,
@@ -75,7 +83,10 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations[]>;
+			});
+
+			// Convert Prisma results to ServiceWithRelations
+			return services.map(convertToServiceWithRelations);
 		} catch (error) {
 			this.logger.error(
 				`Error finding services: ${error.message}`,
@@ -103,7 +114,7 @@ export class ServiceRepository {
 
 	async findById(id: string): Promise<ServiceWithRelations | null> {
 		try {
-			return this.prisma.service.findUnique({
+			const service = await this.prisma.service.findUnique({
 				where: { id },
 				include: {
 					salon: {
@@ -114,7 +125,12 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations | null>;
+			});
+
+			if (!service) return null;
+
+			// Convert to ServiceWithRelations
+			return convertToServiceWithRelations(service);
 		} catch (error) {
 			this.logger.error(
 				`Error finding service by ID ${id}: ${error.message}`,
@@ -129,7 +145,7 @@ export class ServiceRepository {
 		salonId: string,
 	): Promise<ServiceWithRelations | null> {
 		try {
-			return this.prisma.service.findFirst({
+			const service = await this.prisma.service.findFirst({
 				where: {
 					id,
 					salonId,
@@ -143,7 +159,12 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations | null>;
+			});
+
+			if (!service) return null;
+
+			// Convert to ServiceWithRelations
+			return convertToServiceWithRelations(service);
 		} catch (error) {
 			this.logger.error(
 				`Error finding service by ID ${id} for salon ${salonId}: ${error.message}`,
@@ -157,7 +178,7 @@ export class ServiceRepository {
 		data: CreateServiceDto & { salonId: string },
 	): Promise<ServiceWithRelations> {
 		try {
-			return this.prisma.service.create({
+			const service = await this.prisma.service.create({
 				data,
 				include: {
 					salon: {
@@ -167,7 +188,10 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations>;
+			});
+
+			// Convert to ServiceWithRelations
+			return convertToServiceWithRelations(service);
 		} catch (error) {
 			this.logger.error(
 				`Error creating service: ${error.message}`,
@@ -182,7 +206,7 @@ export class ServiceRepository {
 		data: UpdateServiceDto,
 	): Promise<ServiceWithRelations> {
 		try {
-			return this.prisma.service.update({
+			const service = await this.prisma.service.update({
 				where: { id },
 				data,
 				include: {
@@ -193,7 +217,10 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations>;
+			});
+
+			// Convert to ServiceWithRelations
+			return convertToServiceWithRelations(service);
 		} catch (error) {
 			this.logger.error(
 				`Error updating service ${id}: ${error.message}`,
@@ -205,7 +232,7 @@ export class ServiceRepository {
 
 	async delete(id: string): Promise<ServiceWithRelations> {
 		try {
-			return this.prisma.service.delete({
+			const service = await this.prisma.service.delete({
 				where: { id },
 				include: {
 					salon: {
@@ -215,7 +242,10 @@ export class ServiceRepository {
 						},
 					},
 				},
-			}) as Promise<ServiceWithRelations>;
+			});
+
+			// Convert to ServiceWithRelations
+			return convertToServiceWithRelations(service);
 		} catch (error) {
 			this.logger.error(
 				`Error deleting service ${id}: ${error.message}`,

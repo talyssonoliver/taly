@@ -2,10 +2,11 @@ import {
 	type INestApplication,
 	Injectable,
 	Logger,
+	OnModuleDestroy,
 	type OnModuleInit,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client/extension";
 import {
 	CountQueryResult,
 	ThemeCountParams,
@@ -18,8 +19,27 @@ import {
 	WebsiteThemeRecord,
 } from "../websites/types/theme.types";
 
+// Define query event type for proper typing
+interface QueryEvent {
+	query: string;
+	params: string;
+	duration: number;
+	target: string;
+}
+
+// Define type for $allOperations parameters
+interface OperationParams {
+	model: string;
+	operation: string;
+	args: Record<string, unknown>;
+	query: (args: Record<string, unknown>) => Promise<unknown>;
+}
+
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
+export class PrismaService
+	extends PrismaClient
+	implements OnModuleInit, OnModuleDestroy
+{
 	private readonly logger = new Logger(PrismaService.name);
 
 	// Add the theme property to the class
@@ -53,10 +73,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 			},
 
 			findUnique: async (args: ThemeFindUniqueParams) => {
-				const result = await this.$queryRawUnsafe<WebsiteThemeRecord[]>(
+				const result = await this.$queryRawUnsafe(
 					`SELECT * FROM "WebsiteTheme" WHERE id = $1 LIMIT 1`,
 					args.where.id,
-				);
+				) as WebsiteThemeRecord[];
 				// Return null if no result (consistent with Prisma's behavior)
 				return result.length > 0 ? result[0] : null;
 			},
@@ -66,10 +86,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 					args.data,
 				);
 
-				const result = await this.$queryRawUnsafe<WebsiteThemeRecord[]>(
+				const result = await this.$queryRawUnsafe(
 					`INSERT INTO "WebsiteTheme" (${fields}) VALUES (${placeholders}) RETURNING *`,
 					...values,
-				);
+				) as WebsiteThemeRecord[];
 				return result[0];
 			},
 
@@ -79,18 +99,18 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 				// First value is the ID
 				const allValues = [args.where.id, ...values];
 
-				const result = await this.$queryRawUnsafe<WebsiteThemeRecord[]>(
+				const result = await this.$queryRawUnsafe(
 					`UPDATE "WebsiteTheme" SET ${setClauses} WHERE id = $1 RETURNING *`,
 					...allValues,
-				);
+				) as WebsiteThemeRecord[];
 				return result[0];
 			},
 
 			delete: async (args: ThemeDeleteParams) => {
-				const result = await this.$queryRawUnsafe<WebsiteThemeRecord[]>(
+				const result = await this.$queryRawUnsafe(
 					`DELETE FROM "WebsiteTheme" WHERE id = $1 RETURNING *`,
 					args.where.id,
-				);
+				) as WebsiteThemeRecord[];
 				return result[0];
 			},
 
@@ -99,13 +119,21 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 					? this.buildWhereClause(args.where)
 					: "";
 
-				const result = await this.$queryRawUnsafe<CountQueryResult[]>(
+				const result = await this.$queryRawUnsafe(
 					`SELECT COUNT(*) as count FROM "WebsiteTheme" ${whereClause}`,
-				);
+				) as CountQueryResult[];
 
 				return Number(result[0].count);
 			},
 		};
+
+		// Log queries in development environment
+		if (process.env.NODE_ENV === "development") {
+			this.$on("query" as never, (e: QueryEvent) => {
+				this.logger.debug(`Query: ${e.query}`);
+				this.logger.debug(`Duration: ${e.duration}ms`);
+			});
+		}
 	}
 
 	// Helper method to build SQL WHERE clause
@@ -157,15 +185,16 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 			await this.$connect();
 			this.logger.log("Successfully connected to Prisma");
 
+			const self = this;
 			this.$extends({
 				query: {
 					$allModels: {
-						async $allOperations({ model, operation, args, query }) {
+						async $allOperations({ model, operation, args, query }: OperationParams) {
 							const before = Date.now();
 							const result = await query(args);
 							const after = Date.now();
 
-							this.logger.debug(
+							self.logger.debug(
 								`Query ${model}.${operation} took ${after - before}ms`,
 							);
 
@@ -174,9 +203,23 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 					},
 				},
 			});
-		} catch (error) {
-			this.logger.error(`Failed to connect to Prisma: ${error.message}`);
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			this.logger.error(`Failed to connect to Prisma: ${errorMessage}`);
 			throw error;
+		}
+	}
+
+	async onModuleDestroy() {
+		try {
+			this.logger.log("Disconnecting from database...");
+			await this.$disconnect();
+			this.logger.log("Successfully disconnected from database");
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+			this.logger.error(`Error disconnecting from database: ${errorMessage}`);
 		}
 	}
 
@@ -218,5 +261,55 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 				await model.deleteMany({});
 			}),
 		);
+	}
+
+	async getAllThemes(): Promise<WebsiteThemeRecord[]> {
+		const query = `SELECT * FROM themes`;
+		return this.$queryRawUnsafe(query) as Promise<WebsiteThemeRecord[]>;
+	}
+
+	async getThemesBySearch(search: string): Promise<WebsiteThemeRecord[]> {
+		const result = await this.$queryRawUnsafe(
+			`SELECT * FROM themes WHERE name ILIKE $1`,
+			`%${search}%`
+		) as WebsiteThemeRecord[];
+
+		return result;
+	}
+
+	async getThemesBySearchAndSort(search: string, sort: string): Promise<WebsiteThemeRecord[]> {
+		const result = await this.$queryRawUnsafe(
+			`SELECT * FROM themes WHERE name ILIKE $1 ORDER BY ${sort}`,
+			`%${search}%`
+		) as WebsiteThemeRecord[];
+
+		return result;
+	}
+
+	async getThemesByIDs(ids: string[]): Promise<WebsiteThemeRecord[]> {
+		const result = await this.$queryRawUnsafe(
+			`SELECT * FROM themes WHERE id = ANY($1)`,
+			ids
+		) as WebsiteThemeRecord[];
+
+		return result;
+	}
+
+	async getThemesWithPagination(limit: number, page: number): Promise<WebsiteThemeRecord[]> {
+		const result = await this.$queryRawUnsafe(
+			`SELECT * FROM themes LIMIT $1 OFFSET $2`,
+			limit,
+			(page - 1) * limit
+		) as WebsiteThemeRecord[];
+
+		return result;
+	}
+
+	async countThemes(): Promise<number> {
+		const result = await this.$queryRawUnsafe(
+			`SELECT COUNT(*) as count FROM themes`
+		) as CountQueryResult[];
+
+		return Number(result[0].count);
 	}
 }

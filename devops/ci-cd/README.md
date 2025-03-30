@@ -29,7 +29,7 @@ This directory contains the CI/CD pipelines for the Taly project, managed using 
 ### 2. Database Migration
 
 - **File**: `database-pipeline.yml`
-- **Trigger**: Pushes to `main` branch affecting `backend/**/prisma/schema.prisma`. Also allows manual triggering.
+- **Trigger**: Pushes to `main` branch affecting `api/src/database/schema.prisma`. Also allows manual triggering.
 - **Steps**:
     - Checks out the code.
     - Sets up Node.js environment.

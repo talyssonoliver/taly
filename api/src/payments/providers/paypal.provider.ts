@@ -1,207 +1,278 @@
 import { Injectable, Logger } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
-import * as paypal from "@paypal/checkout-server-sdk";
-import type {
-	IPaymentProvider,
-	IPaymentProviderOptions,
-} from "../interfaces/payment-provider.interface";
-import type { CardDetails } from "../interfaces/payment-provider.interface";
-import type { CreatePaymentMethodDto } from "../dto/create-payment-method.dto";
-import type { PaymentMethodResponseDto } from "../dto/payment-method-response.dto";
+import { ConfigService } from "@nestjs/config";
+import axios, { AxiosInstance } from "axios";
+import { PaymentProvider } from "../interfaces/payment-provider.interface";
+
+// Define return type interfaces to avoid anonymous return types
+export interface PaypalTransactionResult {
+	id: string;
+	status: string;
+	amount: {
+		value: string;
+		currency_code: string;
+	};
+	create_time: string;
+	update_time: string;
+}
+
+export interface PaypalRefundResult {
+	id: string;
+	status: string;
+	amount: {
+		value: string;
+		currency_code: string;
+	};
+	create_time: string;
+	update_time: string;
+}
+
+export interface PaypalCaptureResult {
+	id: string;
+	status: string;
+	amount: {
+		value: string;
+		currency_code: string;
+	};
+	final_capture: boolean;
+	seller_protection: {
+		status: string;
+		dispute_categories: string[];
+	};
+	create_time: string;
+	update_time: string;
+}
+
+interface PayPalRefundOptions {
+	reason?: string;
+	amount?: number;
+}
+
+interface PayPalApiResponse {
+	id: string;
+	status: string;
+	links: Array<{ href: string; rel: string; method: string }>;
+}
+
+interface PayPalErrorResponse {
+	name: string;
+	message: string;
+	details?: unknown[];
+}
 
 @Injectable()
-export class PaypalProvider implements IPaymentProvider {
+export class PaypalProvider implements PaymentProvider {
 	private readonly logger = new Logger(PaypalProvider.name);
-	private readonly client: paypal.core.PayPalHttpClient;
+	private readonly axiosInstance: AxiosInstance;
+	private accessToken: string | null = null;
+	private tokenExpiresAt = 0;
 
 	constructor(private readonly configService: ConfigService) {
-		const environment =
-			this.configService.get<string>("NODE_ENV") === "production"
-				? new paypal.core.LiveEnvironment(
-						this.configService.get<string>("PAYPAL_CLIENT_ID"),
-						this.configService.get<string>("PAYPAL_CLIENT_SECRET"),
-					)
-				: new paypal.core.SandboxEnvironment(
-						this.configService.get<string>("PAYPAL_CLIENT_ID"),
-						this.configService.get<string>("PAYPAL_CLIENT_SECRET"),
-					);
-
-		this.client = new paypal.core.PayPalHttpClient(environment);
+		this.axiosInstance = axios.create({
+			baseURL: this.configService.get<string>("PAYPAL_API_URL"),
+		});
 	}
 
-	async processPaymentWithToken(
-		paymentId: string,
+	async initialize(): Promise<void> {
+		await this.getAccessToken();
+	}
+
+	async createPayment(
 		amount: number,
-		token: string,
+		currency: string,
 		description: string,
-	): Promise<Record<string, unknown>> {
+	): Promise<PaypalTransactionResult> {
 		try {
-			this.logger.log("Processing PayPal payment with token for payment");
+			await this.ensureAccessToken();
 
-			const request = new paypal.orders.OrdersCaptureRequest(token);
-			request.requestBody({});
-
-			const response = await this.client.execute(request);
-
-			if (response.result.status !== "COMPLETED") {
-				throw new Error("PayPal payment failed");
-			}
-
-			return {
-				transactionId: response.result.id,
-				status: response.result.status,
-				response: JSON.stringify(response.result),
-			};
-		} catch (error) {
-			this.logger.error("PayPal payment processing error:");
-			throw error;
-		}
-	}
-
-	async processPaymentWithCard(
-		paymentId: string,
-		amount: number,
-		cardDetails: CardDetails,
-		description: string,
-	): Promise<Record<string, unknown>> {
-		this.logger.error("PayPal direct card processing not implemented");
-		throw new Error("PayPal direct card processing not implemented");
-	}
-
-	async processPaymentWithSavedMethod(
-		paymentId: string,
-		amount: number,
-		paymentMethodId: string,
-		description: string,
-	): Promise<Record<string, unknown>> {
-		try {
-			this.logger.log(
-				`Processing PayPal payment with saved method for payment ${paymentId}`,
-			);
-
-			// For PayPal, paymentMethodId is the vault ID
-			const request = new paypal.payments.PaymentsVaultRequest();
-			request.requestBody({
-				intent: "CAPTURE",
-				payment_source: {
-					token: {
-						id: paymentMethodId,
-						type: "PAYMENT_METHOD_TOKEN",
-					},
-				},
-				purchase_units: [
-					{
-						amount: {
-							currency_code: "GBP",
-							value: amount.toFixed(2),
+			const response = await this.axiosInstance.post(
+				"/v2/checkout/orders",
+				{
+					intent: "CAPTURE",
+					purchase_units: [
+						{
+							amount: {
+								currency_code: currency,
+								value: amount.toString(),
+							},
+							description,
 						},
-						description,
-						custom_id: paymentId,
-					},
-				],
-			});
-
-			const response = await this.client.execute(request);
-
-			return {
-				transactionId: response.result.id,
-				status: response.result.status,
-				response: JSON.stringify(response.result),
-			};
-		} catch (error) {
-			this.logger.error(
-				`PayPal payment processing error: ${error instanceof Error ? error.message : String(error)}`,
-			);
-			throw error;
-		}
-	}
-
-	async refundPayment(
-		transactionId: string,
-		amount: number,
-		reason?: string,
-	): Promise<Record<string, unknown>> {
-		try {
-			this.logger.log(
-				`Processing PayPal refund for transaction ${transactionId}`,
-			);
-
-			const captureId = await this.getCaptureIdFromOrder(transactionId);
-
-			if (!captureId) {
-				throw new Error("Cannot find capture ID for refund");
-			}
-
-			const request = new paypal.payments.CapturesRefundRequest(captureId);
-			request.requestBody({
-				amount: {
-					currency_code: "USD",
-					value: amount.toFixed(2),
+					],
 				},
-				note_to_payer: reason || "Refund",
-			});
-
-			const response = await this.client.execute(request);
-
-			return {
-				transactionId: response.result.id,
-				status: response.result.status,
-				response: JSON.stringify(response.result),
-			};
-		} catch (error) {
-			this.logger.error(
-				`PayPal refund processing error: ${error instanceof Error ? error.message : String(error)}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${this.accessToken}`,
+					},
+				},
 			);
+
+			return response.data;
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`PayPal payment creation failed: ${errorMessage}`);
 			throw error;
 		}
 	}
 
-	async validateToken(token: string): Promise<Record<string, unknown>> {
+	async capturePayment(orderId: string): Promise<PaypalCaptureResult> {
 		try {
-			this.logger.log("Validating PayPal token");
+			await this.ensureAccessToken();
 
-			// For PayPal, we can't get details without making a payment, so we just return placeholder values
-			return {
-				lastFour: "N/A",
-				expiryMonth: "N/A",
-				expiryYear: "N/A",
-				cardBrand: "PayPal",
-			};
-		} catch (error) {
-			this.logger.error("PayPal token validation error:", error);
+			const response = await this.axiosInstance.post(
+				`/v2/checkout/orders/${orderId}/capture`,
+				{},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${this.accessToken}`,
+					},
+				},
+			);
+
+			return response.data;
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`PayPal capture payment failed: ${errorMessage}`);
 			throw error;
 		}
 	}
 
-	async createCustomer(email: string, name: string): Promise<string> {
-		// PayPal doesn't have a direct customer creation API
-		return "paypal-customer";
-	}
-
-	async createPaymentMethod(
-		paymentMethodData: CreatePaymentMethodDto,
-		options?: IPaymentProviderOptions,
-	): Promise<PaymentMethodResponseDto> {
-		this.logger.error("PayPal direct payment method creation not implemented");
-		throw new Error("PayPal direct payment method creation not implemented");
-	}
-
-	private async getCaptureIdFromOrder(orderId: string): Promise<string | null> {
+	async refund(
+		paymentId: string,
+		amount?: number,
+		reason?: string,
+	): Promise<PaypalRefundResult> {
 		try {
-			const request = new paypal.orders.OrdersGetRequest(orderId);
-			const response = await this.client.execute(request);
+			await this.ensureAccessToken();
 
-			const purchaseUnit = response.result.purchase_units[0];
-			if (purchaseUnit?.payments?.captures) {
-				return purchaseUnit.payments.captures[0].id;
+			const refundData: Record<string, unknown> = {};
+
+			if (amount !== undefined) {
+				refundData.amount = {
+					value: amount.toString(),
+					currency_code: "USD", // Default to USD or get from payment
+				};
 			}
 
-			return null;
-		} catch (error) {
-			this.logger.error(
-				`Error getting capture ID: ${error instanceof Error ? error.message : String(error)}`,
+			if (reason) {
+				refundData.note_to_payer = reason;
+			}
+
+			const response = await this.axiosInstance.post(
+				`/v2/payments/captures/${paymentId}/refund`,
+				refundData,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${this.accessToken}`,
+					},
+				},
 			);
-			return null;
+
+			return response.data;
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`PayPal refund failed: ${errorMessage}`);
+			throw error;
+		}
+	}
+
+	async getPaymentDetails(paymentId: string): Promise<PaypalTransactionResult> {
+		try {
+			await this.ensureAccessToken();
+
+			const response = await this.axiosInstance.get(
+				`/v2/checkout/orders/${paymentId}`,
+				{
+					headers: {
+						Authorization: `Bearer ${this.accessToken}`,
+					},
+				},
+			);
+
+			return response.data;
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`PayPal get payment details failed: ${errorMessage}`);
+			throw error;
+		}
+	}
+
+	async processRefund(
+		paymentId: string,
+		options?: PayPalRefundOptions,
+	): Promise<boolean> {
+		try {
+			await this.ensureAccessToken();
+
+			const response = await fetch(
+				`${this.configService.get<string>("PAYPAL_API_URL")}/payments/capture/${paymentId}/refund`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${this.accessToken}`,
+					},
+					body: JSON.stringify(options || {}),
+				},
+			);
+
+			const data = (await response.json()) as PayPalApiResponse;
+			return data.status === "COMPLETED";
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown PayPal refund error";
+
+			console.error("PayPal refund failed:", errorMessage);
+			return false;
+		}
+	}
+
+	private async getAccessToken(): Promise<void> {
+		try {
+			const clientId = this.configService.get<string>("PAYPAL_CLIENT_ID");
+			const clientSecret = this.configService.get<string>(
+				"PAYPAL_CLIENT_SECRET",
+			);
+
+			if (!clientId || !clientSecret) {
+				throw new Error("PayPal credentials not configured");
+			}
+
+			const auth = Buffer.from(`${clientId}:${clientSecret}`).toString(
+				"base64",
+			);
+
+			const response = await this.axiosInstance.post(
+				"/v1/oauth2/token",
+				"grant_type=client_credentials",
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded",
+						Authorization: `Basic ${auth}`,
+					},
+				},
+			);
+
+			this.accessToken = response.data.access_token;
+			this.tokenExpiresAt = Date.now() + response.data.expires_in * 1000;
+
+			this.logger.log("PayPal access token obtained");
+		} catch (error: unknown) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Unknown error";
+			this.logger.error(`Failed to get PayPal access token: ${errorMessage}`);
+			throw error;
+		}
+	}
+
+	private async ensureAccessToken(): Promise<void> {
+		if (!this.accessToken || Date.now() >= this.tokenExpiresAt) {
+			await this.getAccessToken();
 		}
 	}
 }

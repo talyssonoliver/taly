@@ -37,7 +37,7 @@ export class AuthService {
 	async validateUser(
 		email: string,
 		password: string,
-	): Promise<Omit<User, "password"> | null> {
+	): Promise<Omit<User, "password" | "firstName" | "lastName"> & { firstName: string | null; lastName: string | null } | null> {
 		this.logger.debug(`Attempting to validate user: ${email}`);
 		try {
 			const user = await this.prismaService.user.findUnique({
@@ -209,6 +209,7 @@ export class AuthService {
 			// In a real application, send email with reset link
 			// For now, just log it
 			this.logger.log(`Password reset token generated for user: ${email}`);
+			this.logger.debug(`Reset token: ${resetToken}`);
 
 			// Return success without revealing if user exists
 			return { success: true };

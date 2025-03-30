@@ -1,6 +1,3 @@
-import { Appointment } from "./appointment.interface";
-import { Refund } from "./refund.interface";
-
 export enum PaymentStatus {
 	PENDING = "pending",
 	PROCESSING = "processing",
@@ -19,19 +16,12 @@ export enum PaymentProvider {
 
 export interface Payment {
 	id: string;
-	appointmentId: string;
 	amount: number;
-	status: PaymentStatus;
-	paymentMethod?: string | null;
-	transactionId?: string | null;
-	provider: PaymentProvider;
-	providerId?: string | null;
-	createdAt: Date;
-	updatedAt: Date;
-
-	// Relations - optional, used for includes
-	appointment?: Appointment;
-	refunds?: Refund[];
+	currency: string;
+	status: "pending" | "completed" | "failed";
+	bookingId: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export type CreatePaymentParams = Omit<

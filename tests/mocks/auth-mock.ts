@@ -1,11 +1,13 @@
 import type { JwtPayload } from "../../api/src/common/interfaces/jwt-payload.interface";
 import { Role } from "../../api/src/common/enums/roles.enum";
+import { JwtService } from '@nestjs/jwt';
+
 
 // Mock JWT payload
 export const mockJwtPayload: JwtPayload = {
 	sub: "mock-user-id",
 	email: "test@example.com",
-	roles: [Role.USER],
+	role: Role.USER,
 	iat: Math.floor(Date.now() / 1000),
 	exp: Math.floor(Date.now() / 1000) + 60 * 60, // Expires in 1 hour
 	tokenType: "access",
@@ -38,7 +40,7 @@ export const mockUser = {
 	email: mockJwtPayload.email,
 	firstName: "Test",
 	lastName: "User",
-	role: mockJwtPayload.roles[0], 
+	role: mockJwtPayload.role, 
 	isActive: true,
 	createdAt: new Date(),
 	updatedAt: new Date(),
@@ -73,11 +75,11 @@ export const mockAuthHelpers = {
 		role: Role = Role.USER,
 	): { accessToken: string; refreshToken: string } => {
 		const accessToken = generateMockToken(
-			{ sub: userId, roles: [role] },
+			{ sub: userId, role: role },
 			"access",
 		);
 		const refreshToken = generateMockToken(
-			{ sub: userId, roles: [role] },
+			{ sub: userId, role: role },
 			"refresh",
 		);
 
@@ -99,4 +101,82 @@ export const mockAuthHelpers = {
 	): { Authorization: string } => {
 		return { Authorization: `Bearer ${token}` };
 	},
+};
+
+/**
+ * Creates mock JWT token for testing
+ */
+export function createMockToken(userId: string, email: string, role: Role = Role.USER): string {
+  const jwtService = new JwtService({
+    secret: 'test-secret',
+  });
+  
+  return jwtService.sign({
+	sub: userId,
+	email,
+	role: role,
+  });
+}
+
+/**
+ * Creates mock user for testing
+ */
+export function createMockUser(override: Partial<any> = {}) {
+  return {
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    email: 'test@example.com',
+    firstName: 'Test',
+    lastName: 'User',
+    role: Role.USER,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ...override,
+  };
+}
+
+/**
+ * Mock for AuthService in tests
+ */
+export const mockAuthService = {
+  validateUser: jest.fn(),
+  register: jest.fn(),
+  login: jest.fn(),
+  refreshToken: jest.fn(),
+  forgotPassword: jest.fn(),
+  resetPassword: jest.fn(),
+  changePassword: jest.fn(),
+  logout: jest.fn(),
+};
+
+/**
+ * Mock for JwtService in tests
+ */
+export const mockJwtService = {
+  sign: jest.fn(),
+  verify: jest.fn(),
+};
+
+/**
+ * Mock for PrismaService in tests
+ */
+export const mockPrismaService = {
+  user: {
+    findUnique: jest.fn(),
+    findFirst: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+  },
+  refreshToken: {
+    findFirst: jest.fn(),
+    upsert: jest.fn(),
+    delete: jest.fn(),
+    deleteMany: jest.fn(),
+  },
+  passwordReset: {
+    findFirst: jest.fn(),
+    upsert: jest.fn(),
+    delete: jest.fn(),
+  },
+  $transaction: jest.fn(<T>(callback: (prisma: any) => T): T => callback(mockPrismaService)),
 };

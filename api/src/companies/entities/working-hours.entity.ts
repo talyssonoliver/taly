@@ -1,52 +1,53 @@
-﻿import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, registerEnumType, Field, ID } from "@nestjs/graphql";
+﻿import { Field, ID, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Salon } from "./salon.entity";
+
 export enum DayOfWeek {
-	MONDAY = "MONDAY",
-	TUESDAY = "TUESDAY",
-	WEDNESDAY = "WEDNESDAY",
-	THURSDAY = "THURSDAY",
-	FRIDAY = "FRIDAY",
-	SATURDAY = "SATURDAY",
-	SUNDAY = "SUNDAY",
+	MONDAY = 1,
+	TUESDAY = 2,
+	WEDNESDAY = 3,
+	THURSDAY = 4,
+	FRIDAY = 5,
+	SATURDAY = 6,
+	SUNDAY = 0,
 }
-@ObjectType()
+
+registerEnumType(DayOfWeek, {
+	name: "DayOfWeek",
+	description: "The day of the week (0-6, where 0 is Sunday)",
+});
+
 @ObjectType()
 export class WorkingHours {
 	@Field(() => ID)
-	@Field(() => ID)
 	id: string;
-	@Field()
-	@Field()
+
+	@Field(() => DayOfWeek)
 	dayOfWeek: DayOfWeek;
-	@Field({ nullable: true })
-	@Field({ nullable: true })
+
+	@Field(() => String, { nullable: true })
 	openTime: string; // Format: 'HH:MM'
-	@Field({ nullable: true })
-	@Field({ nullable: true })
+
+	@Field(() => String, { nullable: true })
 	closeTime: string; // Format: 'HH:MM'
-	@Field()
-	@Field()
+
+	@Field(() => Boolean)
 	isClosed: boolean;
-	@Field()
-	@Field()
+
+	@Field(() => String)
 	salonId: string;
-	@Field() => Salon,
-		(salon) => salon.workingHours,
-	)
-	
+
 	@Field(() => Salon)
 	salon: Salon;
-	@Field()
+
 	@Field()
 	createdAt: Date;
-	@Field()
+
 	@Field()
 	updatedAt: Date;
+
+	constructor(salon?: Salon) {
+		if (salon) {
+			this.salonId = salon.id;
+		}
+	}
 }
-
-

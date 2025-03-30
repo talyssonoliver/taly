@@ -28,6 +28,7 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { WorkingHoursDto } from './dto/working-hours.dto';
 import { PaginationUtil } from '../common/utils/pagination.util';
+import { ServiceWithRelations } from './repositories/service.repository';
 
 @ApiTags('Salons')
 @Controller('salons')
@@ -48,7 +49,7 @@ export class SalonsController {
     @Query('limit') limit = 10,
     @Query('search') search?: string,
   ) {
-    this.logger.log("Finding all users with page={page}, limit={limit}" + (search ? ", search={search}" : ""), { page, limit, search });
+    this.logger.log(`Finding all users with page=${page}, limit=${limit}${search ? `, search=${search}` : ""}`);
     const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.salonsService.findAll(pageNum, limitNum, search);
   }
@@ -57,11 +58,11 @@ export class SalonsController {
   @ApiOperation({ summary: 'Get salon by ID' })
   @ApiParam({ name: 'id', description: 'Salon ID' })
   async findOne(@Param('id') id: string) {
-    this.logger.log(Finding salon with ID: );
+    this.logger.log(`Finding salon with ID: ${id}`);
     const salon = await this.salonsService.findById(id);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${id} not found`);
     }
     
     return salon;
@@ -75,7 +76,7 @@ export class SalonsController {
     @Body() createSalonDto: CreateSalonDto,
     @CurrentUser() user,
   ) {
-    this.logger.log(Creating new salon: );
+    this.logger.log(`Creating new salon: ${JSON.stringify(createSalonDto)}`);
     return this.salonsService.create(createSalonDto, user.id);
   }
 
@@ -87,11 +88,11 @@ export class SalonsController {
     @Body() updateSalonDto: UpdateSalonDto,
     @CurrentUser() user,
   ) {
-    this.logger.log(Updating salon with ID: );
+    this.logger.log(`Updating salon with ID: ${id}`);
     const salon = await this.salonsService.findById(id);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${id} not found`);
     }
     
     // Check if user is authorized to update this salon
@@ -110,11 +111,11 @@ export class SalonsController {
     @Param('id') id: string,
     @CurrentUser() user,
   ) {
-    this.logger.log(Deleting salon with ID: );
+    this.logger.log(`Deleting salon with ID: ${id}`);
     const salon = await this.salonsService.findById(id);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${id} not found`);
     }
     
     // Check if user is authorized to delete this salon
@@ -136,7 +137,7 @@ export class SalonsController {
     @Query('page') page = 1,
     @Query('limit') limit = 10,
   ) {
-    this.logger.log(Finding all services for salon ID: );
+    this.logger.log(`Finding all services for salon ID: ${salonId}`);
     const { page: pageNum, limit: limitNum } = PaginationUtil.normalizePaginationParams(page, limit);
     return this.salonsService.findAllServices(salonId, pageNum, limitNum);
   }
@@ -149,11 +150,11 @@ export class SalonsController {
     @Param('salonId') salonId: string,
     @Param('id') id: string,
   ) {
-    this.logger.log(Finding service with ID:  for salon ID: );
+    this.logger.log(`Finding service with ID: ${id} for salon ID: ${salonId}`);
     const service = await this.salonsService.findServiceById(id, salonId);
     
     if (!service) {
-      throw new NotFoundException(Service with ID  not found for salon with ID );
+      throw new NotFoundException(`Service with ID ${id} not found for salon with ID ${salonId}`);
     }
     
     return service;
@@ -167,12 +168,12 @@ export class SalonsController {
     @Body() createServiceDto: CreateServiceDto,
     @CurrentUser() user,
   ) {
-    this.logger.log(Creating new service:  for salon ID: );
+    this.logger.log(`Creating new service: ${JSON.stringify(createServiceDto)} for salon ID: ${salonId}`);
     
     const salon = await this.salonsService.findById(salonId);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${salonId} not found`);
     }
     
     // Check if user is authorized to add services to this salon
@@ -193,18 +194,18 @@ export class SalonsController {
     @Body() updateServiceDto: UpdateServiceDto,
     @CurrentUser() user,
   ) {
-    this.logger.log(Updating service with ID:  for salon ID: );
+    this.logger.log(`Updating service with ID: ${id} for salon ID: ${salonId}`);
     
     const salon = await this.salonsService.findById(salonId);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${salonId} not found`);
     }
     
     const service = await this.salonsService.findServiceById(id, salonId);
     
     if (!service) {
-      throw new NotFoundException(Service with ID  not found for salon with ID );
+      throw new NotFoundException(`Service with ID ${id} not found for salon with ID ${salonId}`);
     }
     
     // Check if user is authorized to update services for this salon
@@ -225,18 +226,18 @@ export class SalonsController {
     @Param('id') id: string,
     @CurrentUser() user,
   ) {
-    this.logger.log(Deleting service with ID:  for salon ID: );
+    this.logger.log(`Deleting service with ID: ${id} for salon ID: ${salonId}`);
     
     const salon = await this.salonsService.findById(salonId);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${salonId} not found`);
     }
     
     const service = await this.salonsService.findServiceById(id, salonId);
     
     if (!service) {
-      throw new NotFoundException(Service with ID  not found for salon with ID );
+      throw new NotFoundException(`Service with ID ${id} not found for salon with ID ${salonId}`);
     }
     
     // Check if user is authorized to delete services for this salon
@@ -252,11 +253,11 @@ export class SalonsController {
   @ApiOperation({ summary: 'Get working hours for a salon' })
   @ApiParam({ name: 'salonId', description: 'Salon ID' })
   async getWorkingHours(@Param('salonId') salonId: string) {
-    this.logger.log(Getting working hours for salon ID: );
+    this.logger.log(`Getting working hours for salon ID: ${salonId}`);
     const salon = await this.salonsService.findById(salonId);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${salonId} not found`);
     }
     
     return this.salonsService.getWorkingHours(salonId);
@@ -270,12 +271,12 @@ export class SalonsController {
     @Body() workingHoursDto: WorkingHoursDto[],
     @CurrentUser() user,
   ) {
-    this.logger.log(Setting working hours for salon ID: );
+    this.logger.log(`Setting working hours for salon ID: ${salonId}`);
     
     const salon = await this.salonsService.findById(salonId);
     
     if (!salon) {
-      throw new NotFoundException(Salon with ID  not found);
+      throw new NotFoundException(`Salon with ID ${salonId} not found`);
     }
     
     // Check if user is authorized to set working hours for this salon

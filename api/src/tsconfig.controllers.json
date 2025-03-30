@@ -1,13 +1,26 @@
 {
-	"extends": "../tsconfig.json",
-	"compilerOptions": {
-		"noImplicitAny": false,
-		"strictNullChecks": false,
-		"strictPropertyInitialization": false,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"skipLibCheck": true
-	},
-	"include": ["**/*.controller.ts"],
-	"exclude": []
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "../dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "moduleResolution": "node",
+    "composite": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@/*": ["./*"],
+      "@shared/*": ["../../shared/*"],
+      "@api/*": ["./*"]
+    }
+  },
+  "include": ["**/*.controller.ts"],
+  "exclude": ["node_modules", "../dist", "**/*.spec.ts"]
 }

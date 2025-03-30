@@ -1,12 +1,14 @@
 export interface Booking {
-  id: string;
-  serviceName: string;
-  date: string;
-  time: string;
-  customerName: string;
-  service: string;
-  customerEmail: string;
-  status: "pending" | "confirmed" | "canceled" | "completed";
-  createdAt: string;
-  updatedAt: string;
+	id: string;
+	serviceName: string;
+	date: string;
+	time: string;
+	customerName: string;
+	customerEmail: string;
+	customerPhone: string;
+	status: "pending" | "confirmed" | "cancelled";
+	notes: string;
+	service: string;
+	createdAt: string;
+	updatedAt: string;
 }

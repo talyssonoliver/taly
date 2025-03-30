@@ -1,17 +1,38 @@
-import type React from "react";
+import React from "react";
 
-const Spinner: React.FC<{
-  size?: string;
-  color?: string;
-  className?: string;
-}> = ({ size = "w-10 h-10", color = "border-t-blue-600", className = "" }) => {
-  return (
-    <div className={`flex justify-center items-center ${className}`}>
-      <div
-        className={`${size} border-4 border-gray-300 ${color} rounded-full animate-spin`}
-      />
-    </div>
-  );
+interface SpinnerProps {
+	size?: "small" | "medium" | "large";
+	color?: string;
+}
+
+export const Spinner: React.FC<SpinnerProps> = ({
+	size = "medium",
+	color = "#000",
+}) => {
+	const getSizeValue = () => {
+		switch (size) {
+			case "small":
+				return "24px";
+			case "large":
+				return "48px";
+			case "medium":
+				return "36px";
+			default:
+				return "36px";
+		}
+	};
+
+	return (
+		<div
+			style={{
+				display: "inline-block",
+				width: getSizeValue(),
+				height: getSizeValue(),
+				border: "3px solid rgba(0, 0, 0, 0.1)",
+				borderTop: `3px solid ${color}`,
+				borderRadius: "50%",
+				animation: "spin 1s linear infinite",
+			}}
+		/>
+	);
 };
-
-export default Spinner;

@@ -1,5 +1,5 @@
-import { readdirSync } from "fs";
-import * as path from "path";
+import { readdirSync } from "node:fs";
+import * as path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { Logger } from "@nestjs/common";
 
@@ -12,10 +12,10 @@ async function runMigrations() {
 		.filter((file) => file.endsWith(".js") && file !== "migration-runner.js")
 		.sort(); 
 
-	console.log(`Found ${migrationFiles.length} migration files`);
+	logger.log(`Found ${migrationFiles.length} migration files`);
 
 	for (const migrationFile of migrationFiles) {
-		console.log(`Running migration: ${migrationFile}`);
+		logger.log(`Running migration: ${migrationFile}`);
 
 		try {
 			const migrationPath = path.join(migrationsDir, migrationFile);
@@ -25,14 +25,14 @@ async function runMigrations() {
 				await prisma.$transaction(async (prismaTx) => {
 					await migration.main(prismaTx);
 				});
-				console.log(`Successfully executed migration: ${migrationFile}`);
+				logger.log(`Successfully executed migration: ${migrationFile}`);
 			} else {
 				throw new Error(
 					`Migration ${migrationFile} does not export a 'main' function.`,
 				);
 			}
 		} catch (error) {
-			console.error(`Error executing migration ${migrationFile}:`, error);
+			logger.error(`Error executing migration ${migrationFile}:`, error);
 			throw error;
 		}
 	}
@@ -40,7 +40,7 @@ async function runMigrations() {
 
 runMigrations()
 	.catch((e) => {
-		console.error("Migration runner failed:", e);
+		logger.error("Migration runner failed:", e);
 		process.exit(1);
 	})
 	.finally(async () => {

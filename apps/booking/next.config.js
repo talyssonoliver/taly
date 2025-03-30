@@ -1,0 +1,43 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+	reactStrictMode: true,
+	transpilePackages: ["@taly/shared-ui", "@shared-ui"],
+	output: "standalone",
+	compiler: {
+		styledComponents: true,
+	},
+	experimental: {
+		optimizeCss: false, // Disable until critters is properly installed
+		scrollRestoration: true,
+	},
+	webpack(config) {
+		// Add support for importing from shared-ui
+		config.resolve.alias = {
+			...config.resolve.alias,
+			"@components": path.resolve(__dirname, "src/components"),
+			"@pages": path.resolve(__dirname, "src/pages"),
+			"@styles": path.resolve(__dirname, "src/styles"),
+			"@utils": path.resolve(__dirname, "src/utils"),
+			"@hooks": path.resolve(__dirname, "src/hooks"),
+			"@services": path.resolve(__dirname, "src/services"),
+			"@": path.resolve(__dirname, "./src"),
+		};
+
+		// Add support for TypeScript files
+		config.module.rules.push({
+			test: /\.tsx?$/,
+			use: "next-swc-loader",
+			include: [path.resolve(__dirname, "../shared-ui/src")],
+		});
+
+		return config;
+	},
+};
+
+export default nextConfig;

@@ -1,48 +1,36 @@
-﻿import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Float } from "@nestjs/graphql";
-import { Payment } from "./payment.entity";
+﻿import { Field, Float, ID, ObjectType } from "@nestjs/graphql";
 import { User } from "../../users/entities/user.entity";
-@ObjectType()
+import { Payment } from "./payment.entity";
+
 @ObjectType()
 export class Refund {
 	@Field(() => ID)
-	@Field(() => ID)
 	id: string;
-	@Field()
+
 	@Field()
 	paymentId: string;
-	@Field(() => Float)
+
 	@Field(() => Float)
 	amount: number;
-	@Field({ nullable: true })
-	@Field({ nullable: true })
+
+	@Field()
 	reason: string;
-	@Field({ nullable: true })
-	@Field({ nullable: true })
-	transactionId: string;
+
 	@Field()
+	status: string;
+
 	@Field()
-	refundedBy: string;
-	@Field() => Payment,
-		(payment) => payment.refunds,
-	)
-	
+	issuedById: string;
+
 	@Field(() => Payment)
 	payment: Payment;
-	@Field() => User)
-	
+
 	@Field(() => User)
-	refundedByUser: User;
-	@Field()
+	issuedBy: User;
+
 	@Field()
 	createdAt: Date;
-	@Field()
+
 	@Field()
 	updatedAt: Date;
 }
-
-

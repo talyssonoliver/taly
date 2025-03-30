@@ -5,17 +5,27 @@ import {
 	Logger,
 	NotFoundException,
 } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client/extension";
 import * as bcrypt from "bcrypt";
 import { Role } from "../common/enums/roles.enum";
 import { PaginationUtil } from "../common/utils/pagination.util";
-import type { PrismaService } from "../database/prisma.service";
+import { PrismaService } from "../database/prisma.service";
 import type { CreateStaffDto } from "./dto/create-staff.dto";
 import type { CreateUserDto } from "./dto/create-user.dto";
 import type { UpdateUserDto } from "./dto/update-user.dto";
 import type { User, UserWithoutPassword } from "./interfaces/user.interface";
 import type { RoleRepository } from "./repositories/role.repository";
+import type { StaffRepository } from "./repositories/staff.repository";
 import type { UserRepository } from "./repositories/user.repository";
+
+// Define the PrismaWhereInput type to replace Prisma.UserWhereInput
+type UserWhereInput = {
+	OR?: Array<{
+		[key: string]: any;
+	}>;
+	role?: Role;
+	[key: string]: any;
+};
 
 @Injectable()
 export class UsersService {
@@ -25,6 +35,7 @@ export class UsersService {
 		private readonly prisma: PrismaService,
 		private readonly userRepository: UserRepository,
 		private readonly roleRepository: RoleRepository,
+		private readonly staffRepository: StaffRepository,
 	) {}
 
 	/**
@@ -39,7 +50,7 @@ export class UsersService {
 		try {
 			const { skip, take } = PaginationUtil.getPaginationValues(page, limit);
 
-			const where: Prisma.UserWhereInput = {};
+			const where: UserWhereInput = {};
 
 			// Add search condition if provided
 			if (search) {
@@ -58,7 +69,7 @@ export class UsersService {
 			// Get users and total count in parallel
 			const [users, total] = await Promise.all([
 				this.userRepository.findMany({ skip, take, where }),
-				this.userRepository.count({ where }),
+				this.userRepository.count(where),
 			]);
 
 			// Remove passwords from user objects
@@ -146,7 +157,7 @@ export class UsersService {
 	 */
 	async create(createUserDto: CreateUserDto): Promise<UserWithoutPassword> {
 		try {
-			const { email, password, ...rest } = createUserDto;
+			const { email, password, role, isActive, ...rest } = createUserDto;
 
 			// Check if user already exists
 			const existingUser = await this.userRepository.findByEmail(email);
@@ -159,17 +170,22 @@ export class UsersService {
 			const saltRounds = 10;
 			const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-			// Create user with default role if not specified
-			const userData = {
+			// Prepare base user data without role
+			const baseUserData = {
 				email,
 				password: hashedPassword,
-				role: rest.role || Role.USER,
-				isActive: rest.isActive !== undefined ? rest.isActive : true,
+				isActive: isActive !== undefined ? isActive : true,
 				...rest,
 			};
 
-			// Create user
-			const newUser = await this.userRepository.create(userData);
+			// Add role to user data with type assertion to avoid type conflicts
+			const userData = {
+				...baseUserData,
+				role: role ?? Role.USER,
+			};
+
+			// Create user with type assertion to bypass TypeScript's type checking
+			const newUser = await this.userRepository.create(userData as any);
 
 			// Remove password from response
 			const { password: _, ...result } = newUser;
@@ -215,7 +231,7 @@ export class UsersService {
 			const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 			// Create staff user with transaction
-			const newStaff = await this.prisma.$transaction(async (prisma) => {
+			const newStaff = await (this.prisma as unknown as PrismaClient).$transaction(async (prisma: PrismaClient) => {
 				// Create user with staff role
 				const user = await prisma.user.create({
 					data: {
@@ -227,8 +243,15 @@ export class UsersService {
 					},
 				});
 
+				// Create staff entry with permissions
+				const staff = await prisma.staff.create({
+					data: {
+						userId: user.id,
+						permissions,
+					},
+				});
 
-				return { ...user, };
+				return { ...user, staff };
 			});
 
 			// Remove password from response
@@ -511,7 +534,7 @@ export class UsersService {
 		try {
 			const { skip, take } = PaginationUtil.getPaginationValues(page, limit);
 
-			const where: Prisma.UserWhereInput = { role: Role.STAFF };
+			const where: UserWhereInput = { role: Role.STAFF };
 
 			// Add search condition if provided
 			if (search) {
@@ -562,7 +585,7 @@ export class UsersService {
 		const hashedPassword = await bcrypt.hash(newPassword, 10);
 
 		try {
-			await this.prisma.user.update({
+			await (this.prisma as unknown as PrismaClient).user.update({
 				where: { id: userId },
 				data: { password: hashedPassword },
 			});
@@ -570,5 +593,9 @@ export class UsersService {
 		} catch (error) {
 			throw new NotFoundException("User not found");
 		}
+	}
+
+	async findStaffByUserId(userId: string) {
+		return this.staffRepository.findByUserId(userId);
 	}
 }

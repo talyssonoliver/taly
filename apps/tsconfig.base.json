@@ -9,7 +9,8 @@
       "@dashboard/*": ["apps/dashboard/*"],
       "@payments/*": ["apps/payments/*"],
       "@shared/*": ["shared/*"],
-      "@shared-ui/*": ["apps/shared-ui/*"]
+      "@shared-ui/*": ["apps/shared-ui/src/*"],
+      "@taly/serverless-shared/*": ["packages/serverless-shared/*"]
     },
     "noEmit": true,
     "module": "NodeNext",
@@ -17,7 +18,8 @@
     "moduleResolution": "NodeNext",
     "allowJs": true,
     "incremental": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "apps/**/*.ts",

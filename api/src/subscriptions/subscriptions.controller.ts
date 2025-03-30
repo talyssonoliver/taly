@@ -1,24 +1,23 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Put, 
-  Delete, 
-  Body, 
-  Param, 
-  Query, 
-  UseGuards, 
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
   HttpStatus,
-  HttpCode
+  Param,
+  Post,
+  Put,
+  UseGuards
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { SubscriptionsService } from './subscriptions.service';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { ChangePlanDto } from './dto/change-plan.dto';
-import { SubscriptionResponseDto } from './dto/subscription-response.dto';
-import { PlanResponseDto } from './dto/plan-response.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ChangePlanDto } from './dto/change-plan.dto';
+import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { PlanResponseDto } from './dto/plan-response.dto';
+import { SubscriptionResponseDto } from './dto/subscription-response.dto';
+import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
+import { SubscriptionsService } from './subscriptions.service';
 
 @ApiTags('subscriptions')
 @Controller('subscriptions')

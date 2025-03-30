@@ -1,31 +1,45 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Query,
-  UseGuards,
-  Logger,
-  HttpStatus,
-  HttpCode,
-  NotFoundException,
-  ForbiddenException,
+    BadRequestException,
+    Body,
+    Controller,
+    ForbiddenException,
+    Get,
+    HttpCode,
+    HttpStatus,
+    InternalServerErrorException,
+    Logger,
+    NotFoundException,
+    Param,
+    Post,
+    Query,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery, ApiParam } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiOperation,
+    ApiParam,
+    ApiQuery,
+    ApiTags,
+} from '@nestjs/swagger';
+import { Request } from 'express';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Public } from '../common/decorators/public.decorator';
+import { Roles } from '../common/decorators/roles.decorator';
+import { PaymentStatus } from '../common/enums/payment-status.enum';
+import { Role } from '../common/enums/roles.enum';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { Public } from '../common/decorators/public.decorator';
-import { CurrentUser } from '../common/decorators/current-user.decorator';
-import { Role } from '../common/enums/roles.enum';
-import type { PaymentsService } from './payments.service';
-import type { CreatePaymentDto } from './dto/create-payment.dto';
-import type { ProcessPaymentDto } from './dto/process-payment.dto';
-import type { RefundPaymentDto } from './dto/refund-payment.dto';
-import type { PaymentMethodResponseDto} from './dto/payment-method.dto';
 import { PaginationUtil } from '../common/utils/pagination.util';
-import { PaymentStatus } from '../common/enums/payment-status.enum';
+import { UserWithoutPassword } from '../users/interfaces/user.interface';
+import { CreatePaymentDto } from './dto/create-payment.dto';
+import { PaymentMethodResponseDto } from './dto/payment-method.dto';
+import { PaymentResponseDto } from './dto/payment-response.dto';
+import { ProcessPaymentDto } from './dto/process-payment.dto';
+import { RefundResponseDto } from './dto/refund-response.dto';
+import { RefundDto } from './dto/refund.dto';
+import { PaymentsService } from './payments.service';
 
 @ApiTags('Payments')
 @Controller('payments')
@@ -84,29 +98,57 @@ export class PaymentsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get payment by ID' })
+  @ApiOperation({ summary: 'Get payment details' })
   @ApiParam({ name: 'id', description: 'Payment ID' })
-  @Roles(Role.ADMIN, Role.STAFF)
-  async findOne(@Param('id') id: string) {
-    this.logger.log(`Finding payment with ID: ${id}`);
-    const payment = await this.paymentsService.findById(id);
-    
-    if (!payment) {
-      throw new NotFoundException(`Payment with ID ${id} not found`);
+  async findOne(@Param('id') id: string): Promise<PaymentResponseDto> {
+    try {
+      this.logger.log(`Getting payment details for ID: ${id}`);
+      const payment = await this.paymentsService.findById(id);
+      
+      if (!payment) {
+        throw new NotFoundException(`Payment with ID ${id} not found`);
+      }
+      
+      return payment;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error fetching payment';
+      this.logger.error(`Error getting payment: ${message}`);
+      
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      
+      throw new InternalServerErrorException('Failed to retrieve payment details');
     }
-    
-    return payment;
   }
 
   @Post()
   @ApiOperation({ summary: 'Create a new payment' })
+  @ApiBody({ type: CreatePaymentDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() createPaymentDto: CreatePaymentDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log('Creating payment for appointment');
-    return this.paymentsService.create(createPaymentDto, user.id);
+    @Req() req: Request,
+  ): Promise<PaymentResponseDto> {
+    try {
+      const user = req.user as UserWithoutPassword;
+      
+      if (!user?.id) {
+        throw new BadRequestException('User not authenticated');
+      }
+      
+      this.logger.log(`Creating payment for user ID: ${user.id}`);
+      return await this.paymentsService.create(createPaymentDto, user.id);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error creating payment';
+      this.logger.error(`Error creating payment: ${message}`);
+      
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      
+      throw new InternalServerErrorException('Failed to create payment');
+    }
   }
 
   @Post('process')
@@ -132,23 +174,48 @@ export class PaymentsController {
     return this.paymentsService.process(processPaymentDto, user.id);
   }
 
-  @Post('refund')
+  @Post(':id/refund')
   @ApiOperation({ summary: 'Refund a payment' })
-  @HttpCode(HttpStatus.OK)
-  @Roles(Role.ADMIN, Role.STAFF)
+  @ApiParam({ name: 'id', description: 'Payment ID' })
+  @ApiBody({ type: RefundDto })
+  @Roles(Role.ADMIN)
   async refund(
-    @Body() refundPaymentDto: RefundPaymentDto,
-    @CurrentUser() user,
-  ) {
-    this.logger.log(`Refunding payment: ${refundPaymentDto.paymentId}`);
-    
-    const payment = await this.paymentsService.findById(refundPaymentDto.paymentId);
-    
-    if (!payment) {
-      throw new NotFoundException(`Payment with ID ${refundPaymentDto.paymentId} not found`);
+    @Param('id') id: string,
+    @Body() refundDto: RefundDto,
+  ): Promise<RefundResponseDto> {
+    try {
+      this.logger.log(`Processing refund for payment ID: ${id}`);
+      return await this.paymentsService.refund(id, refundDto);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error processing refund';
+      this.logger.error(`Error processing refund: ${message}`);
+      
+      if (error instanceof NotFoundException || error instanceof BadRequestException) {
+        throw error;
+      }
+      
+      throw new InternalServerErrorException('Failed to process refund');
     }
-    
-    return this.paymentsService.refund(refundPaymentDto, user.id);
+  }
+
+  @Post(':id/capture')
+  @ApiOperation({ summary: 'Capture an authorized payment' })
+  @ApiParam({ name: 'id', description: 'Payment ID' })
+  @Roles(Role.ADMIN)
+  async capture(@Param('id') id: string): Promise<PaymentResponseDto> {
+    try {
+      this.logger.log(`Capturing payment ID: ${id}`);
+      return await this.paymentsService.capture(id);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error capturing payment';
+      this.logger.error(`Error capturing payment: ${message}`);
+      
+      if (error instanceof NotFoundException || error instanceof BadRequestException) {
+        throw error;
+      }
+      
+      throw new InternalServerErrorException('Failed to capture payment');
+    }
   }
 
   // Payment methods endpoints

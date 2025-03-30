@@ -1,4 +1,5 @@
 import api from "./api.js";
+import { Payment } from '../../../../shared/types/payment.interface.ts';
 
 interface CreatePaymentPayload {
   amount: number;

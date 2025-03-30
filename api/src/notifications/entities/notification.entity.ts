@@ -1,8 +1,4 @@
-﻿import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { Prisma, PrismaClient } from '@prisma/client';
+﻿import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 export enum NotificationType {
 	EMAIL = "email",
@@ -86,5 +82,3 @@ export class Notification {
 	@ApiProperty({ description: "When the notification was last updated" })
 	updatedAt: Date;
 }
-
-

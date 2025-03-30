@@ -25,7 +25,7 @@ A functional system where company owners can register, manage a basic profile, c
 - [ ] Email validation (format - handled by class-validator in DTO)
 - [ ] Email uniqueness check
 - [ ] Password hashing (bcrypt in `auth.service.ts`)
-- [ ] User creation in the database (`users.service.ts`, `user.repository.ts`, `prisma/schema.prisma`)
+- [ ] User creation in the database (`users.service.ts`, `user.repository.ts`, `api/src/database/schema.prisma`)
 - [ ] JWT generation upon successful registration (`auth.service.ts`)
 - [ ] Email confirmation (basic - just log it, don't actually send yet)
 - [ ] Frontend form (`apps/dashboard/src/pages/signup.tsx` - Needs adaptation)

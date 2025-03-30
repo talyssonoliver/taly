@@ -1,5 +1,5 @@
-import { IsOptional, IsUUID, IsEnum, IsDateString } from "class-validator";
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsDateString, IsEnum, IsOptional, IsUUID } from "class-validator";
 import {
 	SubscriptionPlan,
 	SubscriptionStatus,

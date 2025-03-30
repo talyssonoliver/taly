@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**/prisma/schema.prisma'  # Trigger on schema changes
+      - 'api/src/database/schema.prisma'  # Trigger on schema changes
   workflow_dispatch:  # Allow manual triggering
 
 jobs:

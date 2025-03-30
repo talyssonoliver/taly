@@ -1,6 +1,4 @@
-import { Prisma } from '@prisma/client';
-
-export class PasswordReset implements Prisma.PasswordResetUncheckedCreateInput {
+export class PasswordReset {
   id?: string;
   userId: string;
   token: string;

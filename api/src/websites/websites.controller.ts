@@ -9,7 +9,6 @@ import {
   Query,
   UseGuards,
   HttpStatus,
-  HttpException,
   NotFoundException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
