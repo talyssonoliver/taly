@@ -16,7 +16,7 @@
   "dependencies": {
     "@aws-sdk/client-ses": "^3.750.0",
     "dotenv": "^16.3.1",
-    "nodemailer": "^6.9.1"
+    "nodemailer": "^7.0.7"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.122",
