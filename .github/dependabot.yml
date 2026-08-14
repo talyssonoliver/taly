@@ -1,3 +1,5 @@
+# BOTS DISABLED 2026-08-14 per owner ruling (taly_planner#50): open-pull-requests-limit 0
+# stops NEW Dependabot PRs; existing 47 bot PRs stay open pending classification.
 version: 2
 updates:
   # Frontend dependencies
@@ -5,7 +7,7 @@ updates:
     directory: "/apps/dashboard/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 0
     commit-message:
       prefix: "deps"
       include: "scope"
@@ -15,7 +17,7 @@ updates:
     directory: "/backend/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 0
     commit-message:
       prefix: "deps"
       include: "scope"
@@ -25,7 +27,7 @@ updates:
     directory: "/serverless/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
     commit-message:
       prefix: "deps"
       include: "scope"
@@ -35,7 +37,8 @@ updates:
     directory: "/.github/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
     commit-message:
       prefix: "ci"
       include: "scope"
+
